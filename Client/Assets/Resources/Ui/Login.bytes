@@ -1,0 +1,45 @@
+package.xml|346|<packageDescription id="enrbs27q" name="Login">
+  <resources>
+    <atlas id="atlas0" size="1024,1024" file="atlas0.png"/>
+    <component id="p20p0" name="Login" exported="true" size="1280,800"/>
+    <image id="px3r2" name="LoadingBk" size="960,640"/>
+    <component id="rbto4" name="DlgLogin" size="480,320"/>
+  </resources>
+</packageDescription>p20p0.xml|367|<component size="1280,800">
+  <displayList>
+    <image id="n0" name="n0" src="px3r2" xy="0,0" size="1280,800">
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <component id="n1" name="DlgLogin" src="rbto4" xy="400,224">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
+  </displayList>
+</component>rbto4.xml|1442|<component size="480,320">
+  <displayList>
+    <image id="n0" name="n0" src="px3rb" pkg="e2ilf5a4" xy="1,4" size="471,308">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </image>
+    <image id="n1" name="n1" src="px3ry" pkg="e2ilf5a4" xy="-4,2" size="480,320">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </image>
+    <image id="n2" name="n2" src="px3r1g" pkg="e2ilf5a4" xy="196,25" size="223,50">
+      <relation target="" sidePair="left-center,top-top"/>
+    </image>
+    <image id="n3" name="n3" src="px3r1g" pkg="e2ilf5a4" xy="195,101" size="223,48">
+      <relation target="" sidePair="left-left,top-top"/>
+    </image>
+    <component id="n4" name="n4" src="ffoh1p" pkg="e2ilf5a4" xy="24,220" pivot="0.5,0.5" size="201,75">
+      <relation target="" sidePair="right-center,bottom-bottom"/>
+    </component>
+    <component id="n5" name="BtnLogin" src="ffoh1p" pkg="e2ilf5a4" xy="246,220" pivot="0.5,0.5" size="201,75">
+      <relation target="" sidePair="left-center,bottom-bottom"/>
+      <Button title="登陆"/>
+    </component>
+    <text id="n6" name="n6" xy="220,27" size="183,44" fontSize="12" autoSize="none" text="">
+      <relation target="" sidePair="left-center,top-top"/>
+    </text>
+    <text id="n7" name="n7" xy="220,104" size="183,44" fontSize="12" autoSize="none" text="">
+      <relation target="" sidePair="left-center,top-top"/>
+    </text>
+  </displayList>
+</component>

@@ -1,0 +1,8 @@
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Intermediate\OrleansCodeGenerator.csprojResolveAssemblyReference.cache
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Orleans.SDK.targets
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Configuration\OrleansConfiguration.xsd
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Intermediate\OrleansCodeGenerator.dll
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Intermediate\OrleansCodeGenerator.pdb
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\OrleansCodeGenerator.dll
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\OrleansCodeGenerator.pdb
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\OrleansCodeGenerator.XML

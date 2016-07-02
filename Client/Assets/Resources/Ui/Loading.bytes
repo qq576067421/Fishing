@@ -1,0 +1,29 @@
+px3r4.xml|573|<component size="184,60" extention="ProgressBar">
+  <displayList>
+    <image id="n1" name="n1" src="px3r1i" pkg="e2ilf5a4" xy="0,6" size="184,49">
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n2" name="bar" src="px3r1n" pkg="e2ilf5a4" xy="20,15" size="140,30"/>
+    <text id="n3" name="title" xy="0,0" size="184,60" fontSize="30" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+  </displayList>
+  <ProgressBar/>
+</component>package.xml|352|<packageDescription id="fcyokqd7" name="Loading">
+  <resources>
+    <component id="px3r4" name="ProgressBar" size="184,60"/>
+    <component id="px3r1" name="Loading" exported="true" size="1280,800"/>
+    <image id="px3r2" name="LoadingBk" size="960,640"/>
+    <atlas id="atlas0" size="1024,1024" file="atlas0.png"/>
+  </resources>
+</packageDescription>px3r1.xml|423|<component size="1280,800">
+  <displayList>
+    <image id="n0" name="n0" src="px3r2" xy="0,0" size="1280,800">
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <component id="n2" name="ProgressBar" src="px3r4" xy="4,712" size="1271,60">
+      <relation target="" sidePair="width-width,height-height"/>
+      <ProgressBar value="50" max="100"/>
+    </component>
+  </displayList>
+</component>

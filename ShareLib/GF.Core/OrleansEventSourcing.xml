@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrleansEventSourcing</name>
+    </assembly>
+    <members>
+        <member name="T:Orleans.EventSourcing.JournaledGrain`1">
+            <summary>
+            The base class for all grain classes that have event-sourced state.
+            </summary>
+        </member>
+        <member name="M:Orleans.EventSourcing.JournaledGrain`1.RaiseStateEvent``1(``0,System.Boolean)">
+            <summary>
+            Helper method for raising events, applying them to TGrainState and optionally committing to storage
+            </summary>
+            <param name="event">Event to raise</param>
+            <param name="commit">Whether or not the event needs to be immediately committed to storage</param>
+            <returns></returns>
+        </member>
+        <member name="T:Orleans.EventSourcing.JournaledGrainState`1">
+            <summary>
+            Base class for event-sourced grain state classes.
+            </summary>
+        </member>
+    </members>
+</doc>

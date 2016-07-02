@@ -1,0 +1,212 @@
+px3r2.xml|28|<component size="1280,800"/>ffoh1q.xml|1146|<component size="258,84" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n1" name="n1" src="px3r14" xy="0,0">
+      <gearDisplay controller="button" pages="0"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n2" name="n2" src="px3r14" xy="0,0">
+      <gearDisplay controller="button" pages="1"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n3" name="n3" src="px3r14" xy="0,0">
+      <gearDisplay controller="button" pages="2"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n4" name="n4" src="px3r14" xy="0,0">
+      <gearDisplay controller="button" pages="3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <text id="n5" name="title" xy="0,0" size="258,84" fontSize="30" color="#ffffff" align="center" vAlign="middle" autoSize="none" singleLine="true" text="">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+  </displayList>
+  <Button/>
+</component>package.xml|4844|<packageDescription id="e2ilf5a4" name="Common">
+  <resources>
+    <image id="px3rx" name="Crown" size="64,44" exported="true"/>
+    <image id="px3r18" name="BorderLittleIcoSelect" size="100,100" exported="true"/>
+    <image id="px3rg" name="MsgLine1" size="908,4" exported="true"/>
+    <image id="px3r1h" name="BgGoldInLobby" size="252,54" exported="true"/>
+    <image id="px3r6" name="RankSilver" size="64,54" exported="true"/>
+    <image id="px3r1e" name="BgTitle" size="392,48" exported="true"/>
+    <image id="px3rk" name="LoginPwd" size="30,30" exported="true"/>
+    <image id="px3rn" name="LoginDelete" size="30,30" exported="true"/>
+    <image id="px3r11" name="BtnLongGold" size="646,84" exported="true"/>
+    <image id="px3rd" name="purpleDiamond" size="54,38" exported="true"/>
+    <component id="ffoh1q" name="Btn2" exported="true" size="258,84"/>
+    <image id="px3r17" name="Bowl" size="88,106" exported="true"/>
+    <atlas id="atlas0" size="1024,1024" file="atlas0.png"/>
+    <image id="px3r15" name="BtnBg" size="258,84" exported="true"/>
+    <image id="px3r1i" name="BgGoldInGame" size="184,60" exported="true" scale="9grid" scale9grid="26,15,131,30"/>
+    <image id="px3rs" name="High" size="132,60" exported="true"/>
+    <image id="px3ry" name="CircleBorder" size="156,156" exported="true" scale="9grid" scale9grid="39,39,78,78"/>
+    <image id="px3r1a" name="BorderIco NotLobby" size="200,200" exported="true"/>
+    <image id="px3r10" name="BtnPurple" size="258,84" exported="true"/>
+    <image id="px3r1g" name="BgInput" size="526,52" exported="true" scale="9grid" scale9grid="28,13,469,26"/>
+    <image id="px3rw" name="DayGiftDone" size="50,50" exported="true"/>
+    <image id="px3r19" name="BorderIco" size="90,90" exported="true"/>
+    <image id="px3rf" name="PersonOnline" size="28,36" exported="true"/>
+    <image id="px3r1d" name="BgWarning" size="640,102" exported="true"/>
+    <image id="px3r7" name="RankGold" size="64,54" exported="true"/>
+    <image id="px3r3" name="TitleSendGift" size="430,44" exported="true"/>
+    <component id="ffoh1s" name="Btn4" exported="true" size="258,84"/>
+    <image id="px3rz" name="CheckBoxChecked" size="38,38" exported="true"/>
+    <image id="px3r1j" name="BgCheckBox" size="38,38" exported="true"/>
+    <image id="px3rm" name="LoginDownList" size="30,30" exported="true"/>
+    <image id="px3rr" name="Horn" size="56,58" exported="true"/>
+    <component id="ffoh1r" name="Btn3" exported="true" size="258,84"/>
+    <image id="px3r1l" name="VipIcon" size="28,28" exported="true"/>
+    <component id="ffoh1t" name="Btn5" exported="true" size="646,84"/>
+    <image id="px3rp" name="LoginAccount" size="30,30" exported="true"/>
+    <image id="px3r1f" name="BgSendGold" size="164,164" exported="true"/>
+    <image id="px3ra" name="RankBgSelf" size="54,54" exported="true"/>
+    <component id="px3r2" name="FloatMsg" exported="true" size="1280,800"/>
+    <image id="px3rv" name="DefaultInco" size="100,100" exported="true"/>
+    <image id="px3r14" name="BtnBlue" size="258,84" exported="true"/>
+    <image id="px3r4" name="TitleDayGift" size="226,46" exported="true"/>
+    <component id="ffoh1p" name="Btn1" exported="true" size="258,84"/>
+    <image id="px3r1c" name="BorderBigIcoSelect" size="320,184" exported="true"/>
+    <image id="px3r16" name="Box" size="82,85" exported="true"/>
+    <image id="px3re" name="Primary" size="132,60" exported="true"/>
+    <image id="px3r13" name="BtnGold" size="258,84" exported="true"/>
+    <image id="px3r5" name="shit" size="70,70" exported="true"/>
+    <image id="px3r12" name="BtnGray" size="258,84" exported="true"/>
+    <image id="px3r1k" name="Award" size="158,52" exported="true"/>
+    <component id="ffoh1u" name="Btn6" exported="true" size="258,84"/>
+    <image id="px3ri" name="Middle" size="130,60" exported="true"/>
+    <image id="px3rh" name="MsgLine" size="458,2" exported="true"/>
+    <image id="px3ru" name="flower" size="70,70" exported="true"/>
+    <image id="px3rl" name="LoginPhone" size="30,30" exported="true"/>
+    <image id="px3r1n" name="fgExp" size="60,30" exported="true" scale="9grid" scale9grid="5,8,49,16"/>
+    <sound id="px3r1m" name="Close" file="px3r1m.wav" exported="true"/>
+    <image id="px3rq" name="loading" size="50,50" exported="true"/>
+    <image id="px3ro" name="LoginCheckCode" size="30,30" exported="true"/>
+    <image id="px3rt" name="Gold" size="60,60" exported="true"/>
+    <image id="px3r9" name="RankBgTop" size="60,60" exported="true"/>
+    <image id="px3rb" name="RankBg" size="60,60" exported="true" scale="9grid" scale9grid="3,5,54,49"/>
+    <image id="px3r1b" name="BorderGold" size="130,126" exported="true"/>
+    <image id="px3rc" name="QuestArrows" size="28,46" exported="true"/>
+    <image id="px3r8" name="RankCopper" size="64,54" exported="true"/>
+  </resources>
+</packageDescription>ffoh1t.xml|1146|<component size="646,84" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n1" name="n1" src="px3r11" xy="0,0">
+      <gearDisplay controller="button" pages="0"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n2" name="n2" src="px3r11" xy="0,0">
+      <gearDisplay controller="button" pages="1"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n3" name="n3" src="px3r11" xy="0,0">
+      <gearDisplay controller="button" pages="2"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n4" name="n4" src="px3r11" xy="0,0">
+      <gearDisplay controller="button" pages="3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <text id="n5" name="title" xy="0,0" size="646,84" fontSize="30" color="#ffffff" align="center" vAlign="middle" autoSize="none" singleLine="true" text="">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+  </displayList>
+  <Button/>
+</component>ffoh1r.xml|1146|<component size="258,84" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n1" name="n1" src="px3r13" xy="0,0">
+      <gearDisplay controller="button" pages="0"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n2" name="n2" src="px3r13" xy="0,0">
+      <gearDisplay controller="button" pages="1"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n3" name="n3" src="px3r13" xy="0,0">
+      <gearDisplay controller="button" pages="2"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n4" name="n4" src="px3r13" xy="0,0">
+      <gearDisplay controller="button" pages="3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <text id="n5" name="title" xy="0,0" size="258,84" fontSize="30" color="#ffffff" align="center" vAlign="middle" autoSize="none" singleLine="true" text="">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+  </displayList>
+  <Button/>
+</component>ffoh1p.xml|1188|<component size="258,84" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n1" name="n1" src="px3r15" xy="0,0">
+      <gearDisplay controller="button" pages="0"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n2" name="n2" src="px3r15" xy="0,0">
+      <gearDisplay controller="button" pages="1"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n3" name="n3" src="px3r15" xy="0,0">
+      <gearDisplay controller="button" pages="2"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n4" name="n4" src="px3r15" xy="0,0">
+      <gearDisplay controller="button" pages="3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <text id="n5" name="title" xy="0,0" size="258,84" fontSize="30" color="#ffffff" align="center" vAlign="middle" autoSize="none" singleLine="true" text="">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+  </displayList>
+  <Button downEffect="scale" downEffectValue="0.80"/>
+</component>ffoh1s.xml|1146|<component size="258,84" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n1" name="n1" src="px3r12" xy="0,0">
+      <gearDisplay controller="button" pages="0"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n2" name="n2" src="px3r12" xy="0,0">
+      <gearDisplay controller="button" pages="1"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n3" name="n3" src="px3r12" xy="0,0">
+      <gearDisplay controller="button" pages="2"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n4" name="n4" src="px3r12" xy="0,0">
+      <gearDisplay controller="button" pages="3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <text id="n5" name="title" xy="0,0" size="258,84" fontSize="30" color="#ffffff" align="center" vAlign="middle" autoSize="none" singleLine="true" text="">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+  </displayList>
+  <Button/>
+</component>ffoh1u.xml|1146|<component size="258,84" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <displayList>
+    <image id="n1" name="n1" src="px3r10" xy="0,0">
+      <gearDisplay controller="button" pages="0"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n2" name="n2" src="px3r10" xy="0,0">
+      <gearDisplay controller="button" pages="1"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n3" name="n3" src="px3r10" xy="0,0">
+      <gearDisplay controller="button" pages="2"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <image id="n4" name="n4" src="px3r10" xy="0,0">
+      <gearDisplay controller="button" pages="3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <text id="n5" name="title" xy="0,0" size="258,84" fontSize="30" color="#ffffff" align="center" vAlign="middle" autoSize="none" singleLine="true" text="">
+      <relation target="" sidePair="width-width,height-height"/>
+    </text>
+  </displayList>
+  <Button/>
+</component>

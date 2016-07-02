@@ -1,0 +1,420 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrleansTestingHost</name>
+    </assembly>
+    <members>
+        <member name="T:Orleans.Runtime.Configuration.ConfigurationExtensions">
+            <summary>
+            Silo configuration extensions.
+            </summary>
+        </member>
+        <member name="M:Orleans.Runtime.Configuration.ConfigurationExtensions.ApplyToAllNodes(Orleans.Runtime.Configuration.ClusterConfiguration,System.Action{Orleans.Runtime.Configuration.NodeConfiguration})">
+            <summary>
+            Applies the specified config change defined by <paramref name="nodeConfigUpdater"/> to 
+            <see cref="P:Orleans.Runtime.Configuration.ClusterConfiguration.Defaults"/> and all the node configurations currently 
+            defined in <see cref="P:Orleans.Runtime.Configuration.ClusterConfiguration.Overrides"/>.
+            </summary>
+            <param name="config">The cluster configuration object to add provider to.</param>
+            <param name="nodeConfigUpdater">The function to apply to each node configuration.</param>
+        </member>
+        <member name="T:Orleans.TestingHost.Extensions.TestConfigurationExtensions">
+            <summary>
+            Test silo configuration extensions.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.Extensions.TestConfigurationExtensions.AdjustForTestEnvironment(Orleans.Runtime.Configuration.ClusterConfiguration)">
+            <summary>
+            This call tweaks the cluster config with settings specific to a test run.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.Extensions.TestConfigurationExtensions.AdjustForTestEnvironment(Orleans.Runtime.Configuration.ClientConfiguration)">
+            <summary>
+            This call tweaks the client config with settings specific to a test run.
+            </summary>
+        </member>
+        <member name="T:Orleans.TestingHost.Utils.AsyncResultHandle">
+            <summary>
+            This class is for internal testing use only.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.Utils.AsyncResultHandle.WaitForFinished(System.TimeSpan)">
+            <summary>
+            </summary>
+            <param name="timeout"></param>
+            <returns>Returns <c>true</c> if operation completes before timeout</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.Utils.AsyncResultHandle.WaitForContinue(System.TimeSpan)">
+            <summary>
+            </summary>
+            <param name="timeout"></param>
+            <returns>Returns <c>true</c> if operation completes before timeout</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.Utils.AsyncResultHandle.WaitFor(System.TimeSpan,System.Func{System.Boolean})">
+            <summary>
+            </summary>
+            <param name="timeout"></param>
+            <param name="checkFlag"></param>
+            <returns>Returns <c>true</c> if operation completes before timeout</returns>
+        </member>
+        <member name="T:Orleans.TestingHost.Utils.StorageEmulator">
+            <summary>
+            A wrapper on Azure Storage Emulator.
+            </summary>
+            <remarks>It might be tricky to implement this as a <see cref="T:System.IDisposable">IDisposable</see>, isolated, autonomous instance, 
+            see at <see href="http://azure.microsoft.com/en-us/documentation/articles/storage-use-emulator/">Use the Azure Storage Emulator for Development and Testing</see>
+            for pointers.</remarks>
+        </member>
+        <member name="F:Orleans.TestingHost.Utils.StorageEmulator.storageEmulatorProcessNames">
+            <summary>
+            The storage emulator process name. One way to enumerate running process names is
+            Get-Process | Format-Table Id, ProcessName -autosize. If there were multiple storage emulator
+            processes running, they would named WASTOR~1, WASTOR~2, ... WASTOR~n.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.Utils.StorageEmulator.IsStarted">
+            <summary>
+            Is the storage emulator already started.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Orleans.TestingHost.Utils.StorageEmulator.Exists">
+            <summary>
+            Checks if the storage emulator exists, i.e. is installed.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.Utils.StorageEmulator.Help">
+            <summary>
+            Storage Emulator help.
+            </summary>
+            <returns>Storage emulator help.</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.Utils.StorageEmulator.TryStart">
+            <summary>
+            Tries to start the storage emulator.
+            </summary>
+            <returns><em>TRUE</em> if the process was started sucessfully. <em>FALSE</em> otherwise.</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.Utils.StorageEmulator.Start">
+            <summary>
+            Starts the storage emulator if not already started.
+            </summary>
+            <returns><em>TRUE</em> if the process was stopped succesfully or was already started. <em>FALSE</em> otherwise.</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.Utils.StorageEmulator.Stop">
+            <summary>
+            Stops the storage emulator if started.
+            </summary>
+            <returns><em>TRUE</em> if the process was stopped succesfully or was already stopped. <em>FALSE</em> otherwise.</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.Utils.StorageEmulator.CreateProcessArguments(System.String)">
+            <summary>
+            Creates a new <see cref="T:System.Diagnostics.ProcessStartInfo">ProcessStartInfo</see> to be used as an argument
+            to other operations in this class.
+            </summary>
+            <param name="arguments">The arguments.</param>
+            <returns>A new <see cref="T:System.Diagnostics.ProcessStartInfo">ProcessStartInfo</see> that has the given arguments.</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.Utils.StorageEmulator.GetStorageEmulatorProcess">
+            <summary>
+            Queries the storage emulator process from the system.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.TestingHost.Utils.StorageEmulator.GetStorageEmulatorPath">
+            <summary>
+            Returns a full path to the storage emulator executable, including the executable name and file extension.
+            </summary>
+            <returns>A full path to the storage emulator executable, or null if not found.</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.Utils.StorageEmulator.GetProgramFilesBasePath">
+            <summary>
+            Determines the Program Files base directory.
+            </summary>
+            <returns>The Program files base directory.</returns>
+        </member>
+        <member name="T:Orleans.TestingHost.Utils.ThreadSafeRandom">
+            <summary>
+            Thread-safe random number generator.
+            Similar to the implementation by Steven Toub: http://blogs.msdn.com/b/pfxteam/archive/2014/10/20/9434171.aspx
+            </summary>
+        </member>
+        <member name="T:Orleans.TestingHost.TestClusterOptions">
+            <summary>
+            Configuration builder for starting a <see cref="T:Orleans.TestingHost.TestCluster"/>. It is not required to use this, but it is way simpler than crafting the configuration manually.
+            </summary>
+        </member>
+        <member name="T:Orleans.TestingHost.TestCluster">
+            <summary>
+            A host class for local testing with Orleans using in-process silos. 
+            Runs a Primary and optionally secondary silos in seperate app domains, and client in the main app domain.
+            Additional silos can also be started in-process on demand if required for particular test cases.
+            </summary>
+            <remarks>
+            Make sure that your test project references your test grains and test grain interfaces 
+            projects, and has CopyLocal=True set on those references [which should be the default].
+            </remarks>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.#ctor">
+            <summary>
+            Configure the default Primary test silo, plus client in-process.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.#ctor(Orleans.TestingHost.TestClusterOptions)">
+            <summary>
+            Configures the test cluster plus client in-process.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.#ctor(Orleans.Runtime.Configuration.ClusterConfiguration)">
+            <summary>
+            Configures the test cluster plus default client in-process.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.#ctor(Orleans.Runtime.Configuration.ClusterConfiguration,Orleans.Runtime.Configuration.ClientConfiguration)">
+            <summary>
+            Configures the test cluster plus client in-process,
+            using the specified silo and client config configurations.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.Deploy">
+            <summary>
+            Deploys the cluster using the specified configuration and starts the client in-process.
+            It will start all the silos defined in the <see cref="P:Orleans.Runtime.Configuration.ClusterConfiguration.Overrides"/> collection.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.Deploy(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Deploys the cluster using the specified configuration and starts the client in-process.
+            </summary>
+            <param name="siloNames">Only deploy the specified silos which must also be present in the <see cref="P:Orleans.Runtime.Configuration.ClusterConfiguration.Overrides"/> collection.</param>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.DeployAsync(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>
+            Deploys the cluster using the specified configuration and starts the client in-process.
+            </summary>
+            <param name="siloNames">Only deploy the specified silos which must also be present in the <see cref="P:Orleans.Runtime.Configuration.ClusterConfiguration.Overrides"/> collection.</param>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.GetActiveSilos">
+            <summary>
+            Get the list of current active silos.
+            </summary>
+            <returns>List of current silos.</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.GetSiloForAddress(Orleans.Runtime.SiloAddress)">
+            <summary>
+            Find the silo handle for the specified silo address.
+            </summary>
+            <param name="siloAddress">Silo address to be found.</param>
+            <returns>SiloHandle of the appropriate silo, or <c>null</c> if not found.</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.WaitForLivenessToStabilizeAsync(System.Boolean)">
+            <summary>
+            Wait for the silo liveness sub-system to detect and act on any recent cluster membership changes.
+            </summary>
+            <param name="didKill">Whether recent membership changes we done by graceful Stop.</param>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.StartAdditionalSilo">
+            <summary>
+            Start an additional silo, so that it joins the existing cluster.
+            </summary>
+            <returns>SiloHandle for the newly started silo.</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.StartAdditionalSilos(System.Int32)">
+            <summary>
+            Start a number of additional silo, so that they join the existing cluster.
+            </summary>
+            <param name="numExtraSilos">Number of additional silos to start.</param>
+            <returns>List of SiloHandles for the newly started silos.</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.StopSecondarySilos">
+            <summary>
+            Stop any additional silos, not including the default Primary silo.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.StopPrimarySilo">
+            <summary>
+            Stops the default Primary silo.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.StopAllSilos">
+            <summary>
+            Stop all current silos.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.StopSilo(Orleans.TestingHost.SiloHandle)">
+            <summary>
+            Do a semi-graceful Stop of the specified silo.
+            </summary>
+            <param name="instance">Silo to be stopped.</param>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.KillSilo(Orleans.TestingHost.SiloHandle)">
+            <summary>
+            Do an immediate Kill of the specified silo.
+            </summary>
+            <param name="instance">Silo to be killed.</param>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.KillClient">
+            <summary>
+            Performs a hard kill on client.  Client will not cleanup resources.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.RestartSilo(Orleans.TestingHost.SiloHandle)">
+            <summary>
+            Do a Stop or Kill of the specified silo, followed by a restart.
+            </summary>
+            <param name="instance">Silo to be restarted.</param>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.RestartStoppedSecondarySilo(System.String)">
+            <summary>
+            Restart a previously stopped.
+            </summary>
+            <param name="siloName">Silo to be restarted.</param>
+        </member>
+        <member name="M:Orleans.TestingHost.TestCluster.ImportGeneratedAssemblies(Orleans.TestingHost.SiloHandle)">
+            <summary>
+            Imports assemblies generated by runtime code generation from the provided silo.
+            </summary>
+            <param name="siloHandle">The silo.</param>
+        </member>
+        <member name="T:Orleans.TestingHost.TestingSiloHost">
+            <summary>
+            Important note: <see cref="T:Orleans.TestingHost.TestingSiloHost"/> will be eventually deprectated. It is recommended that you use <see cref="T:Orleans.TestingHost.TestCluster"/> instead.
+            A host class for local testing with Orleans using in-process silos.
+            
+            Runs a Primary and Secondary silo in seperate app domains, and client in the main app domain.
+            Additional silos can also be started in-process if required for particular test cases.
+            </summary>
+            <remarks>
+            Make sure the following files are included in any test projects that use <c>TestingSiloHost</c>, 
+            and ensure "Copy if Newer" is set to ensure the config files are included in the test set.
+            <code>
+            OrleansConfigurationForTesting.xml
+            ClientConfigurationForTesting.xml
+            </code>
+            Also make sure that your test project references your test grains and test grain interfaces 
+            projects, and has CopyLocal=True set on those references [which should be the default].
+            </remarks>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.#ctor">
+            <summary>
+            Start the default Primary and Secondary test silos, plus client in-process, 
+            using the default silo config options.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.#ctor(System.Boolean)">
+            <summary>
+            Start the default Primary and Secondary test silos, plus client in-process, 
+            ensuring that fresh silos are started if they were already running.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.#ctor(Orleans.TestingHost.TestingSiloOptions)">
+            <summary>
+            Start the default Primary and Secondary test silos, plus client in-process, 
+            using the specified silo config options.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.#ctor(Orleans.TestingHost.TestingSiloOptions,Orleans.TestingHost.TestingClientOptions)">
+            <summary>
+            Start the default Primary and Secondary test silos, plus client in-process, 
+            using the specified silo and client config options.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.GetActiveSilos">
+            <summary>
+            Get the list of current active silos.
+            </summary>
+            <returns>List of current silos.</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.GetSiloForAddress(Orleans.Runtime.SiloAddress)">
+            <summary>
+            Find the silo handle for the specified silo address.
+            </summary>
+            <param name="siloAddress">Silo address to be found.</param>
+            <returns>SiloHandle of the appropriate silo, or <c>null</c> if not found.</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.WaitForLivenessToStabilizeAsync(System.Boolean)">
+            <summary>
+            Wait for the silo liveness sub-system to detect and act on any recent cluster membership changes.
+            </summary>
+            <param name="didKill">Whether recent membership changes we done by graceful Stop.</param>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.StartAdditionalSilo">
+            <summary>
+            Start an additional silo, so that it joins the existing cluster with the default Primary and Secondary silos.
+            </summary>
+            <returns>SiloHandle for the newly started silo.</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.StartAdditionalSilos(System.Int32)">
+            <summary>
+            Start a number of additional silo, so that they join the existing cluster with the default Primary and Secondary silos.
+            </summary>
+            <param name="numExtraSilos">Number of additional silos to start.</param>
+            <returns>List of SiloHandles for the newly started silos.</returns>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.StopAdditionalSilos">
+            <summary>
+            Stop any additional silos, not including the default Primary and Secondary silos.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.RestartAllAdditionalSilos">
+            <summary>
+            Restart all additional silos, not including the default Primary and Secondary silos.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.StopDefaultSilos">
+            <summary>
+            Stop the default Primary and Secondary silos.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.StopAllSilos">
+            <summary>
+            Stop all current silos.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.StopAllSilosIfRunning">
+            <summary>
+            Stop all current silos if running.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.RestartDefaultSilos(System.Boolean)">
+            <summary>
+            Restart the default Primary and Secondary silos.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.StartSecondarySilo(Orleans.TestingHost.TestingSiloOptions,System.Int32)">
+            <summary>
+            Start a Secondary silo with a given instanceCounter 
+            (allows to set the port number as before or new, depending on the scenario).
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.StopSilo(Orleans.TestingHost.SiloHandle)">
+            <summary>
+            Do a semi-graceful Stop of the specified silo.
+            </summary>
+            <param name="instance">Silo to be stopped.</param>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.KillSilo(Orleans.TestingHost.SiloHandle)">
+            <summary>
+            Do an immediate Kill of the specified silo.
+            </summary>
+            <param name="instance">Silo to be killed.</param>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.KillClient">
+            <summary>
+            Performs a hard kill on client.  Client will not cleanup reasources.
+            </summary>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.RestartSilo(Orleans.TestingHost.SiloHandle)">
+            <summary>
+            Do a Stop or Kill of the specified silo, followed by a restart.
+            </summary>
+            <param name="instance">Silo to be restarted.</param>
+        </member>
+        <member name="M:Orleans.TestingHost.TestingSiloHost.ImportGeneratedAssemblies(Orleans.TestingHost.SiloHandle)">
+            <summary>
+            Imports assemblies generated by runtime code generation from the provided silo.
+            </summary>
+            <param name="siloHandle">The silo.</param>
+        </member>
+    </members>
+</doc>

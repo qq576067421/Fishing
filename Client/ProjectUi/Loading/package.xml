@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="fcyokqd7" jpegQuality="80" compressPNG="true">
+  <resources>
+    <folder id="px3r0" name="image" folder=""/>
+    <component id="px3r1" name="Loading" folder="" file="px3r1.xml" exported="true"/>
+    <image id="px3r2" name="LoadingBk" folder="px3r0" qualityOption="source" file="px3r2.png" size="960,640"/>
+    <folder id="px3r3" name="component" folder=""/>
+    <component id="px3r4" name="ProgressBar" folder="px3r3" file="px3r4.xml"/>
+  </resources>
+  <publish name="Loading"/>
+</packageDescription>

@@ -1,0 +1,3203 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Google.Protobuf</name>
+    </assembly>
+    <members>
+        <member name="T:Google.Protobuf.ByteArray">
+            <summary>
+            Provides a utility routine to copy small arrays much more quickly than Buffer.BlockCopy
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.ByteArray.CopyThreshold">
+            <summary>
+            The threshold above which you should use Buffer.BlockCopy rather than ByteArray.Copy
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteArray.Copy(System.Byte[],System.Int32,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Determines which copy routine to use based on the number of bytes to be copied.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteArray.Reverse(System.Byte[])">
+            <summary>
+            Reverses the order of bytes in the array
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.ByteString">
+            <summary>
+            Immutable array of bytes.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.AttachBytes(System.Byte[])">
+            <summary>
+            Internal use only.  Ensure that the provided array is not mutated and belongs to this instance.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.#ctor(System.Byte[])">
+            <summary>
+            Constructs a new ByteString from the given byte array. The array is
+            *not* copied, and must not be modified after this constructor is called.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.ToByteArray">
+            <summary>
+            Converts this <see cref="T:Google.Protobuf.ByteString"/> into a byte array.
+            </summary>
+            <remarks>The data is copied - changes to the returned array will not be reflected in this <c>ByteString</c>.</remarks>
+            <returns>A byte array with the same data as this <c>ByteString</c>.</returns>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.ToBase64">
+            <summary>
+            Converts this <see cref="T:Google.Protobuf.ByteString"/> into a standard base64 representation.
+            </summary>
+            <returns>A base64 representation of this <c>ByteString</c>.</returns>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.FromBase64(System.String)">
+            <summary>
+            Constructs a <see cref="T:Google.Protobuf.ByteString"/> from the Base64 Encoded String.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.CopyFrom(System.Byte[])">
+            <summary>
+            Constructs a <see cref="T:Google.Protobuf.ByteString"/> from the given array. The contents
+            are copied, so further modifications to the array will not
+            be reflected in the returned ByteString.
+            This method can also be invoked in <c>ByteString.CopyFrom(0xaa, 0xbb, ...)</c> form
+            which is primarily useful for testing.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.CopyFrom(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Constructs a <see cref="T:Google.Protobuf.ByteString"/> from a portion of a byte array.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.CopyFrom(System.String,System.Text.Encoding)">
+            <summary>
+            Creates a new <see cref="T:Google.Protobuf.ByteString"/> by encoding the specified text with
+            the given encoding.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.CopyFromUtf8(System.String)">
+            <summary>
+            Creates a new <see cref="T:Google.Protobuf.ByteString"/> by encoding the specified text in UTF-8.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.ToString(System.Text.Encoding)">
+            <summary>
+            Converts this <see cref="T:Google.Protobuf.ByteString"/> into a string by applying the given encoding.
+            </summary>
+            <remarks>
+            This method should only be used to convert binary data which was the result of encoding
+            text with the given encoding.
+            </remarks>
+            <param name="encoding">The encoding to use to decode the binary data into text.</param>
+            <returns>The result of decoding the binary data with the given decoding.</returns>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.ToStringUtf8">
+            <summary>
+            Converts this <see cref="T:Google.Protobuf.ByteString"/> into a string by applying the UTF-8 encoding.
+            </summary>
+            <remarks>
+            This method should only be used to convert binary data which was the result of encoding
+            text with UTF-8.
+            </remarks>
+            <returns>The result of decoding the binary data with the given decoding.</returns>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.GetEnumerator">
+            <summary>
+            Returns an iterator over the bytes in this <see cref="T:Google.Protobuf.ByteString"/>.
+            </summary>
+            <returns>An iterator over the bytes in this object.</returns>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an iterator over the bytes in this <see cref="T:Google.Protobuf.ByteString"/>.
+            </summary>
+            <returns>An iterator over the bytes in this object.</returns>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.CreateCodedInput">
+            <summary>
+            Creates a CodedInputStream from this ByteString's data.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.op_Equality(Google.Protobuf.ByteString,Google.Protobuf.ByteString)">
+            <summary>
+            Compares two byte strings for equality.
+            </summary>
+            <param name="lhs">The first byte string to compare.</param>
+            <param name="rhs">The second byte string to compare.</param>
+            <returns><c>true</c> if the byte strings are equal; false otherwise.</returns>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.op_Inequality(Google.Protobuf.ByteString,Google.Protobuf.ByteString)">
+            <summary>
+            Compares two byte strings for inequality.
+            </summary>
+            <param name="lhs">The first byte string to compare.</param>
+            <param name="rhs">The second byte string to compare.</param>
+            <returns><c>false</c> if the byte strings are equal; true otherwise.</returns>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.Equals(System.Object)">
+            <summary>
+            Compares this byte string with another object.
+            </summary>
+            <param name="obj">The object to compare this with.</param>
+            <returns><c>true</c> if <paramref name="obj"/> refers to an equal <see cref="T:Google.Protobuf.ByteString"/>; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.GetHashCode">
+            <summary>
+            Returns a hash code for this object. Two equal byte strings
+            will return the same hash code.
+            </summary>
+            <returns>A hash code for this object.</returns>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.Equals(Google.Protobuf.ByteString)">
+            <summary>
+            Compares this byte string with another.
+            </summary>
+            <param name="other">The <see cref="T:Google.Protobuf.ByteString"/> to compare this with.</param>
+            <returns><c>true</c> if <paramref name="other"/> refers to an equal byte string; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.WriteRawBytesTo(Google.Protobuf.CodedOutputStream)">
+            <summary>
+            Used internally by CodedOutputStream to avoid creating a copy for the write
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.CopyTo(System.Byte[],System.Int32)">
+            <summary>
+            Copies the entire byte array to the destination array provided at the offset specified.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.WriteTo(System.IO.Stream)">
+            <summary>
+            Writes the entire byte array to the provided stream
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.ByteString.Empty">
+            <summary>
+            Returns an empty ByteString.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.ByteString.Length">
+            <summary>
+            Returns the length of this ByteString in bytes.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.ByteString.IsEmpty">
+            <summary>
+            Returns <c>true</c> if this byte string is empty, <c>false</c> otherwise.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.ByteString.Item(System.Int32)">
+            <summary>
+            Retuns the byte at the given index.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.ByteString.Unsafe">
+            <summary>
+            Unsafe operations that can cause IO Failure and/or other catestrophic side-effects.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.Unsafe.FromBytes(System.Byte[])">
+            <summary>
+            Constructs a new ByteString from the given byte array. The array is
+            *not* copied, and must not be modified after this constructor is called.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.ByteString.Unsafe.GetBuffer(Google.Protobuf.ByteString)">
+            <summary>
+            Provides direct, unrestricted access to the bytes contained in this instance.
+            You must not modify or resize the byte array returned by this method.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.CodedOutputStream">
+            <summary>
+            Encodes and writes protocol message fields.
+            </summary>
+            <remarks>
+            <para>
+            This class is generally used by generated code to write appropriate
+            primitives to the stream. It effectively encapsulates the lowest
+            levels of protocol buffer format. Unlike some other implementations,
+            this does not include combined "write tag and value" methods. Generated
+            code knows the exact byte representations of the tags they're going to write,
+            so there's no need to re-encode them each time. Manually-written code calling
+            this class should just call one of the <c>WriteTag</c> overloads before each value.
+            </para>
+            <para>
+            Repeated fields and map fields are not handled by this class; use <c>RepeatedField&lt;T&gt;</c>
+            and <c>MapField&lt;TKey, TValue&gt;</c> to serialize such fields.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeDoubleSize(System.Double)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a
+            double field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeFloatSize(System.Single)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a
+            float field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeUInt64Size(System.UInt64)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a
+            uint64 field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeInt64Size(System.Int64)">
+            <summary>
+            Computes the number of bytes that would be needed to encode an
+            int64 field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeInt32Size(System.Int32)">
+            <summary>
+            Computes the number of bytes that would be needed to encode an
+            int32 field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeFixed64Size(System.UInt64)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a
+            fixed64 field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeFixed32Size(System.UInt32)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a
+            fixed32 field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeBoolSize(System.Boolean)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a
+            bool field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeStringSize(System.String)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a
+            string field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeGroupSize(Google.Protobuf.IMessage)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a
+            group field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeMessageSize(Google.Protobuf.IMessage)">
+            <summary>
+            Computes the number of bytes that would be needed to encode an
+            embedded message field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeBytesSize(Google.Protobuf.ByteString)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a
+            bytes field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeUInt32Size(System.UInt32)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a
+            uint32 field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeEnumSize(System.Int32)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a
+            enum field, including the tag. The caller is responsible for
+            converting the enum value to its numeric value.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeSFixed32Size(System.Int32)">
+            <summary>
+            Computes the number of bytes that would be needed to encode an
+            sfixed32 field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeSFixed64Size(System.Int64)">
+            <summary>
+            Computes the number of bytes that would be needed to encode an
+            sfixed64 field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeSInt32Size(System.Int32)">
+            <summary>
+            Computes the number of bytes that would be needed to encode an
+            sint32 field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeSInt64Size(System.Int64)">
+            <summary>
+            Computes the number of bytes that would be needed to encode an
+            sint64 field, including the tag.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeLengthSize(System.Int32)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a length,
+            as written by <see cref="M:Google.Protobuf.CodedOutputStream.WriteLength(System.Int32)"/>.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeRawVarint32Size(System.UInt32)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a varint.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeRawVarint64Size(System.UInt64)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a varint.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.ComputeTagSize(System.Int32)">
+            <summary>
+            Computes the number of bytes that would be needed to encode a tag.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.CodedOutputStream.DefaultBufferSize">
+            <summary>
+            The buffer size used by CreateInstance(Stream).
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.#ctor(System.Byte[])">
+            <summary>
+            Creates a new CodedOutputStream that writes directly to the given
+            byte array. If more bytes are written than fit in the array,
+            OutOfSpaceException will be thrown.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.#ctor(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Creates a new CodedOutputStream that writes directly to the given
+            byte array slice. If more bytes are written than fit in the array,
+            OutOfSpaceException will be thrown.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a new CodedOutputStream which write to the given stream.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.#ctor(System.IO.Stream,System.Int32)">
+            <summary>
+            Creates a new CodedOutputStream which write to the given stream and uses
+            the specified buffer size.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteDouble(System.Double)">
+            <summary>
+            Writes a double field value, without a tag, to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteFloat(System.Single)">
+            <summary>
+            Writes a float field value, without a tag, to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteUInt64(System.UInt64)">
+            <summary>
+            Writes a uint64 field value, without a tag, to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteInt64(System.Int64)">
+            <summary>
+            Writes an int64 field value, without a tag, to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteInt32(System.Int32)">
+            <summary>
+            Writes an int32 field value, without a tag, to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteFixed64(System.UInt64)">
+            <summary>
+            Writes a fixed64 field value, without a tag, to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteFixed32(System.UInt32)">
+            <summary>
+            Writes a fixed32 field value, without a tag, to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteBool(System.Boolean)">
+            <summary>
+            Writes a bool field value, without a tag, to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteString(System.String)">
+            <summary>
+            Writes a string field value, without a tag, to the stream.
+            The data is length-prefixed.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteMessage(Google.Protobuf.IMessage)">
+            <summary>
+            Writes a message, without a tag, to the stream.
+            The data is length-prefixed.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteBytes(Google.Protobuf.ByteString)">
+            <summary>
+            Write a byte string, without a tag, to the stream.
+            The data is length-prefixed.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteUInt32(System.UInt32)">
+            <summary>
+            Writes a uint32 value, without a tag, to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteEnum(System.Int32)">
+            <summary>
+            Writes an enum value, without a tag, to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteSFixed32(System.Int32)">
+            <summary>
+            Writes an sfixed32 value, without a tag, to the stream.
+            </summary>
+            <param name="value">The value to write.</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteSFixed64(System.Int64)">
+            <summary>
+            Writes an sfixed64 value, without a tag, to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteSInt32(System.Int32)">
+            <summary>
+            Writes an sint32 value, without a tag, to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteSInt64(System.Int64)">
+            <summary>
+            Writes an sint64 value, without a tag, to the stream.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteLength(System.Int32)">
+            <summary>
+            Writes a length (in bytes) for length-delimited data.
+            </summary>
+            <remarks>
+            This method simply writes a rawint, but exists for clarity in calling code.
+            </remarks>
+            <param name="length">Length value, in bytes.</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteTag(System.Int32,Google.Protobuf.WireFormat.WireType)">
+            <summary>
+            Encodes and writes a tag.
+            </summary>
+            <param name="fieldNumber">The number of the field to write the tag for</param>
+            <param name="type">The wire format type of the tag to write</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteTag(System.UInt32)">
+            <summary>
+            Writes an already-encoded tag.
+            </summary>
+            <param name="tag">The encoded tag</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteRawTag(System.Byte)">
+            <summary>
+            Writes the given single-byte tag directly to the stream.
+            </summary>
+            <param name="b1">The encoded tag</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteRawTag(System.Byte,System.Byte)">
+            <summary>
+            Writes the given two-byte tag directly to the stream.
+            </summary>
+            <param name="b1">The first byte of the encoded tag</param>
+            <param name="b2">The second byte of the encoded tag</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteRawTag(System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Writes the given three-byte tag directly to the stream.
+            </summary>
+            <param name="b1">The first byte of the encoded tag</param>
+            <param name="b2">The second byte of the encoded tag</param>
+            <param name="b3">The third byte of the encoded tag</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteRawTag(System.Byte,System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Writes the given four-byte tag directly to the stream.
+            </summary>
+            <param name="b1">The first byte of the encoded tag</param>
+            <param name="b2">The second byte of the encoded tag</param>
+            <param name="b3">The third byte of the encoded tag</param>
+            <param name="b4">The fourth byte of the encoded tag</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteRawTag(System.Byte,System.Byte,System.Byte,System.Byte,System.Byte)">
+            <summary>
+            Writes the given five-byte tag directly to the stream.
+            </summary>
+            <param name="b1">The first byte of the encoded tag</param>
+            <param name="b2">The second byte of the encoded tag</param>
+            <param name="b3">The third byte of the encoded tag</param>
+            <param name="b4">The fourth byte of the encoded tag</param>
+            <param name="b5">The fifth byte of the encoded tag</param>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteRawVarint32(System.UInt32)">
+            <summary>
+            Writes a 32 bit value as a varint. The fast route is taken when
+            there's enough buffer space left to whizz through without checking
+            for each byte; otherwise, we resort to calling WriteRawByte each time.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteRawBytes(System.Byte[])">
+            <summary>
+            Writes out an array of bytes.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.WriteRawBytes(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Writes out part of an array of bytes.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.EncodeZigZag32(System.Int32)">
+            <summary>
+            Encode a 32-bit value with ZigZag encoding.
+            </summary>
+            <remarks>
+            ZigZag encodes signed integers into values that can be efficiently
+            encoded with varint.  (Otherwise, negative values must be 
+            sign-extended to 64 bits to be varint encoded, thus always taking
+            10 bytes on the wire.)
+            </remarks>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.EncodeZigZag64(System.Int64)">
+            <summary>
+            Encode a 64-bit value with ZigZag encoding.
+            </summary>
+            <remarks>
+            ZigZag encodes signed integers into values that can be efficiently
+            encoded with varint.  (Otherwise, negative values must be 
+            sign-extended to 64 bits to be varint encoded, thus always taking
+            10 bytes on the wire.)
+            </remarks>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.Flush">
+            <summary>
+            Flushes any buffered data to the underlying stream (if there is one).
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedOutputStream.CheckNoSpaceLeft">
+            <summary>
+            Verifies that SpaceLeft returns zero. It's common to create a byte array
+            that is exactly big enough to hold a message, then write to it with
+            a CodedOutputStream. Calling CheckNoSpaceLeft after writing verifies that
+            the message was actually as big as expected, which can help bugs.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.CodedOutputStream.Position">
+            <summary>
+            Returns the current position in the stream, or the position in the output buffer
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.CodedOutputStream.SpaceLeft">
+            <summary>
+            If writing to a flat array, returns the space left in the array. Otherwise,
+            throws an InvalidOperationException.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.CodedOutputStream.OutOfSpaceException">
+            <summary>
+            Indicates that a CodedOutputStream wrapping a flat byte array
+            ran out of space.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.CodedInputStream">
+            <summary>
+            Readings and decodes protocol message fields.
+            </summary>
+            <remarks>
+            <para>
+            This class is generally used by generated code to read appropriate
+            primitives from the stream. It effectively encapsulates the lowest
+            levels of protocol buffer format.
+            </para>
+            <para>
+            Repeated fields and map fields are not handled by this class; use <see cref="T:Google.Protobuf.Collections.RepeatedField`1"/>
+            and <see cref="T:Google.Protobuf.Collections.MapField`2"/> to serialize such fields.
+            </para>
+            </remarks>
+        </member>
+        <member name="F:Google.Protobuf.CodedInputStream.buffer">
+            <summary>
+            Buffer of data read from the stream or provided at construction time.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.CodedInputStream.bufferSize">
+            <summary>
+            The index of the buffer at which we need to refill from the stream (if there is one).
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.CodedInputStream.bufferPos">
+            <summary>
+            The position within the current buffer (i.e. the next byte to read)
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.CodedInputStream.input">
+            <summary>
+            The stream to read further input from, or null if the byte array buffer was provided
+            directly on construction, with no further data available.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.CodedInputStream.lastTag">
+            <summary>
+            The last tag we read. 0 indicates we've read to the end of the stream
+            (or haven't read anything yet).
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.CodedInputStream.nextTag">
+            <summary>
+            The next tag, used to store the value read by PeekTag.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.CodedInputStream.totalBytesRetired">
+            <summary>
+            The total number of bytes read before the current buffer. The
+            total bytes read up to the current position can be computed as
+            totalBytesRetired + bufferPos.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.CodedInputStream.currentLimit">
+            <summary>
+            The absolute position of the end of the current message.
+            </summary> 
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.#ctor(System.Byte[])">
+            <summary>
+            Creates a new CodedInputStream reading data from the given byte array.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.#ctor(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Creates a new CodedInputStream that reads from the given byte array slice.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.#ctor(System.IO.Stream)">
+            <summary>
+            Creates a new CodedInputStream reading data from the given stream.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.#ctor(System.IO.Stream,System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Creates a new CodedInputStream reading data from the given
+            stream and buffer, using the default limits.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.#ctor(System.IO.Stream,System.Byte[],System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Creates a new CodedInputStream reading data from the given
+            stream and buffer, using the specified limits.
+            </summary>
+            <remarks>
+            This chains to the version with the default limits instead of vice versa to avoid
+            having to check that the default values are valid every time.
+            </remarks>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.CreateWithLimits(System.IO.Stream,System.Int32,System.Int32)">
+            <summary>
+            Creates a <see cref="T:Google.Protobuf.CodedInputStream"/> with the specified size and recursion limits, reading
+            from an input stream.
+            </summary>
+            <remarks>
+            This method exists separately from the constructor to reduce the number of constructor overloads.
+            It is likely to be used considerably less frequently than the constructors, as the default limits
+            are suitable for most use cases.
+            </remarks>
+            <param name="input">The input stream to read from</param>
+            <param name="sizeLimit">The total limit of data to read from the stream.</param>
+            <param name="recursionLimit">The maximum recursion depth to allow while reading.</param>
+            <returns>A <c>CodedInputStream</c> reading from <paramref name="input"/> with the specified size
+            and recursion limits.</returns>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.CheckReadEndOfStreamTag">
+            <summary>
+            Verifies that the last call to ReadTag() returned tag 0 - in other words,
+            we've reached the end of the stream when we expected to.
+            </summary>
+            <exception cref="T:Google.Protobuf.InvalidProtocolBufferException">The 
+            tag read was not the one specified</exception>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.PeekTag">
+            <summary>
+            Peeks at the next field tag. This is like calling <see cref="M:Google.Protobuf.CodedInputStream.ReadTag"/>, but the
+            tag is not consumed. (So a subsequent call to <see cref="M:Google.Protobuf.CodedInputStream.ReadTag"/> will return the
+            same value.)
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadTag">
+            <summary>
+            Reads a field tag, returning the tag of 0 for "end of stream".
+            </summary>
+            <remarks>
+            If this method returns 0, it doesn't necessarily mean the end of all
+            the data in this CodedInputStream; it may be the end of the logical stream
+            for an embedded message, for example.
+            </remarks>
+            <returns>The next field tag, or 0 for end of stream. (0 is never a valid tag.)</returns>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.SkipLastField">
+            <summary>
+            Skips the data for the field with the tag we've just read.
+            This should be called directly after <see cref="M:Google.Protobuf.CodedInputStream.ReadTag"/>, when
+            the caller wishes to skip an unknown field.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadDouble">
+            <summary>
+            Reads a double field from the stream.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadFloat">
+            <summary>
+            Reads a float field from the stream.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadUInt64">
+            <summary>
+            Reads a uint64 field from the stream.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadInt64">
+            <summary>
+            Reads an int64 field from the stream.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadInt32">
+            <summary>
+            Reads an int32 field from the stream.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadFixed64">
+            <summary>
+            Reads a fixed64 field from the stream.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadFixed32">
+            <summary>
+            Reads a fixed32 field from the stream.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadBool">
+            <summary>
+            Reads a bool field from the stream.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadString">
+            <summary>
+            Reads a string field from the stream.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadMessage(Google.Protobuf.IMessage)">
+            <summary>
+            Reads an embedded message field value from the stream.
+            </summary>   
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadBytes">
+            <summary>
+            Reads a bytes field value from the stream.
+            </summary>   
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadUInt32">
+            <summary>
+            Reads a uint32 field value from the stream.
+            </summary>   
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadEnum">
+            <summary>
+            Reads an enum field value from the stream. If the enum is valid for type T,
+            then the ref value is set and it returns true.  Otherwise the unknown output
+            value is set and this method returns false.
+            </summary>   
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadSFixed32">
+            <summary>
+            Reads an sfixed32 field value from the stream.
+            </summary>   
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadSFixed64">
+            <summary>
+            Reads an sfixed64 field value from the stream.
+            </summary>   
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadSInt32">
+            <summary>
+            Reads an sint32 field value from the stream.
+            </summary>   
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadSInt64">
+            <summary>
+            Reads an sint64 field value from the stream.
+            </summary>   
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadLength">
+            <summary>
+            Reads a length for length-delimited data.
+            </summary>
+            <remarks>
+            This is internally just reading a varint, but this method exists
+            to make the calling code clearer.
+            </remarks>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.MaybeConsumeTag(System.UInt32)">
+            <summary>
+            Peeks at the next tag in the stream. If it matches <paramref name="tag"/>,
+            the tag is consumed and the method returns <c>true</c>; otherwise, the
+            stream is left in the original position and the method returns <c>false</c>.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.SlowReadRawVarint32">
+            <summary>
+            Same code as ReadRawVarint32, but read each byte individually, checking for
+            buffer overflow.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadRawVarint32">
+            <summary>
+            Reads a raw Varint from the stream.  If larger than 32 bits, discard the upper bits.
+            This method is optimised for the case where we've got lots of data in the buffer.
+            That means we can check the size just once, then just read directly from the buffer
+            without constant rechecking of the buffer length.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadRawVarint32(System.IO.Stream)">
+            <summary>
+            Reads a varint from the input one byte at a time, so that it does not
+            read any bytes after the end of the varint. If you simply wrapped the
+            stream in a CodedInputStream and used ReadRawVarint32(Stream)
+            then you would probably end up reading past the end of the varint since
+            CodedInputStream buffers its input.
+            </summary>
+            <param name="input"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadRawVarint64">
+            <summary>
+            Reads a raw varint from the stream.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadRawLittleEndian32">
+            <summary>
+            Reads a 32-bit little-endian integer from the stream.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadRawLittleEndian64">
+            <summary>
+            Reads a 64-bit little-endian integer from the stream.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.DecodeZigZag32(System.UInt32)">
+            <summary>
+            Decode a 32-bit value with ZigZag encoding.
+            </summary>
+            <remarks>
+            ZigZag encodes signed integers into values that can be efficiently
+            encoded with varint.  (Otherwise, negative values must be 
+            sign-extended to 64 bits to be varint encoded, thus always taking
+            10 bytes on the wire.)
+            </remarks>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.DecodeZigZag64(System.UInt64)">
+            <summary>
+            Decode a 32-bit value with ZigZag encoding.
+            </summary>
+            <remarks>
+            ZigZag encodes signed integers into values that can be efficiently
+            encoded with varint.  (Otherwise, negative values must be 
+            sign-extended to 64 bits to be varint encoded, thus always taking
+            10 bytes on the wire.)
+            </remarks>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.PushLimit(System.Int32)">
+            <summary>
+            Sets currentLimit to (current position) + byteLimit. This is called
+            when descending into a length-delimited embedded message. The previous
+            limit is returned.
+            </summary>
+            <returns>The old limit.</returns>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.PopLimit(System.Int32)">
+            <summary>
+            Discards the current limit, returning the previous limit.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.RefillBuffer(System.Boolean)">
+            <summary>
+            Called when buffer is empty to read more bytes from the
+            input.  If <paramref name="mustSucceed"/> is true, RefillBuffer() gurantees that
+            either there will be at least one byte in the buffer when it returns
+            or it will throw an exception.  If <paramref name="mustSucceed"/> is false,
+            RefillBuffer() returns false if no more bytes were available.
+            </summary>
+            <param name="mustSucceed"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadRawByte">
+            <summary>
+            Read one byte from the input.
+            </summary>
+            <exception cref="T:Google.Protobuf.InvalidProtocolBufferException">
+            the end of the stream or the current limit was reached
+            </exception>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.ReadRawBytes(System.Int32)">
+            <summary>
+            Reads a fixed size of bytes from the input.
+            </summary>
+            <exception cref="T:Google.Protobuf.InvalidProtocolBufferException">
+            the end of the stream or the current limit was reached
+            </exception>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.SkipRawBytes(System.Int32)">
+            <summary>
+            Reads and discards <paramref name="size"/> bytes.
+            </summary>
+            <exception cref="T:Google.Protobuf.InvalidProtocolBufferException">the end of the stream
+            or the current limit was reached</exception>
+        </member>
+        <member name="M:Google.Protobuf.CodedInputStream.SkipImpl(System.Int32)">
+            <summary>
+            Abstraction of skipping to cope with streams which can't really skip.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.CodedInputStream.Position">
+            <summary>
+            Returns the current position in the input stream, or the position in the input buffer
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.CodedInputStream.LastTag">
+            <summary>
+            Returns the last tag read, or 0 if no tags have been read or we've read beyond
+            the end of the stream.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.CodedInputStream.SizeLimit">
+            <summary>
+            Returns the size limit for this stream.
+            </summary>
+            <remarks>
+            This limit is applied when reading from the underlying stream, as a sanity check. It is
+            not applied when reading from a byte array data source without an underlying stream.
+            The default value is 64MB.
+            </remarks>
+            <value>
+            The size limit.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.CodedInputStream.RecursionLimit">
+            <summary>
+            Returns the recursion limit for this stream. This limit is applied whilst reading messages,
+            to avoid maliciously-recursive data.
+            </summary>
+            <remarks>
+            The default limit is 64.
+            </remarks>
+            <value>
+            The recursion limit for this stream.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.CodedInputStream.ReachedLimit">
+            <summary>
+            Returns whether or not all the data before the limit has been read.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Google.Protobuf.CodedInputStream.IsAtEnd">
+            <summary>
+            Returns true if the stream has reached the end of the input. This is the
+            case if either the end of the underlying input source has been reached or
+            the stream has reached a limit created using PushLimit.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Collections.MapField`2">
+            <summary>
+            Representation of a map field in a Protocol Buffer message.
+            </summary>
+            <typeparam name="TKey">Key type in the map. Must be a type supported by Protocol Buffer map keys.</typeparam>
+            <typeparam name="TValue">Value type in the map. Must be a type supported by Protocol Buffers.</typeparam>
+            <remarks>
+            This implementation preserves insertion order for simplicity of testing
+            code using maps fields. Overwriting an existing entry does not change the
+            position of that entry within the map. Equality is not order-sensitive.
+            For string keys, the equality comparison is provided by <see cref="P:System.StringComparer.Ordinal"/>.
+            </remarks>
+        </member>
+        <member name="T:Google.Protobuf.IDeepCloneable`1">
+            <summary>
+            Generic interface for a deeply cloneable type.
+            </summary>
+            <remarks>
+            <para>
+            All generated messages implement this interface, but so do some non-message types.
+            Additionally, due to the type constraint on <c>T</c> in <see cref="T:Google.Protobuf.IMessage`1"/>,
+            it is simpler to keep this as a separate interface.
+            </para>
+            </remarks>
+            <typeparam name="T">The type itself, returned by the <see cref="M:Google.Protobuf.IDeepCloneable`1.Clone"/> method.</typeparam>
+        </member>
+        <member name="M:Google.Protobuf.IDeepCloneable`1.Clone">
+            <summary>
+            Creates a deep clone of this object.
+            </summary>
+            <returns>A deep clone of this object.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.#ctor">
+            <summary>
+            Constructs a new map field, defaulting the value nullability to only allow null values for message types
+            and non-nullable value types.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.#ctor(System.Boolean)">
+            <summary>
+            Constructs a new map field, overriding the choice of whether null values are permitted in the map.
+            This is used by wrapper types, where maps with string and bytes wrappers as the value types
+            support null values.
+            </summary>
+            <param name="allowNullValues">Whether null values are permitted in the map or not.</param>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.Clone">
+            <summary>
+            Creates a deep clone of this object.
+            </summary>
+            <returns>
+            A deep clone of this object.
+            </returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.Add(`0,`1)">
+            <summary>
+            Adds the specified key/value pair to the map.
+            </summary>
+            <remarks>
+            This operation fails if the key already exists in the map. To replace an existing entry, use the indexer.
+            </remarks>
+            <param name="key">The key to add</param>
+            <param name="value">The value to add.</param>
+            <exception cref="T:System.ArgumentException">The given key already exists in map.</exception>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.ContainsKey(`0)">
+            <summary>
+            Determines whether the specified key is present in the map.
+            </summary>
+            <param name="key">The key to check.</param>
+            <returns><c>true</c> if the map contains the given key; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.Remove(`0)">
+            <summary>
+            Removes the entry identified by the given key from the map.
+            </summary>
+            <param name="key">The key indicating the entry to remove from the map.</param>
+            <returns><c>true</c> if the map contained the given key before the entry was removed; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.TryGetValue(`0,`1@)">
+            <summary>
+            Gets the value associated with the specified key.
+            </summary>
+            <param name="key">The key whose value to get.</param>
+            <param name="value">When this method returns, the value associated with the specified key, if the key is found;
+            otherwise, the default value for the type of the <paramref name="value"/> parameter.
+            This parameter is passed uninitialized.</param>
+            <returns><c>true</c> if the map contains an element with the specified key; otherwise, <c>false</c>.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.Add(System.Collections.Generic.IDictionary{`0,`1})">
+            <summary>
+            Adds the specified entries to the map.
+            </summary>
+            <param name="entries">The entries to add to the map.</param>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            An enumerator that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.System#Collections#Generic#ICollection{System#Collections#Generic#KeyValuePair{TKey@TValue}}#Add(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Adds the specified item to the map.
+            </summary>
+            <param name="item">The item to add to the map.</param>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.Clear">
+            <summary>
+            Removes all items from the map.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.System#Collections#Generic#ICollection{System#Collections#Generic#KeyValuePair{TKey@TValue}}#Contains(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Determines whether map contains an entry equivalent to the given key/value pair.
+            </summary>
+            <param name="item">The key/value pair to find.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.System#Collections#Generic#ICollection{System#Collections#Generic#KeyValuePair{TKey@TValue}}#CopyTo(System.Collections.Generic.KeyValuePair{`0,`1}[],System.Int32)">
+            <summary>
+            Copies the key/value pairs in this map to an array.
+            </summary>
+            <param name="array">The array to copy the entries into.</param>
+            <param name="arrayIndex">The index of the array at which to start copying values.</param>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.System#Collections#Generic#ICollection{System#Collections#Generic#KeyValuePair{TKey@TValue}}#Remove(System.Collections.Generic.KeyValuePair{`0,`1})">
+            <summary>
+            Removes the specified key/value pair from the map.
+            </summary>
+            <remarks>Both the key and the value must be found for the entry to be removed.</remarks>
+            <param name="item">The key/value pair to remove.</param>
+            <returns><c>true</c> if the key/value pair was found and removed; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/>, is equal to this instance.
+            </summary>
+            <param name="other">The <see cref="T:System.Object"/> to compare with this instance.</param>
+            <returns>
+              <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+            </returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.Equals(Google.Protobuf.Collections.MapField{`0,`1})">
+            <summary>
+            Compares this map with another for equality.
+            </summary>
+            <remarks>
+            The order of the key/value pairs in the maps is not deemed significant in this comparison.
+            </remarks>
+            <param name="other">The map to compare this with.</param>
+            <returns><c>true</c> if <paramref name="other"/> refers to an equal map; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.AddEntriesFrom(Google.Protobuf.CodedInputStream,Google.Protobuf.Collections.MapField{`0,`1}.Codec)">
+            <summary>
+            Adds entries to the map from the given stream.
+            </summary>
+            <remarks>
+            It is assumed that the stream is initially positioned after the tag specified by the codec.
+            This method will continue reading entries from the stream until the end is reached, or
+            a different tag is encountered.
+            </remarks>
+            <param name="input">Stream to read from</param>
+            <param name="codec">Codec describing how the key/value pairs are encoded</param>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.WriteTo(Google.Protobuf.CodedOutputStream,Google.Protobuf.Collections.MapField{`0,`1}.Codec)">
+            <summary>
+            Writes the contents of this map to the given coded output stream, using the specified codec
+            to encode each entry.
+            </summary>
+            <param name="output">The output stream to write to.</param>
+            <param name="codec">The codec to use for each entry.</param>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.CalculateSize(Google.Protobuf.Collections.MapField{`0,`1}.Codec)">
+            <summary>
+            Calculates the size of this map based on the given entry codec.
+            </summary>
+            <param name="codec">The codec to use to encode each entry.</param>
+            <returns></returns>
+        </member>
+        <member name="P:Google.Protobuf.Collections.MapField`2.Item(`0)">
+            <summary>
+            Gets or sets the value associated with the specified key.
+            </summary>
+            <param name="key">The key of the value to get or set.</param>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">The property is retrieved and key does not exist in the collection.</exception>
+            <returns>The value associated with the specified key. If the specified key is not found,
+            a get operation throws a <see cref="T:System.Collections.Generic.KeyNotFoundException"/>, and a set operation creates a new element with the specified key.</returns>
+        </member>
+        <member name="P:Google.Protobuf.Collections.MapField`2.Keys">
+            <summary>
+            Gets a collection containing the keys in the map.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Collections.MapField`2.Values">
+            <summary>
+            Gets a collection containing the values in the map.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Collections.MapField`2.AllowsNullValues">
+            <summary>
+            Returns whether or not this map allows values to be null.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Collections.MapField`2.Count">
+            <summary>
+            Gets the number of elements contained in the map.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Collections.MapField`2.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the map is read-only.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Collections.MapField`2.Codec">
+            <summary>
+            A codec for a specific map field. This contains all the information required to encode and
+            decode the nested messages.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Collections.MapField`2.Codec.#ctor(Google.Protobuf.FieldCodec{`0},Google.Protobuf.FieldCodec{`1},System.UInt32)">
+            <summary>
+            Creates a new entry codec based on a separate key codec and value codec,
+            and the tag to use for each map entry.
+            </summary>
+            <param name="keyCodec">The key codec.</param>
+            <param name="valueCodec">The value codec.</param>
+            <param name="mapTag">The map tag to use to introduce each map entry.</param>
+        </member>
+        <member name="P:Google.Protobuf.Collections.MapField`2.Codec.MapTag">
+            <summary>
+            The tag used in the enclosing message to indicate map entries.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Collections.MapField`2.Codec.MessageAdapter">
+            <summary>
+            A mutable message class, used for parsing and serializing. This
+            delegates the work to a codec, but implements the <see cref="T:Google.Protobuf.IMessage"/> interface
+            for interop with <see cref="T:Google.Protobuf.CodedInputStream"/> and <see cref="T:Google.Protobuf.CodedOutputStream"/>.
+            This is nested inside Codec as it's tightly coupled to the associated codec,
+            and it's simpler if it has direct access to all its fields.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.IMessage">
+            <summary>
+            Interface for a Protocol Buffers message, supporting
+            basic operations required for serialization.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.IMessage.MergeFrom(Google.Protobuf.CodedInputStream)">
+            <summary>
+            Merges the data from the specified coded input stream with the current message.
+            </summary>
+            <remarks>See the user guide for precise merge semantics.</remarks>
+            <param name="input"></param>
+        </member>
+        <member name="M:Google.Protobuf.IMessage.WriteTo(Google.Protobuf.CodedOutputStream)">
+            <summary>
+            Writes the data to the given coded output stream.
+            </summary>
+            <param name="output">Coded output stream to write the data to. Must not be null.</param>
+        </member>
+        <member name="M:Google.Protobuf.IMessage.CalculateSize">
+            <summary>
+            Calculates the size of this message in Protocol Buffer wire format, in bytes.
+            </summary>
+            <returns>The number of bytes required to write this message
+            to a coded output stream.</returns>
+        </member>
+        <member name="P:Google.Protobuf.IMessage.Descriptor">
+            <summary>
+            Descriptor for this message. All instances are expected to return the same descriptor,
+            and for generated types this will be an explicitly-implemented member, returning the
+            same value as the static property declared on the type.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Collections.ReadOnlyDictionary`2">
+            <summary>
+            Read-only wrapper around another dictionary.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Collections.RepeatedField`1">
+            <summary>
+            The contents of a repeated field: essentially, a collection with some extra
+            restrictions (no null values) and capabilities (deep cloning).
+            </summary>
+            <typeparam name="T">The element type of the repeated field.</typeparam>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.Clone">
+            <summary>
+            Creates a deep clone of this repeated field.
+            </summary>
+            <remarks>
+            If the field type is
+            a message type, each element is also cloned; otherwise, it is
+            assumed that the field type is primitive (including string and
+            bytes, both of which are immutable) and so a simple copy is
+            equivalent to a deep clone.
+            </remarks>
+            <returns>A deep clone of this repeated field.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.AddEntriesFrom(Google.Protobuf.CodedInputStream,Google.Protobuf.FieldCodec{`0})">
+            <summary>
+            Adds the entries from the given input stream, decoding them with the specified codec.
+            </summary>
+            <param name="input">The input stream to read from.</param>
+            <param name="codec">The codec to use in order to read each entry.</param>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.CalculateSize(Google.Protobuf.FieldCodec{`0})">
+            <summary>
+            Calculates the size of this collection based on the given codec.
+            </summary>
+            <param name="codec">The codec to use when encoding each field.</param>
+            <returns>The number of bytes that would be written to a <see cref="T:Google.Protobuf.CodedOutputStream"/> by <see cref="M:Google.Protobuf.Collections.RepeatedField`1.WriteTo(Google.Protobuf.CodedOutputStream,Google.Protobuf.FieldCodec{`0})"/>,
+            using the same codec.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.WriteTo(Google.Protobuf.CodedOutputStream,Google.Protobuf.FieldCodec{`0})">
+            <summary>
+            Writes the contents of this collection to the given <see cref="T:Google.Protobuf.CodedOutputStream"/>,
+            encoding each value using the specified codec.
+            </summary>
+            <param name="output">The output stream to write to.</param>
+            <param name="codec">The codec to use when encoding each value.</param>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.Add(`0)">
+            <summary>
+            Adds the specified item to the collection.
+            </summary>
+            <param name="item">The item to add.</param>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.Clear">
+            <summary>
+            Removes all items from the collection.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.Contains(`0)">
+            <summary>
+            Determines whether this collection contains the given item.
+            </summary>
+            <param name="item">The item to find.</param>
+            <returns><c>true</c> if this collection contains the given item; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.CopyTo(`0[],System.Int32)">
+            <summary>
+            Copies this collection to the given array.
+            </summary>
+            <param name="array">The array to copy to.</param>
+            <param name="arrayIndex">The first index of the array to copy to.</param>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.Remove(`0)">
+            <summary>
+            Removes the specified item from the collection
+            </summary>
+            <param name="item">The item to remove.</param>
+            <returns><c>true</c> if the item was found and removed; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.Add(Google.Protobuf.Collections.RepeatedField{`0})">
+            <summary>
+            Adds all of the specified values into this collection.
+            </summary>
+            <param name="values">The values to add to this collection.</param>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.Add(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Adds all of the specified values into this collection.
+            </summary>
+            <param name="values">The values to add to this collection.</param>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through the collection.
+            </summary>
+            <returns>
+            An enumerator that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/>, is equal to this instance.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with this instance.</param>
+            <returns>
+              <c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            Returns an enumerator that iterates through a collection.
+            </summary>
+            <returns>
+            An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.
+            </returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+            </returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.Equals(Google.Protobuf.Collections.RepeatedField{`0})">
+            <summary>
+            Compares this repeated field with another for equality.
+            </summary>
+            <param name="other">The repeated field to compare this with.</param>
+            <returns><c>true</c> if <paramref name="other"/> refers to an equal repeated field; <c>false</c> otherwise.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.IndexOf(`0)">
+            <summary>
+            Returns the index of the given item within the collection, or -1 if the item is not
+            present.
+            </summary>
+            <param name="item">The item to find in the collection.</param>
+            <returns>The zero-based index of the item, or -1 if it is not found.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.Insert(System.Int32,`0)">
+            <summary>
+            Inserts the given item at the specified index.
+            </summary>
+            <param name="index">The index at which to insert the item.</param>
+            <param name="item">The item to insert.</param>
+        </member>
+        <member name="M:Google.Protobuf.Collections.RepeatedField`1.RemoveAt(System.Int32)">
+            <summary>
+            Removes the item at the given index.
+            </summary>
+            <param name="index">The zero-based index of the item to remove.</param>
+        </member>
+        <member name="P:Google.Protobuf.Collections.RepeatedField`1.Count">
+            <summary>
+            Gets the number of elements contained in the collection.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Collections.RepeatedField`1.IsReadOnly">
+            <summary>
+            Gets a value indicating whether the collection is read-only.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Collections.RepeatedField`1.Item(System.Int32)">
+            <summary>
+            Gets or sets the item at the specified index.
+            </summary>
+            <value>
+            The element at the specified index.
+            </value>
+            <param name="index">The zero-based index of the element to get or set.</param>
+            <returns>The item at the specified index.</returns>
+        </member>
+        <member name="T:Google.Protobuf.Compatibility.PropertyInfoExtensions">
+            <summary>
+            Extension methods for <see cref="T:System.Reflection.PropertyInfo"/>, effectively providing
+            the familiar members from previous desktop framework versions while
+            targeting the newer releases, .NET Core etc.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Compatibility.PropertyInfoExtensions.GetGetMethod(System.Reflection.PropertyInfo)">
+            <summary>
+            Returns the public getter of a property, or null if there is no such getter
+            (either because it's read-only, or the getter isn't public).
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Compatibility.PropertyInfoExtensions.GetSetMethod(System.Reflection.PropertyInfo)">
+            <summary>
+            Returns the public setter of a property, or null if there is no such setter
+            (either because it's write-only, or the setter isn't public).
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Compatibility.TypeExtensions">
+            <summary>
+            Provides extension methods on Type that just proxy to TypeInfo.
+            These are used to support the new type system from .NET 4.5, without
+            having calls to GetTypeInfo all over the place. While the methods here are meant to be
+            broadly compatible with the desktop framework, there are some subtle differences in behaviour - but
+            they're not expected to affect our use cases. While the class is internal, that should be fine: we can
+            evaluate each new use appropriately.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Compatibility.TypeExtensions.IsValueType(System.Type)">
+            <summary>
+            Returns true if the target type is a value type, including a nullable value type or an enum, or false
+            if it's a reference type (class, delegate, interface - including System.ValueType and System.Enum).
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Compatibility.TypeExtensions.IsAssignableFrom(System.Type,System.Type)">
+            <summary>
+            See https://msdn.microsoft.com/en-us/library/system.type.isassignablefrom
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Compatibility.TypeExtensions.GetProperty(System.Type,System.String)">
+            <summary>
+            Returns a representation of the public property associated with the given name in the given type,
+            including inherited properties or null if there is no such public property.
+            Here, "public property" means a property where either the getter, or the setter, or both, is public.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Compatibility.TypeExtensions.GetMethod(System.Type,System.String)">
+            <summary>
+            Returns a representation of the public method associated with the given name in the given type,
+            including inherited methods.
+            </summary>
+            <remarks>
+            This has a few differences compared with Type.GetMethod in the desktop framework. It will throw
+            if there is an ambiguous match even between a private method and a public one, but it *won't* throw
+            if there are two overloads at different levels in the type hierarchy (e.g. class Base declares public void Foo(int) and
+            class Child : Base declares public void Foo(long)).
+            </remarks>
+            <exception cref="T:System.Reflection.AmbiguousMatchException">One type in the hierarchy declared more than one method with the same name</exception>
+        </member>
+        <member name="T:Google.Protobuf.FieldCodec">
+            <summary>
+            Factory methods for <see cref="T:Google.Protobuf.FieldCodec`1"/>.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForString(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for a string field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForBytes(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for a bytes field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForBool(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for a bool field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForInt32(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for an int32 field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForSInt32(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for an sint32 field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForFixed32(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for a fixed32 field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForSFixed32(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for an sfixed32 field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForUInt32(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for a uint32 field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForInt64(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for an int64 field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForSInt64(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for an sint64 field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForFixed64(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for a fixed64 field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForSFixed64(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for an sfixed64 field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForUInt64(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for a uint64 field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForFloat(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for a float field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForDouble(System.UInt32)">
+            <summary>
+            Retrieves a codec suitable for a double field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForEnum``1(System.UInt32,System.Func{``0,System.Int32},System.Func{System.Int32,``0})">
+            <summary>
+            Retrieves a codec suitable for an enum field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <param name="toInt32">A conversion function from <see cref="T:System.Int32"/> to the enum type.</param>
+            <param name="fromInt32">A conversion function from the enum type to <see cref="T:System.Int32"/>.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForMessage``1(System.UInt32,Google.Protobuf.MessageParser{``0})">
+            <summary>
+            Retrieves a codec suitable for a message field with the given tag.
+            </summary>
+            <param name="tag">The tag.</param>
+            <param name="parser">A parser to use for the message type.</param>
+            <returns>A codec for the given tag.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForClassWrapper``1(System.UInt32)">
+            <summary>
+            Creates a codec for a wrapper type of a class - which must be string or ByteString.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.ForStructWrapper``1(System.UInt32)">
+            <summary>
+            Creates a codec for a wrapper type of a struct - which must be Int32, Int64, UInt32, UInt64,
+            Bool, Single or Double.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.FieldCodec.WrapperCodecs">
+            <summary>
+            Helper code to create codecs for wrapper types.
+            </summary>
+            <remarks>
+            Somewhat ugly with all the static methods, but the conversions involved to/from nullable types make it
+            slightly tricky to improve. So long as we keep the public API (ForClassWrapper, ForStructWrapper) in place,
+            we can refactor later if we come up with something cleaner.
+            </remarks>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec.WrapperCodecs.GetCodec``1">
+            <summary>
+            Returns a field codec which effectively wraps a value of type T in a message.
+            
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.FieldCodec`1">
+            <summary>
+            An encode/decode pair for a single field. This effectively encapsulates
+            all the information needed to read or write the field value from/to a coded
+            stream.
+            </summary>
+            <remarks>
+            This never writes default values to the stream, and is not currently designed
+            to play well with packed arrays.
+            </remarks>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec`1.WriteTagAndValue(Google.Protobuf.CodedOutputStream,`0)">
+            <summary>
+            Write a tag and the given value, *if* the value is not the default.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec`1.Read(Google.Protobuf.CodedInputStream)">
+            <summary>
+            Reads a value of the codec type from the given <see cref="T:Google.Protobuf.CodedInputStream"/>.
+            </summary>
+            <param name="input">The input stream to read from.</param>
+            <returns>The value read from the stream.</returns>
+        </member>
+        <member name="M:Google.Protobuf.FieldCodec`1.CalculateSizeWithTag(`0)">
+            <summary>
+            Calculates the size required to write the given value, with a tag,
+            if the value is not the default.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.FieldCodec`1.ValueSizeCalculator">
+            <summary>
+            Returns the size calculator for just a value.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.FieldCodec`1.ValueWriter">
+            <summary>
+            Returns a delegate to write a value (unconditionally) to a coded output stream.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.FieldCodec`1.ValueReader">
+            <summary>
+            Returns a delegate to read a value from a coded input stream. It is assumed that
+            the stream is already positioned on the appropriate tag.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.FieldCodec`1.FixedSize">
+            <summary>
+            Returns the fixed size for an entry, or 0 if sizes vary.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.FieldCodec`1.Tag">
+            <summary>
+            Gets the tag of the codec.
+            </summary>
+            <value>
+            The tag of the codec.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.FieldCodec`1.DefaultValue">
+            <summary>
+            Gets the default value of the codec's type.
+            </summary>
+            <value>
+            The default value of the codec's type.
+            </value>
+        </member>
+        <member name="T:Google.Protobuf.FrameworkPortability">
+            <summary>
+            Class containing helpful workarounds for various platform compatibility
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.JsonFormatter">
+            <summary>
+            Reflection-based converter from messages to JSON.
+            </summary>
+            <remarks>
+            <para>
+            Instances of this class are thread-safe, with no mutable state.
+            </para>
+            <para>
+            This is a simple start to get JSON formatting working. As it's reflection-based,
+            it's not as quick as baking calls into generated messages - but is a simpler implementation.
+            (This code is generally not heavily optimized.)
+            </para>
+            </remarks>
+        </member>
+        <member name="F:Google.Protobuf.JsonFormatter.CommonRepresentations">
+            <summary>
+            The JSON representation of the first 160 characters of Unicode.
+            Empty strings are replaced by the static constructor.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.JsonFormatter.#ctor(Google.Protobuf.JsonFormatter.Settings)">
+            <summary>
+            Creates a new formatted with the given settings.
+            </summary>
+            <param name="settings">The settings.</param>
+        </member>
+        <member name="M:Google.Protobuf.JsonFormatter.Format(Google.Protobuf.IMessage)">
+            <summary>
+            Formats the specified message as JSON.
+            </summary>
+            <param name="message">The message to format.</param>
+            <returns>The formatted message.</returns>
+        </member>
+        <member name="M:Google.Protobuf.JsonFormatter.WriteWellKnownTypeValue(System.Text.StringBuilder,Google.Protobuf.Reflection.MessageDescriptor,System.Object,System.Boolean)">
+            <summary>
+            Central interception point for well-known type formatting. Any well-known types which
+            don't need special handling can fall back to WriteMessage. We avoid assuming that the
+            values are using the embedded well-known types, in order to allow for dynamic messages
+            in the future.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.JsonFormatter.MaybeWrapInString(System.Text.StringBuilder,System.Object,System.Action{System.Text.StringBuilder,Google.Protobuf.IMessage},System.Boolean)">
+            <summary>
+            Some well-known types end up as string values... so they need wrapping in quotes, but only
+            when they're being used as fields within another message.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.JsonFormatter.AppendNanoseconds(System.Text.StringBuilder,System.Int32)">
+            <summary>
+            Appends a number of nanoseconds to a StringBuilder. Either 0 digits are added (in which
+            case no "." is appended), or 3 6 or 9 digits.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.JsonFormatter.CanWriteSingleValue(Google.Protobuf.Reflection.FieldDescriptor,System.Object)">
+            <summary>
+            Returns whether or not a singular value can be represented in JSON.
+            Currently only relevant for enums, where unknown values can't be represented.
+            For repeated/map fields, this always returns true.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.JsonFormatter.WriteString(System.Text.StringBuilder,System.String)">
+            <summary>
+            Writes a string (including leading and trailing double quotes) to a builder, escaping as required.
+            </summary>
+            <remarks>
+            Other than surrogate pair handling, this code is mostly taken from src/google/protobuf/util/internal/json_escaping.cc.
+            </remarks>
+        </member>
+        <member name="M:Google.Protobuf.JsonFormatter.AppendEscapedString(System.Text.StringBuilder,System.String)">
+            <summary>
+            Appends the given text to the string builder, escaping as required.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.JsonFormatter.Default">
+            <summary>
+            Returns a formatter using the default settings.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.JsonFormatter.Settings">
+            <summary>
+            Settings controlling JSON formatting.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.JsonFormatter.Settings.#ctor(System.Boolean)">
+            <summary>
+            Creates a new <see cref="T:Google.Protobuf.JsonFormatter.Settings"/> object with the specified formatting of default values.
+            </summary>
+            <param name="formatDefaultValues"><c>true</c> if default values (0, empty strings etc) should be formatted; <c>false</c> otherwise.</param>
+        </member>
+        <member name="P:Google.Protobuf.JsonFormatter.Settings.Default">
+            <summary>
+            Default settings, as used by <see cref="P:Google.Protobuf.JsonFormatter.Default"/>
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.JsonFormatter.Settings.FormatDefaultValues">
+            <summary>
+            Whether fields whose values are the default for the field type (e.g. 0 for integers)
+            should be formatted (true) or omitted (false).
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.MessageExtensions">
+            <summary>
+            Extension methods on <see cref="T:Google.Protobuf.IMessage"/> and <see cref="T:Google.Protobuf.IMessage`1"/>.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.MessageExtensions.MergeFrom(Google.Protobuf.IMessage,System.Byte[])">
+            <summary>
+            Merges data from the given byte array into an existing message.
+            </summary>
+            <param name="message">The message to merge the data into.</param>
+            <param name="data">The data to merge, which must be protobuf-encoded binary data.</param>
+        </member>
+        <member name="M:Google.Protobuf.MessageExtensions.MergeFrom(Google.Protobuf.IMessage,Google.Protobuf.ByteString)">
+            <summary>
+            Merges data from the given byte string into an existing message.
+            </summary>
+            <param name="message">The message to merge the data into.</param>
+            <param name="data">The data to merge, which must be protobuf-encoded binary data.</param>
+        </member>
+        <member name="M:Google.Protobuf.MessageExtensions.MergeFrom(Google.Protobuf.IMessage,System.IO.Stream)">
+            <summary>
+            Merges data from the given stream into an existing message.
+            </summary>
+            <param name="message">The message to merge the data into.</param>
+            <param name="input">Stream containing the data to merge, which must be protobuf-encoded binary data.</param>
+        </member>
+        <member name="M:Google.Protobuf.MessageExtensions.MergeDelimitedFrom(Google.Protobuf.IMessage,System.IO.Stream)">
+            <summary>
+            Merges length-delimited data from the given stream into an existing message.
+            </summary>
+            <remarks>
+            The stream is expected to contain a length and then the data. Only the amount of data
+            specified by the length will be consumed.
+            </remarks>
+            <param name="message">The message to merge the data into.</param>
+            <param name="input">Stream containing the data to merge, which must be protobuf-encoded binary data.</param>
+        </member>
+        <member name="M:Google.Protobuf.MessageExtensions.ToByteArray(Google.Protobuf.IMessage)">
+            <summary>
+            Converts the given message into a byte array in protobuf encoding.
+            </summary>
+            <param name="message">The message to convert.</param>
+            <returns>The message data as a byte array.</returns>
+        </member>
+        <member name="M:Google.Protobuf.MessageExtensions.WriteTo(Google.Protobuf.IMessage,System.IO.Stream)">
+            <summary>
+            Writes the given message data to the given stream in protobuf encoding.
+            </summary>
+            <param name="message">The message to write to the stream.</param>
+            <param name="output">The stream to write to.</param>
+        </member>
+        <member name="M:Google.Protobuf.MessageExtensions.WriteDelimitedTo(Google.Protobuf.IMessage,System.IO.Stream)">
+            <summary>
+            Writes the length and then data of the given message to a stream.
+            </summary>
+            <param name="message">The message to write.</param>
+            <param name="output">The output stream to write to.</param>
+        </member>
+        <member name="M:Google.Protobuf.MessageExtensions.ToByteString(Google.Protobuf.IMessage)">
+            <summary>
+            Converts the given message into a byte string in protobuf encoding.
+            </summary>
+            <param name="message">The message to convert.</param>
+            <returns>The message data as a byte string.</returns>
+        </member>
+        <member name="T:Google.Protobuf.IMessage`1">
+            <summary>
+            Generic interface for a Protocol Buffers message,
+            where the type parameter is expected to be the same type as
+            the implementation class.
+            </summary>
+            <typeparam name="T">The message type.</typeparam>
+        </member>
+        <member name="M:Google.Protobuf.IMessage`1.MergeFrom(`0)">
+            <summary>
+            Merges the given message into this one.
+            </summary>
+            <remarks>See the user guide for precise merge semantics.</remarks>
+            <param name="message">The message to merge with this one. Must not be null.</param>
+        </member>
+        <member name="T:Google.Protobuf.InvalidProtocolBufferException">
+            <summary>
+            Thrown when a protocol message being parsed is invalid in some way,
+            e.g. it contains a malformed varint or a negative byte length.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.InvalidProtocolBufferException.InvalidTag">
+            <summary>
+            Creates an exception for an error condition of an invalid tag being encountered.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.LimitedInputStream">
+            <summary>
+            Stream implementation which proxies another stream, only allowing a certain amount
+            of data to be read. Note that this is only used to read delimited streams, so it
+            doesn't attempt to implement everything.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.MessageParser`1">
+            <summary>
+            A parser for a specific message type.
+            </summary>
+            <remarks>
+            <p>
+            This delegates most behavior to the
+            <see cref="M:Google.Protobuf.IMessage.MergeFrom(Google.Protobuf.CodedInputStream)"/> implementation within the original type, but
+            provides convenient overloads to parse from a variety of sources.
+            </p>
+            <p>
+            Most applications will never need to create their own instances of this type;
+            instead, use the static <c>Parser</c> property of a generated message type to obtain a
+            parser for that type.
+            </p>
+            </remarks>
+            <typeparam name="T">The type of message to be parsed.</typeparam>
+        </member>
+        <member name="M:Google.Protobuf.MessageParser`1.#ctor(System.Func{`0})">
+            <summary>
+            Creates a new parser.
+            </summary>
+            <remarks>
+            The factory method is effectively an optimization over using a generic constraint
+            to require a parameterless constructor: delegates are significantly faster to execute.
+            </remarks>
+            <param name="factory">Function to invoke when a new, empty message is required.</param>
+        </member>
+        <member name="M:Google.Protobuf.MessageParser`1.CreateTemplate">
+            <summary>
+            Creates a template instance ready for population.
+            </summary>
+            <returns>An empty message.</returns>
+        </member>
+        <member name="M:Google.Protobuf.MessageParser`1.ParseFrom(System.Byte[])">
+            <summary>
+            Parses a message from a byte array.
+            </summary>
+            <param name="data">The byte array containing the message. Must not be null.</param>
+            <returns>The newly parsed message.</returns>
+        </member>
+        <member name="M:Google.Protobuf.MessageParser`1.ParseFrom(Google.Protobuf.ByteString)">
+            <summary>
+            Parses a message from the given byte string.
+            </summary>
+            <param name="data">The data to parse.</param>
+            <returns>The parsed message.</returns>
+        </member>
+        <member name="M:Google.Protobuf.MessageParser`1.ParseFrom(System.IO.Stream)">
+            <summary>
+            Parses a message from the given stream.
+            </summary>
+            <param name="input">The stream to parse.</param>
+            <returns>The parsed message.</returns>
+        </member>
+        <member name="M:Google.Protobuf.MessageParser`1.ParseDelimitedFrom(System.IO.Stream)">
+            <summary>
+            Parses a length-delimited message from the given stream.
+            </summary>
+            <remarks>
+            The stream is expected to contain a length and then the data. Only the amount of data
+            specified by the length will be consumed.
+            </remarks>
+            <param name="input">The stream to parse.</param>
+            <returns>The parsed message.</returns>
+        </member>
+        <member name="M:Google.Protobuf.MessageParser`1.ParseFrom(Google.Protobuf.CodedInputStream)">
+            <summary>
+            Parses a message from the given coded input stream.
+            </summary>
+            <param name="input">The stream to parse.</param>
+            <returns>The parsed message.</returns>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.DescriptorBase">
+            <summary>
+            Base class for nearly all descriptors, providing common functionality.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.IDescriptor">
+            <summary>
+            Interface implemented by all descriptor types.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.IDescriptor.Name">
+            <summary>
+            Returns the name of the entity (message, field etc) being described.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.IDescriptor.FullName">
+            <summary>
+            Returns the fully-qualified name of the entity being described.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.IDescriptor.File">
+            <summary>
+            Returns the descriptor for the .proto file that this entity is part of.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.DescriptorBase.Index">
+            <value>
+            The index of this descriptor within its parent descriptor. 
+            </value>
+            <remarks>
+            This returns the index of this descriptor within its parent, for
+            this descriptor's type. (There can be duplicate values for different
+            types, e.g. one enum type with index 0 and one message type with index 0.)
+            </remarks>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.DescriptorBase.Name">
+            <summary>
+            Returns the name of the entity (field, message etc) being described.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.DescriptorBase.FullName">
+            <summary>
+            The fully qualified name of the descriptor's target.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.DescriptorBase.File">
+            <value>
+            The file this descriptor was declared in.
+            </value>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.DescriptorPool">
+            <summary>
+            Contains lookup tables containing all the descriptors defined in a particular file.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.DescriptorPool.FindSymbol``1(System.String)">
+            <summary>
+            Finds a symbol of the given name within the pool.
+            </summary>
+            <typeparam name="T">The type of symbol to look for</typeparam>
+            <param name="fullName">Fully-qualified name to look up</param>
+            <returns>The symbol with the given name and type,
+            or null if the symbol doesn't exist or has the wrong type</returns>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.DescriptorPool.AddPackage(System.String,Google.Protobuf.Reflection.FileDescriptor)">
+            <summary>
+            Adds a package to the symbol tables. If a package by the same name
+            already exists, that is fine, but if some other kind of symbol
+            exists under the same name, an exception is thrown. If the package
+            has multiple components, this also adds the parent package(s).
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.DescriptorPool.AddSymbol(Google.Protobuf.Reflection.IDescriptor)">
+            <summary>
+            Adds a symbol to the symbol table.
+            </summary>
+            <exception cref="T:Google.Protobuf.Reflection.DescriptorValidationException">The symbol already existed
+            in the symbol table.</exception>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.DescriptorPool.ValidateSymbolName(Google.Protobuf.Reflection.IDescriptor)">
+            <summary>
+            Verifies that the descriptor's name is valid (i.e. it contains
+            only letters, digits and underscores, and does not start with a digit).
+            </summary>
+            <param name="descriptor"></param>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.DescriptorPool.FindFieldByNumber(Google.Protobuf.Reflection.MessageDescriptor,System.Int32)">
+            <summary>
+            Returns the field with the given number in the given descriptor,
+            or null if it can't be found.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.DescriptorPool.AddFieldByNumber(Google.Protobuf.Reflection.FieldDescriptor)">
+            <summary>
+            Adds a field to the fieldsByNumber table.
+            </summary>
+            <exception cref="T:Google.Protobuf.Reflection.DescriptorValidationException">A field with the same
+            containing type and number already exists.</exception>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.DescriptorPool.AddEnumValueByNumber(Google.Protobuf.Reflection.EnumValueDescriptor)">
+            <summary>
+            Adds an enum value to the enumValuesByNumber table. If an enum value
+            with the same type and number already exists, this method does nothing.
+            (This is allowed; the first value defined with the number takes precedence.)
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.DescriptorPool.LookupSymbol(System.String,Google.Protobuf.Reflection.IDescriptor)">
+            <summary>
+            Looks up a descriptor by name, relative to some other descriptor.
+            The name may be fully-qualified (with a leading '.'), partially-qualified,
+            or unqualified. C++-like name lookup semantics are used to search for the
+            matching descriptor.
+            </summary>
+            <remarks>
+            This isn't heavily optimized, but it's only used during cross linking anyway.
+            If it starts being used more widely, we should look at performance more carefully.
+            </remarks>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.DescriptorPool.DescriptorIntPair">
+            <summary>
+            Struct used to hold the keys for the fieldByNumber table.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.DescriptorUtil">
+            <summary>
+            Internal class containing utility methods when working with descriptors.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.DescriptorUtil.ConvertAndMakeReadOnly``2(System.Collections.Generic.IList{``0},Google.Protobuf.Reflection.DescriptorUtil.IndexedConverter{``0,``1})">
+            <summary>
+            Converts the given array into a read-only list, applying the specified conversion to
+            each input element.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.DescriptorUtil.IndexedConverter`2">
+            <summary>
+            Equivalent to Func[TInput, int, TOutput] but usable in .NET 2.0. Only used to convert
+            arrays.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.DescriptorValidationException">
+            <summary>
+            Thrown when building descriptors fails because the source DescriptorProtos
+            are not valid.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.DescriptorValidationException.ProblemSymbolName">
+            <value>
+            The full name of the descriptor where the error occurred.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.DescriptorValidationException.Description">
+            <value>
+            A human-readable description of the error. (The Message property
+            is made up of the descriptor's name and this description.)
+            </value>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.EnumDescriptor">
+            <summary>
+            Descriptor for an enum type in a .proto file.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.EnumDescriptor.FindValueByNumber(System.Int32)">
+            <summary>
+            Finds an enum value by number. If multiple enum values have the
+            same number, this returns the first defined value with that number.
+            If there is no value for the given number, this returns <c>null</c>.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.EnumDescriptor.FindValueByName(System.String)">
+            <summary>
+            Finds an enum value by name.
+            </summary>
+            <param name="name">The unqualified name of the value (e.g. "FOO").</param>
+            <returns>The value's descriptor, or null if not found.</returns>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.EnumDescriptor.Name">
+            <summary>
+            The brief name of the descriptor's target.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.EnumDescriptor.GeneratedType">
+            <summary>
+            The generated type for this enum, or <c>null</c> if the descriptor does not represent a generated type.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.EnumDescriptor.ContainingType">
+            <value>
+            If this is a nested type, get the outer descriptor, otherwise null.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.EnumDescriptor.Values">
+            <value>
+            An unmodifiable list of defined value descriptors for this enum.
+            </value>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.EnumValueDescriptor">
+            <summary>
+            Descriptor for a single enum value within an enum in a .proto file.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.EnumValueDescriptor.Name">
+            <summary>
+            Returns the name of the enum value described by this object.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.EnumValueDescriptor.Number">
+            <summary>
+            Returns the number associated with this enum value.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.EnumValueDescriptor.EnumDescriptor">
+            <summary>
+            Returns the enum descriptor that this value is part of.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.FieldAccessorBase">
+            <summary>
+            Base class for field accessors.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.IFieldAccessor">
+            <summary>
+            Allows fields to be reflectively accessed.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.IFieldAccessor.Clear(Google.Protobuf.IMessage)">
+            <summary>
+            Clears the field in the specified message. (For repeated fields,
+            this clears the list.)
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.IFieldAccessor.GetValue(Google.Protobuf.IMessage)">
+            <summary>
+            Fetches the field value. For repeated values, this will be an
+            <see cref="T:System.Collections.IList"/> implementation. For map values, this will be an
+            <see cref="T:System.Collections.IDictionary"/> implementation.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.IFieldAccessor.SetValue(Google.Protobuf.IMessage,System.Object)">
+            <summary>
+            Mutator for single "simple" fields only.
+            </summary>
+            <remarks>
+            Repeated fields are mutated by fetching the value and manipulating it as a list.
+            Map fields are mutated by fetching the value and manipulating it as a dictionary.
+            </remarks>
+            <exception cref="T:System.InvalidOperationException">The field is not a "simple" field.</exception>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.IFieldAccessor.Descriptor">
+            <summary>
+            Returns the descriptor associated with this field.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.FieldDescriptor">
+            <summary>
+            Descriptor for a field or extension within a message in a .proto file.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FieldDescriptor.GetFieldTypeFromProtoType(Google.Protobuf.Reflection.FieldDescriptorProto.Types.Type)">
+            <summary>
+            Maps a field type as included in the .proto file to a FieldType.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FieldDescriptor.CompareTo(Google.Protobuf.Reflection.FieldDescriptor)">
+            <summary>
+            Compares this descriptor with another one, ordering in "canonical" order
+            which simply means ascending order by field number. <paramref name="other"/>
+            must be a field of the same type, i.e. the <see cref="P:Google.Protobuf.Reflection.FieldDescriptor.ContainingType"/> of
+            both fields must be the same.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FieldDescriptor.CrossLink">
+            <summary>
+            Look up and cross-link all field types etc.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldDescriptor.Name">
+            <summary>
+            The brief name of the descriptor's target.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldDescriptor.Accessor">
+            <summary>
+            Returns the accessor for this field, or <c>null</c> if this descriptor does
+            not support reflective access.
+            </summary>
+            <remarks>
+            While a <see cref="T:Google.Protobuf.Reflection.FieldDescriptor"/> describes the field, it does not provide
+            any way of obtaining or changing the value of the field within a specific message;
+            that is the responsibility of the accessor.
+            </remarks>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldDescriptor.IsRepeated">
+            <summary>
+            Returns <c>true</c> if this field is a repeated field; <c>false</c> otherwise.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldDescriptor.IsMap">
+            <summary>
+            Returns <c>true</c> if this field is a map field; <c>false</c> otherwise.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldDescriptor.IsPacked">
+            <summary>
+            Returns <c>true</c> if this field is a packed, repeated field; <c>false</c> otherwise.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldDescriptor.ContainingType">
+            <summary>
+            Get the field's containing message type.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldDescriptor.ContainingOneof">
+            <summary>
+            Returns the oneof containing this field, or <c>null</c> if it is not part of a oneof.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldDescriptor.FieldType">
+            <summary>
+            Returns  the type of the field.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldDescriptor.FieldNumber">
+            <summary>
+            Returns the field number declared in the proto file.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldDescriptor.EnumType">
+            <summary>
+            For enum fields, returns the field's type.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FieldDescriptor.MessageType">
+            <summary>
+            For embedded message and group fields, returns the field's type.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.FieldType">
+            <summary>
+            Enumeration of all the possible field types.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.Double">
+            <summary>
+            The <c>double</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.Float">
+            <summary>
+            The <c>float</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.Int64">
+            <summary>
+            The <c>int64</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.UInt64">
+            <summary>
+            The <c>uint64</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.Int32">
+            <summary>
+            The <c>int32</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.Fixed64">
+            <summary>
+            The <c>fixed64</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.Fixed32">
+            <summary>
+            The <c>fixed32</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.Bool">
+            <summary>
+            The <c>bool</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.String">
+            <summary>
+            The <c>string</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.Group">
+            <summary>
+            The field type used for groups (not supported in this implementation).
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.Message">
+            <summary>
+            The field type used for message fields.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.Bytes">
+            <summary>
+            The <c>bytes</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.UInt32">
+            <summary>
+            The <c>uint32</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.SFixed32">
+            <summary>
+            The <c>sfixed32</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.SFixed64">
+            <summary>
+            The <c>sfixed64</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.SInt32">
+            <summary>
+            The <c>sint32</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.SInt64">
+            <summary>
+            The <c>sint64</c> field type.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.FieldType.Enum">
+            <summary>
+            The field type used for enum fields.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.FileDescriptor">
+            <summary>
+            Describes a .proto file, including everything defined within.
+            IDescriptor is implemented such that the File property returns this descriptor,
+            and the FullName is the same as the Name.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FileDescriptor.ComputeFullName(Google.Protobuf.Reflection.MessageDescriptor,System.String)">
+            <summary>
+            Computes the full name of a descriptor within this file, with an optional parent message.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FileDescriptor.DeterminePublicDependencies(Google.Protobuf.Reflection.FileDescriptor,Google.Protobuf.Reflection.FileDescriptorProto,Google.Protobuf.Reflection.FileDescriptor[],System.Boolean)">
+            <summary>
+            Extracts public dependencies from direct dependencies. This is a static method despite its
+            first parameter, as the value we're in the middle of constructing is only used for exceptions.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FileDescriptor.FindTypeByName``1(System.String)">
+            <summary>
+            Finds a type (message, enum, service or extension) in the file by name. Does not find nested types.
+            </summary>
+            <param name="name">The unqualified type name to look for.</param>
+            <typeparam name="T">The type of descriptor to look for</typeparam>
+            <returns>The type's descriptor, or null if not found.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FileDescriptor.BuildFrom(Google.Protobuf.ByteString,Google.Protobuf.Reflection.FileDescriptorProto,Google.Protobuf.Reflection.FileDescriptor[],System.Boolean,Google.Protobuf.Reflection.GeneratedCodeInfo)">
+            <summary>
+            Builds a FileDescriptor from its protocol buffer representation.
+            </summary>
+            <param name="descriptorData">The original serialized descriptor data.
+            We have only limited proto2 support, so serializing FileDescriptorProto
+            would not necessarily give us this.</param>
+            <param name="proto">The protocol message form of the FileDescriptor.</param>
+            <param name="dependencies">FileDescriptors corresponding to all of the
+            file's dependencies, in the exact order listed in the .proto file. May be null,
+            in which case it is treated as an empty array.</param>
+            <param name="allowUnknownDependencies">Whether unknown dependencies are ignored (true) or cause an exception to be thrown (false).</param>
+            <param name="generatedCodeInfo">Reflection information, if any. May be null, specifically for non-generated code.</param>
+            <exception cref="T:Google.Protobuf.Reflection.DescriptorValidationException">If <paramref name="proto"/> is not
+            a valid descriptor. This can occur for a number of reasons, such as a field
+            having an undefined type or because two messages were defined with the same name.</exception>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FileDescriptor.InternalBuildGeneratedFileFrom(System.Byte[],Google.Protobuf.Reflection.FileDescriptor[],Google.Protobuf.Reflection.GeneratedCodeInfo)">
+            <summary>
+            Creates an instance for generated code.
+            </summary>
+            <remarks>
+            The <paramref name="generatedCodeInfo"/> parameter should be null for descriptors which don't correspond to
+            generated types. Otherwise, it should be a <see cref="T:Google.Protobuf.Reflection.GeneratedCodeInfo"/> with nested types and nested
+            enums corresponding to the types and enums contained within the file descriptor.
+            </remarks>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.FileDescriptor.ToString">
+            <summary>
+            Returns a <see cref="T:System.String"/> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String"/> that represents this instance.
+            </returns>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FileDescriptor.Proto">
+            <value>
+            The descriptor in its protocol message representation.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FileDescriptor.Name">
+            <value>
+            The file name.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FileDescriptor.Package">
+            <summary>
+            The package as declared in the .proto file. This may or may not
+            be equivalent to the .NET namespace of the generated classes.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FileDescriptor.MessageTypes">
+            <value>
+            Unmodifiable list of top-level message types declared in this file.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FileDescriptor.EnumTypes">
+            <value>
+            Unmodifiable list of top-level enum types declared in this file.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FileDescriptor.Services">
+            <value>
+            Unmodifiable list of top-level services declared in this file.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FileDescriptor.Dependencies">
+            <value>
+            Unmodifiable list of this file's dependencies (imports).
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FileDescriptor.PublicDependencies">
+            <value>
+            Unmodifiable list of this file's public dependencies (public imports).
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FileDescriptor.SerializedData">
+            <value>
+            The original serialized binary form of this descriptor.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FileDescriptor.Google#Protobuf#Reflection#IDescriptor#FullName">
+            <value>
+            Implementation of IDescriptor.FullName - just returns the same as Name.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FileDescriptor.Google#Protobuf#Reflection#IDescriptor#File">
+            <value>
+            Implementation of IDescriptor.File - just returns this descriptor.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FileDescriptor.DescriptorPool">
+            <value>
+            Pool containing symbol descriptors.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.FileDescriptor.DescriptorProtoFileDescriptor">
+            <summary>
+            Returns the file descriptor for descriptor.proto.
+            </summary>
+            <remarks>
+            This is used for protos which take a direct dependency on <c>descriptor.proto</c>, typically for
+            annotations. While <c>descriptor.proto</c> is a proto2 file, it is built into the Google.Protobuf
+            runtime for reflection purposes. The messages are internal to the runtime as they would require
+            proto2 semantics for full support, but the file descriptor is available via this property. The
+            C# codegen in protoc automatically uses this property when it detects a dependency on <c>descriptor.proto</c>.
+            </remarks>
+            <value>
+            The file descriptor for <c>descriptor.proto</c>.
+            </value>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.GeneratedCodeInfo">
+            <summary>
+            Extra information provided by generated code when initializing a message or file descriptor.
+            These are constructed as required, and are not long-lived. Hand-written code should
+            never need to use this type.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.GeneratedCodeInfo.#ctor(System.Type,System.String[],System.String[],System.Type[],Google.Protobuf.Reflection.GeneratedCodeInfo[])">
+            <summary>
+            Creates a GeneratedCodeInfo for a message descriptor, with nested types, nested enums, the CLR type, property names and oneof names.
+            Each array parameter may be null, to indicate a lack of values.
+            The parameter order is designed to make it feasible to format the generated code readably.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.GeneratedCodeInfo.#ctor(System.Type[],Google.Protobuf.Reflection.GeneratedCodeInfo[])">
+            <summary>
+            Creates a GeneratedCodeInfo for a file descriptor, with only types and enums.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.GeneratedCodeInfo.ClrType">
+            <summary>
+            Irrelevant for file descriptors; the CLR type for the message for message descriptors.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.GeneratedCodeInfo.PropertyNames">
+            <summary>
+            Irrelevant for file descriptors; the CLR property names (in message descriptor field order)
+            for fields in the message for message descriptors.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.GeneratedCodeInfo.OneofNames">
+            <summary>
+            Irrelevant for file descriptors; the CLR property "base" names (in message descriptor oneof order)
+            for oneofs in the message for message descriptors. It is expected that for a oneof name of "Foo",
+            there will be a "FooCase" property and a "ClearFoo" method.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.GeneratedCodeInfo.NestedTypes">
+            <summary>
+            The reflection information for types within this file/message descriptor. Elements may be null
+            if there is no corresponding generated type, e.g. for map entry types.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.GeneratedCodeInfo.NestedEnums">
+            <summary>
+            The CLR types for enums within this file/message descriptor.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.MapFieldAccessor">
+            <summary>
+            Accessor for map fields.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.MessageDescriptor">
+            <summary>
+            Describes a message type.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.MessageDescriptor.CountTotalGeneratedTypes">
+            <summary>
+            Returns the total number of nested types and enums, recursively.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.MessageDescriptor.FindFieldByName(System.String)">
+            <summary>
+            Finds a field by field name.
+            </summary>
+            <param name="name">The unqualified name of the field (e.g. "foo").</param>
+            <returns>The field's descriptor, or null if not found.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.MessageDescriptor.FindFieldByNumber(System.Int32)">
+            <summary>
+            Finds a field by field number.
+            </summary>
+            <param name="number">The field number within this message type.</param>
+            <returns>The field's descriptor, or null if not found.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.MessageDescriptor.FindDescriptor``1(System.String)">
+            <summary>
+            Finds a nested descriptor by name. The is valid for fields, nested
+            message types, oneofs and enums.
+            </summary>
+            <param name="name">The unqualified name of the descriptor, e.g. "Foo"</param>
+            <returns>The descriptor, or null if not found.</returns>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.MessageDescriptor.CrossLink">
+            <summary>
+            Looks up and cross-links all fields and nested types.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MessageDescriptor.Name">
+            <summary>
+            The brief name of the descriptor's target.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MessageDescriptor.GeneratedType">
+            <summary>
+            The generated type for this message, or <c>null</c> if the descriptor does not represent a generated type.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MessageDescriptor.IsWellKnownType">
+            <summary>
+            Returns whether this message is one of the "well known types" which may have runtime/protoc support.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MessageDescriptor.ContainingType">
+            <value>
+            If this is a nested type, get the outer descriptor, otherwise null.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MessageDescriptor.Fields">
+            <value>
+            A collection of fields, which can be retrieved by name or field number.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MessageDescriptor.NestedTypes">
+            <value>
+            An unmodifiable list of this message type's nested types.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MessageDescriptor.EnumTypes">
+            <value>
+            An unmodifiable list of this message type's enum types.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MessageDescriptor.Oneofs">
+            <value>
+            An unmodifiable list of the "oneof" field collections in this message type.
+            </value>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.MessageDescriptor.FieldCollection">
+            <summary>
+            A collection to simplify retrieving the field accessor for a particular field.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.MessageDescriptor.FieldCollection.InDeclarationOrder">
+            <value>
+            Returns the fields in the message as an immutable list, in the order in which they
+            are declared in the source .proto file.
+            </value>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.MessageDescriptor.FieldCollection.InFieldNumberOrder">
+            <value>
+            Returns the fields in the message as an immutable list, in ascending field number
+            order. Field numbers need not be contiguous, so there is no direct mapping from the
+            index in the list to the field number; to retrieve a field by field number, it is better
+            to use the <see cref="T:Google.Protobuf.Reflection.MessageDescriptor.FieldCollection"/> indexer.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MessageDescriptor.FieldCollection.Item(System.Int32)">
+            <summary>
+            Retrieves the descriptor for the field with the given number.
+            </summary>
+            <param name="number">Number of the field to retrieve the descriptor for</param>
+            <returns>The accessor for the given field</returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">The message descriptor does not contain a field
+            with the given number</exception>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MessageDescriptor.FieldCollection.Item(System.String)">
+            <summary>
+            Retrieves the descriptor for the field with the given name.
+            </summary>
+            <param name="name">Name of the field to retrieve the descriptor for</param>
+            <returns>The descriptor for the given field</returns>
+            <exception cref="T:System.Collections.Generic.KeyNotFoundException">The message descriptor does not contain a field
+            with the given name</exception>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.MethodDescriptor">
+            <summary>
+            Describes a single method in a service.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MethodDescriptor.Service">
+            <value>
+            The service this method belongs to.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MethodDescriptor.InputType">
+            <value>
+            The method's input type.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MethodDescriptor.OutputType">
+            <value>
+            The method's input type.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MethodDescriptor.IsClientStreaming">
+            <value>
+            Indicates if client streams multiple requests.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MethodDescriptor.IsServerStreaming">
+            <value>
+            Indicates if server streams multiple responses.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.MethodDescriptor.Name">
+            <summary>
+            The brief name of the descriptor's target.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.OneofAccessor">
+            <summary>
+            Reflection access for a oneof, allowing clear and "get case" actions.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.OneofAccessor.Clear(Google.Protobuf.IMessage)">
+            <summary>
+            Clears the oneof in the specified message.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.OneofAccessor.GetCaseFieldDescriptor(Google.Protobuf.IMessage)">
+            <summary>
+            Indicates which field in the oneof is set for specified message
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.OneofAccessor.Descriptor">
+            <summary>
+            Gets the descriptor for this oneof.
+            </summary>
+            <value>
+            The descriptor of the oneof.
+            </value>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.OneofDescriptor">
+            <summary>
+            Describes a "oneof" field collection in a message type: a set of
+            fields of which at most one can be set in any particular message.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.OneofDescriptor.Name">
+            <summary>
+            The brief name of the descriptor's target.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.OneofDescriptor.ContainingType">
+            <summary>
+            Gets the message type containing this oneof.
+            </summary>
+            <value>
+            The message type containing this oneof.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.OneofDescriptor.Fields">
+            <summary>
+            Gets the fields within this oneof, in declaration order.
+            </summary>
+            <value>
+            The fields within this oneof, in declaration order.
+            </value>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.OneofDescriptor.Accessor">
+            <summary>
+            Gets an accessor for reflective access to the values associated with the oneof
+            in a particular message.
+            </summary>
+            <value>
+            The accessor used for reflective access, or <c>null</c> if reflection is not
+            supported by this descriptor.
+            </value>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.PackageDescriptor">
+            <summary>
+            Represents a package in the symbol table.  We use PackageDescriptors
+            just as placeholders so that someone cannot define, say, a message type
+            that has the same name as an existing package.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.ReflectionUtil">
+            <summary>
+            The methods in this class are somewhat evil, and should not be tampered with lightly.
+            Basically they allow the creation of relatively weakly typed delegates from MethodInfos
+            which are more strongly typed. They do this by creating an appropriate strongly typed
+            delegate from the MethodInfo, and then calling that within an anonymous method.
+            Mind-bending stuff (at least to your humble narrator) but the resulting delegates are
+            very fast compared with calling Invoke later on.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.Reflection.ReflectionUtil.EmptyTypes">
+            <summary>
+            Empty Type[] used when calling GetProperty to force property instead of indexer fetching.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.ReflectionUtil.CreateFuncIMessageObject(System.Reflection.MethodInfo)">
+            <summary>
+            Creates a delegate which will cast the argument to the appropriate method target type,
+            call the method on it, then convert the result to object.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.ReflectionUtil.CreateFuncIMessageT``1(System.Reflection.MethodInfo)">
+            <summary>
+            Creates a delegate which will cast the argument to the appropriate method target type,
+            call the method on it, then convert the result to the specified type.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.ReflectionUtil.CreateActionIMessageObject(System.Reflection.MethodInfo)">
+            <summary>
+            Creates a delegate which will execute the given method after casting the first argument to
+            the target type of the method, and the second argument to the first parameter type of the method.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.ReflectionUtil.CreateActionIMessage(System.Reflection.MethodInfo)">
+            <summary>
+            Creates a delegate which will execute the given method after casting the first argument to
+            the target type of the method.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.RepeatedFieldAccessor">
+            <summary>
+            Accessor for repeated fields.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.ServiceDescriptor">
+            <summary>
+            Describes a service type.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Reflection.ServiceDescriptor.FindMethodByName(System.String)">
+            <summary>
+            Finds a method by name.
+            </summary>
+            <param name="name">The unqualified name of the method (e.g. "Foo").</param>
+            <returns>The method's decsriptor, or null if not found.</returns>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.ServiceDescriptor.Name">
+            <summary>
+            The brief name of the descriptor's target.
+            </summary>
+        </member>
+        <member name="P:Google.Protobuf.Reflection.ServiceDescriptor.Methods">
+            <value>
+            An unmodifiable list of methods in this service.
+            </value>
+        </member>
+        <member name="T:Google.Protobuf.Reflection.SingleFieldAccessor">
+            <summary>
+            Accessor for single fields.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.Preconditions">
+            <summary>
+            Helper methods for throwing exceptions
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Preconditions.CheckNotNull``1(``0,System.String)">
+            <summary>
+            Throws an ArgumentNullException if the given value is null, otherwise
+            return the value to the caller.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.Preconditions.CheckNotNullUnconstrained``1(``0,System.String)">
+            <summary>
+            Throws an ArgumentNullException if the given value is null, otherwise
+            return the value to the caller.
+            </summary>
+            <remarks>
+            This is equivalent to <see cref="M:Google.Protobuf.Preconditions.CheckNotNull``1(``0,System.String)"/> but without the type parameter
+            constraint. In most cases, the constraint is useful to prevent you from calling CheckNotNull
+            with a value type - but it gets in the way if either you want to use it with a nullable
+            value type, or you want to use it with an unconstrained type parameter.
+            </remarks>
+        </member>
+        <member name="F:Google.Protobuf.WellKnownTypes.Duration.NanosecondsPerSecond">
+            <summary>
+            The number of nanoseconds in a second.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.WellKnownTypes.Duration.NanosecondsPerTick">
+            <summary>
+            The number of nanoseconds in a BCL tick (as used by <see cref="T:System.TimeSpan"/> and <see cref="T:System.DateTime"/>).
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.Duration.ToTimeSpan">
+            <summary>
+            Converts this <see cref="T:Google.Protobuf.WellKnownTypes.Duration"/> to a <see cref="T:System.TimeSpan"/>.
+            </summary>
+            <remarks>If the duration is not a precise number of ticks, it is truncated towards 0.</remarks>
+            <returns>The value of this duration, as a <c>TimeSpan</c>.</returns>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.Duration.FromTimeSpan(System.TimeSpan)">
+            <summary>
+            Converts the given <see cref="T:System.TimeSpan"/> to a <see cref="T:Google.Protobuf.WellKnownTypes.Duration"/>.
+            </summary>
+            <param name="timeSpan">The <c>TimeSpan</c> to convert.</param>
+            <returns>The value of the given <c>TimeSpan</c>, as a <c>Duration</c>.</returns>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.Duration.op_UnaryNegation(Google.Protobuf.WellKnownTypes.Duration)">
+            <summary>
+            Returns the result of negating the duration. For example, the negation of 5 minutes is -5 minutes.
+            </summary>
+            <param name="value">The duration to negate. Must not be null.</param>
+            <returns>The negated value of this duration.</returns>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.Duration.op_Addition(Google.Protobuf.WellKnownTypes.Duration,Google.Protobuf.WellKnownTypes.Duration)">
+            <summary>
+            Adds the two specified <see cref="T:Google.Protobuf.WellKnownTypes.Duration"/> values together.
+            </summary>
+            <param name="lhs">The first value to add. Must not be null.</param>
+            <param name="rhs">The second value to add. Must not be null.</param>
+            <returns></returns>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.Duration.op_Subtraction(Google.Protobuf.WellKnownTypes.Duration,Google.Protobuf.WellKnownTypes.Duration)">
+            <summary>
+            Subtracts one <see cref="T:Google.Protobuf.WellKnownTypes.Duration"/> from another.
+            </summary>
+            <param name="lhs">The duration to subtract from. Must not be null.</param>
+            <param name="rhs">The duration to subtract. Must not be null.</param>
+            <returns>The difference between the two specified durations.</returns>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.Duration.Normalize(System.Int64,System.Int32)">
+            <summary>
+            Creates a duration with the normalized values from the given number of seconds and
+            nanoseconds, conforming with the description in the proto file.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.WellKnownTypes.TimeExtensions">
+            <summary>
+            Extension methods on BCL time-related types, converting to protobuf types.
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.TimeExtensions.ToTimestamp(System.DateTime)">
+            <summary>
+            Converts the given <see cref="T:System.DateTime"/> to a <see cref="T:Google.Protobuf.WellKnownTypes.Timestamp"/>.
+            </summary>
+            <param name="dateTime">The date and time to convert to a timestamp.</param>
+            <exception cref="T:System.ArgumentException">The <paramref name="dateTime"/> value has a <see cref="P:System.DateTime.Kind"/>other than <c>Utc</c>.</exception>
+            <returns>The converted timestamp.</returns>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.TimeExtensions.ToTimestamp(System.DateTimeOffset)">
+            <summary>
+            Converts the given <see cref="T:System.DateTimeOffset"/> to a <see cref="T:Google.Protobuf.WellKnownTypes.Timestamp"/>
+            </summary>
+            <remarks>The offset is taken into consideration when converting the value (so the same instant in time
+            is represented) but is not a separate part of the resulting value. In other words, there is no
+            roundtrip operation to retrieve the original <c>DateTimeOffset</c>.</remarks>
+            <param name="dateTimeOffset">The date and time (with UTC offset) to convert to a timestamp.</param>
+            <returns>The converted timestamp.</returns>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.TimeExtensions.ToDuration(System.TimeSpan)">
+            <summary>
+            Converts the given <see cref="T:System.TimeSpan"/> to a <see cref="T:Google.Protobuf.WellKnownTypes.Duration"/>.
+            </summary>
+            <param name="timeSpan">The time span to convert.</param>
+            <returns>The converted duration.</returns>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.Timestamp.op_Subtraction(Google.Protobuf.WellKnownTypes.Timestamp,Google.Protobuf.WellKnownTypes.Timestamp)">
+            <summary>
+            Returns the difference between one <see cref="T:Google.Protobuf.WellKnownTypes.Timestamp"/> and another, as a <see cref="T:Google.Protobuf.WellKnownTypes.Duration"/>.
+            </summary>
+            <param name="lhs">The timestamp to subtract from. Must not be null.</param>
+            <param name="rhs">The timestamp to subtract. Must not be null.</param>
+            <returns>The difference between the two specified timestamps.</returns>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.Timestamp.op_Addition(Google.Protobuf.WellKnownTypes.Timestamp,Google.Protobuf.WellKnownTypes.Duration)">
+            <summary>
+            Adds a <see cref="T:Google.Protobuf.WellKnownTypes.Duration"/> to a <see cref="T:Google.Protobuf.WellKnownTypes.Timestamp"/>, to obtain another <c>Timestamp</c>.
+            </summary>
+            <param name="lhs">The timestamp to add the duration to. Must not be null.</param>
+            <param name="rhs">The duration to add. Must not be null.</param>
+            <returns>The result of adding the duration to the timestamp.</returns>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.Timestamp.op_Subtraction(Google.Protobuf.WellKnownTypes.Timestamp,Google.Protobuf.WellKnownTypes.Duration)">
+            <summary>
+            Subtracts a <see cref="T:Google.Protobuf.WellKnownTypes.Duration"/> from a <see cref="T:Google.Protobuf.WellKnownTypes.Timestamp"/>, to obtain another <c>Timestamp</c>.
+            </summary>
+            <param name="lhs">The timestamp to subtract the duration from. Must not be null.</param>
+            <param name="rhs">The duration to subtract.</param>
+            <returns>The result of subtracting the duration from the timestamp.</returns>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.Timestamp.ToDateTime">
+            <summary>
+            Converts this timestamp into a <see cref="T:System.DateTime"/>.
+            </summary>
+            <remarks>
+            The resulting <c>DateTime</c> will always have a <c>Kind</c> of <c>Utc</c>.
+            If the timestamp is not a precise number of ticks, it will be truncated towards the start
+            of time. For example, a timestamp with a <see cref="P:Google.Protobuf.WellKnownTypes.Timestamp.Nanos"/> value of 99 will result in a
+            <see cref="T:System.DateTime"/> value precisely on a second.
+            </remarks>
+            <returns>This timestamp as a <c>DateTime</c>.</returns>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.Timestamp.ToDateTimeOffset">
+            <summary>
+            Converts this timestamp into a <see cref="T:System.DateTimeOffset"/>.
+            </summary>
+            <remarks>
+            The resulting <c>DateTimeOffset</c> will always have an <c>Offset</c> of zero.
+            If the timestamp is not a precise number of ticks, it will be truncated towards the start
+            of time. For example, a timestamp with a <see cref="P:Google.Protobuf.WellKnownTypes.Timestamp.Nanos"/> value of 99 will result in a
+            <see cref="T:System.DateTimeOffset"/> value precisely on a second.
+            </remarks>
+            <returns>This timestamp as a <c>DateTimeOffset</c>.</returns>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.Timestamp.FromDateTime(System.DateTime)">
+            <summary>
+            Converts the specified <see cref="T:System.DateTime"/> to a <see cref="T:Google.Protobuf.WellKnownTypes.Timestamp"/>.
+            </summary>
+            <param name="dateTime"></param>
+            <exception cref="T:System.ArgumentException">The <c>Kind</c> of <paramref name="dateTime"/> is not <c>DateTimeKind.Utc</c>.</exception>
+            <returns>The converted timestamp.</returns>
+        </member>
+        <member name="M:Google.Protobuf.WellKnownTypes.Timestamp.FromDateTimeOffset(System.DateTimeOffset)">
+            <summary>
+            Converts the given <see cref="T:System.DateTimeOffset"/> to a <see cref="T:Google.Protobuf.WellKnownTypes.Timestamp"/>
+            </summary>
+            <remarks>The offset is taken into consideration when converting the value (so the same instant in time
+            is represented) but is not a separate part of the resulting value. In other words, there is no
+            roundtrip operation to retrieve the original <c>DateTimeOffset</c>.</remarks>
+            <param name="dateTimeOffset">The date and time (with UTC offset) to convert to a timestamp.</param>
+            <returns>The converted timestamp.</returns>
+        </member>
+        <member name="T:Google.Protobuf.WireFormat">
+            <summary>
+            This class is used internally by the Protocol Buffer Library and generated
+            message implementations. It is public only for the sake of those generated
+            messages. Others should not use this class directly.
+            <para>
+            This class contains constants and helper functions useful for dealing with
+            the Protocol Buffer wire format.
+            </para>
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.WireFormat.GetTagWireType(System.UInt32)">
+            <summary>
+            Given a tag value, determines the wire type (lower 3 bits).
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.WireFormat.GetTagFieldNumber(System.UInt32)">
+            <summary>
+            Given a tag value, determines the field number (the upper 29 bits).
+            </summary>
+        </member>
+        <member name="M:Google.Protobuf.WireFormat.MakeTag(System.Int32,Google.Protobuf.WireFormat.WireType)">
+            <summary>
+            Makes a tag value given a field number and wire type.
+            </summary>
+        </member>
+        <member name="T:Google.Protobuf.WireFormat.WireType">
+            <summary>
+            Wire types within protobuf encoding.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.WireFormat.WireType.Varint">
+            <summary>
+            Variable-length integer.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.WireFormat.WireType.Fixed64">
+            <summary>
+            A fixed-length 64-bit value.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.WireFormat.WireType.LengthDelimited">
+            <summary>
+            A length-delimited value, i.e. a length followed by that many bytes of data.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.WireFormat.WireType.StartGroup">
+            <summary>
+            A "start group" value - not supported by this implementation.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.WireFormat.WireType.EndGroup">
+            <summary>
+            An "end group" value - not supported by this implementation.
+            </summary>
+        </member>
+        <member name="F:Google.Protobuf.WireFormat.WireType.Fixed32">
+            <summary>
+            A fixed-length 32-bit value.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Bond.IO</name>
+    </assembly>
+    <members>
+        <member name="T:Bond.IO.Unsafe.InputBuffer">
+            <summary>
+            Implements IInputStream on top of memory buffer
+            </summary>
+        </member>
+        <member name="M:Bond.IO.Unsafe.InputBuffer.Clone">
+            <summary>
+            Create a clone of the current state of the buffer
+            </summary>
+        </member>
+        <member name="M:Bond.IO.Unsafe.InputBuffer.ReadUInt16">
+            <summary>
+            Read little-endian encoded 16-bit unsigned integer
+            </summary>
+            <exception cref="T:System.IO.EndOfStreamException"/>
+        </member>
+        <member name="M:Bond.IO.Unsafe.InputBuffer.ReadUInt32">
+            <summary>
+            Read little-endian encoded 32-bit unsigned integer
+            </summary>
+            <exception cref="T:System.IO.EndOfStreamException"/>
+        </member>
+        <member name="M:Bond.IO.Unsafe.InputBuffer.ReadUInt64">
+            <summary>
+            Read little-endian encoded 64-bit unsigned integer
+            </summary>
+            <exception cref="T:System.IO.EndOfStreamException"/>
+        </member>
+        <member name="M:Bond.IO.Unsafe.InputBuffer.ReadFloat">
+            <summary>
+            Read little-endian encoded single precision ‎IEEE 754 float
+            </summary>
+            <exception cref="T:System.IO.EndOfStreamException"/>
+        </member>
+        <member name="M:Bond.IO.Unsafe.InputBuffer.ReadDouble">
+            <summary>
+            Read little-endian encoded double precision ‎IEEE 754 float
+            </summary>
+            <exception cref="T:System.IO.EndOfStreamException"/>
+        </member>
+        <member name="T:Bond.IO.Unsafe.InputStream">
+            <summary>
+            Implements IInputStream on top of System.Stream
+            </summary>
+        </member>
+        <member name="M:Bond.IO.Unsafe.InputStream.Clone">
+            <summary>
+            Create a clone of the current state of the buffer
+            </summary>
+        </member>
+        <member name="M:Bond.IO.Unsafe.InputStream.ReadBytes(System.Int32)">
+            <summary>
+            Read an array of bytes verbatim
+            </summary>
+            <param name="count">Number of bytes to read</param>
+            <exception cref="T:System.IO.EndOfStreamException"/>
+        </member>
+        <member name="T:Bond.IO.Unsafe.OutputBuffer">
+            <summary>
+            Implements IOutputStream on top of memory buffer
+            </summary>
+        </member>
+        <member name="M:Bond.IO.Unsafe.OutputBuffer.WriteUInt32(System.UInt32)">
+            <summary>
+            Write little-endian encoded 32-bit unsigned integer
+            </summary>
+        </member>
+        <member name="M:Bond.IO.Unsafe.OutputBuffer.WriteUInt64(System.UInt64)">
+            <summary>
+            Write little-endian encoded 64-bit unsigned integer
+            </summary>
+        </member>
+        <member name="M:Bond.IO.Unsafe.OutputBuffer.WriteFloat(System.Single)">
+            <summary>
+            Write little-endian encoded single precision ‎IEEE 754 float
+            </summary>
+        </member>
+        <member name="M:Bond.IO.Unsafe.OutputBuffer.WriteDouble(System.Double)">
+            <summary>
+            Write little-endian encoded double precision ‎IEEE 754 float
+            </summary>
+        </member>
+        <member name="T:Bond.IO.Unsafe.OutputStream">
+            <summary>
+            Implements IOutputStream on top of System.Stream
+            </summary>
+        </member>
+        <member name="M:Bond.IO.Unsafe.OutputStream.Flush">
+            <summary> 
+            Flush the buffer to the stream.
+            </summary>
+            <remarks> 
+            Does NOT flush the stream. That may not be advisable unless you
+            know the alignment and transactional behavior of the storage
+            medium, so the caller remains separately responsible for that logic
+            if they need it.
+            </remarks>
+        </member>
+        <member name="M:Bond.IO.Unsafe.OutputStream.WriteBytes(System.ArraySegment{System.Byte})">
+            <summary>
+            Write an array of bytes verbatim
+            </summary>
+            <param name="data">Array segment specifying bytes to write</param>
+        </member>
+        <member name="M:Bond.IO.Unsafe.OutputStream.WriteString(System.Text.Encoding,System.String,System.Int32)">
+            <summary>
+            Write UTF-8 or UTF-16 encoded string
+            </summary>
+            <param name="encoding">String encoding</param>
+            <param name="value">String value</param>
+            <param name="size">Size in bytes of encoded string</param>
+        </member>
+    </members>
+</doc>

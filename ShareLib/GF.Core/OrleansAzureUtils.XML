@@ -1,0 +1,1061 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrleansAzureUtils</name>
+    </assembly>
+    <members>
+        <member name="T:Orleans.Runtime.MultiClusterNetwork.AzureTableBasedGossipChannel">
+            <summary>
+            An implementation of a gossip channel based on a standard Orleans Azure table.
+            Multiple gossip networks can use the same table, and are separated by partition key = GlobalServiceId
+            </summary>
+        </member>
+        <member name="T:Orleans.Runtime.MultiClusterNetwork.GossipTableEntry">
+            <summary>
+            Low level representation details and functionality for Azure-Table-Based Gossip Channels
+            </summary>
+        </member>
+        <member name="M:Orleans.Runtime.MultiClusterNetwork.GossipTableInstanceManager.TryUpdateTableEntryAsync(Orleans.Runtime.MultiClusterNetwork.GossipTableEntry,System.String,System.String)">
+            <summary>
+            Try once to conditionally update a data entry in the Azure table. Returns false if etag does not match.
+            </summary>
+        </member>
+        <member name="M:Orleans.Runtime.MultiClusterNetwork.GossipTableInstanceManager.TryCreateTableEntryAsync(Orleans.Runtime.MultiClusterNetwork.GossipTableEntry,System.String)">
+            <summary>
+            Try once to insert a new data entry in the Azure table. Returns false if there is a conflict.
+            </summary>       
+        </member>
+        <member name="M:Orleans.Runtime.MultiClusterNetwork.GossipTableInstanceManager.TryDeleteTableEntryAsync(Orleans.Runtime.MultiClusterNetwork.GossipTableEntry,System.String,System.String)">
+            <summary>
+            Try once to delete a data entry in the Azure table. Returns false if there is a conflict.
+            </summary>       
+        </member>
+        <member name="T:Orleans.Runtime.Configuration.AzureConfigurationExtensions">
+            <summary>
+            Extension methods for configuration classes specific to OrleansAzureUtils.dll 
+            </summary>
+        </member>
+        <member name="M:Orleans.Runtime.Configuration.AzureConfigurationExtensions.AddAzureTableStorageProvider(Orleans.Runtime.Configuration.ClusterConfiguration,System.String,System.String,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Adds a storage provider of type <see cref="T:Orleans.Storage.AzureTableStorage"/>.
+            </summary>
+            <param name="config">The cluster configuration object to add provider to.</param>
+            <param name="providerName">The provider name.</param>
+            <param name="connectionString">The azure storage connection string. If none is provided, it will use the same as in the Globals configuration.</param>
+            <param name="tableName">The table name where to store the state.</param>
+            <param name="deleteOnClear">Whether the provider deletes the state when <see cref="M:Orleans.Storage.IStorageProvider.ClearStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/> is called.</param>
+            <param name="useJsonFormat">Whether is stores the content as JSON or as binary in Azure Table.</param>
+            <param name="useFullAssemblyNames">Whether to use full assembly names in the serialized JSON. This value is ignored if <paramref name="useJsonFormat"/> is false.</param>
+            <param name="indentJson">Whether to indent (pretty print) the JSON. This value is ignored if <paramref name="useJsonFormat"/> is false.</param>
+        </member>
+        <member name="M:Orleans.Runtime.Configuration.AzureConfigurationExtensions.AddAzureBlobStorageProvider(Orleans.Runtime.Configuration.ClusterConfiguration,System.String,System.String,System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Adds a storage provider of type <see cref="T:Orleans.Storage.AzureBlobStorage"/>.
+            </summary>
+            <param name="config">The cluster configuration object to add provider to.</param>
+            <param name="providerName">The provider name.</param>
+            <param name="connectionString">The azure storage connection string. If none is provided, it will use the same as in the Globals configuration.</param>
+            <param name="containerName">The container name where to store the state.</param>
+            <param name="useFullAssemblyNames">Whether to use full assembly names in the serialized JSON.</param>
+            <param name="indentJson">Whether to indent (pretty print) the JSON.</param>
+        </member>
+        <member name="M:Orleans.Runtime.Configuration.AzureConfigurationExtensions.AddAzureQueueStreamProvider(Orleans.Runtime.Configuration.ClusterConfiguration,System.String,System.String,System.Int32,System.String,System.Int32,Orleans.Providers.Streams.Common.PersistentStreamProviderState,Orleans.Streams.PersistentStreamProviderConfig)">
+            <summary>
+            Adds a stream provider of type <see cref="T:Orleans.Providers.Streams.AzureQueue.AzureQueueStreamProvider"/>.
+            </summary>
+            <param name="config">The cluster configuration object to add provider to.</param>
+            <param name="providerName">The provider name</param>
+            <param name="connectionString">The azure storage connection string. If none is provided, it will use the same as in the Globals configuration.</param>
+            <param name="numberOfQueues">The number of queues to use as partitions.</param>
+            <param name="deploymentId">The deployment ID used for partitioning. If none is specified, the provider will use the same DeploymentId as the Cluster.</param>
+            <param name="cacheSize">The cache size.</param>
+            <param name="startupState">The startup state of the persistent stream provider.</param>
+            <param name="persistentStreamProviderConfig">Settings related to all persistent stream providers.</param>
+        </member>
+        <member name="M:Orleans.Runtime.Configuration.AzureConfigurationExtensions.AddAzureQueueStreamProvider(Orleans.Runtime.Configuration.ClientConfiguration,System.String,System.String,System.Int32,System.String,System.Int32,Orleans.Providers.Streams.Common.PersistentStreamProviderState,Orleans.Streams.PersistentStreamProviderConfig)">
+            <summary>
+            Adds a stream provider of type <see cref="T:Orleans.Providers.Streams.AzureQueue.AzureQueueStreamProvider"/>.
+            </summary>
+            <param name="config">The cluster configuration object to add provider to.</param>
+            <param name="providerName">The provider name</param>
+            <param name="connectionString">The azure storage connection string. If none is provided, it will use the same as in the Globals configuration.</param>
+            <param name="numberOfQueues">The number of queues to use as partitions.</param>
+            <param name="deploymentId">The deployment ID used for partitioning. If none is specified, the provider will use the same DeploymentId as the Cluster.</param>
+            <param name="cacheSize">The cache size.</param>
+            <param name="startupState">The startup state of the persistent stream provider.</param>
+            <param name="persistentStreamProviderConfig">Settings related to all persistent stream providers.</param>
+        </member>
+        <member name="T:Orleans.Runtime.Host.AzureConfigUtils">
+            <summary>
+            Various utility functions to make it easier to access and handle Azure configuration information.
+            </summary>
+        </member>
+        <member name="P:Orleans.Runtime.Host.AzureConfigUtils.ClientConfigFileLocation">
+            <summary>
+             Return the default file location for the Orleans client config file (ClientConfiguration.xml)
+            </summary>
+            <exception cref="T:System.IO.FileNotFoundException">If client config file cannot be located</exception>
+        </member>
+        <member name="P:Orleans.Runtime.Host.AzureConfigUtils.SiloConfigFileLocation">
+            <summary>
+             Return the default file location for the Orleans silo config file (OrleansConfiguration.xml)
+            </summary>
+            <exception cref="T:System.IO.FileNotFoundException">If silo config file cannot be located</exception>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureConfigUtils.FindConfigFile(System.String,System.String)">
+            <summary>
+            Search for the specified config file 
+            by checking each of the expected app directory locations used by Azure.
+            </summary>
+            <param name="cfgFileName">Name of the file to be found.</param>
+            <param name="what">Short description of the file to be found.</param>
+            <returns>Location if the file, if found, otherwise FileNotFound exeception will be thrown.</returns>
+            <exception cref="T:System.IO.FileNotFoundException">If the specified config file cannot be located</exception>
+        </member>
+        <member name="P:Orleans.Runtime.Host.AzureConfigUtils.AppDirectoryLocations">
+            <summary>
+            Return the expected possible base locations for the Azure app directory we are being run from
+            </summary>
+            <returns>Enererable list of app directory locations</returns>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureConfigUtils.FindAppDirectoryLocations">
+            <summary>
+            Return the expected possible base locations for the Azure app directory we are being run from
+            </summary>
+            <returns>Enererable list of app directory locations</returns>
+        </member>
+        <member name="T:Orleans.Runtime.Host.AzureClient">
+            <summary>
+            Utility class for initializing an Orleans client running inside Azure.
+            </summary>
+        </member>
+        <member name="F:Orleans.Runtime.Host.AzureClient.MaxRetries">
+            <summary>Number of retry attempts to make when searching for gateway silos to connect to.</summary>
+        </member>
+        <member name="F:Orleans.Runtime.Host.AzureClient.StartupRetryPause">
+            <summary>Amount of time to pause before each retry attempt.</summary>
+        </member>
+        <member name="P:Orleans.Runtime.Host.AzureClient.IsInitialized">
+            <summary>
+            Whether the Orleans Azure client runtime has already been initialized
+            </summary>
+            <returns><c>true</c> if client runtime is already initialized</returns>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureClient.Initialize">
+            <summary>
+            Initialise the Orleans client runtime in this Azure process
+            </summary>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureClient.Initialize(System.IO.FileInfo)">
+            <summary>
+            Initialise the Orleans client runtime in this Azure process
+            </summary>
+            <param name="orleansClientConfigFile">Location of the Orleans client config file to use for base config settings</param>
+            <remarks>Any silo gateway address specified in the config file is ignored, and gateway endpoint info is read from the silo instance table in Azure storage instead.</remarks>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureClient.Initialize(System.String)">
+            <summary>
+            Initialise the Orleans client runtime in this Azure process
+            </summary>
+            <param name="clientConfigFilePath">Location of the Orleans client config file to use for base config settings</param>
+            <remarks>Any silo gateway address specified in the config file is ignored, and gateway endpoint info is read from the silo instance table in Azure storage instead.</remarks>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureClient.Initialize(Orleans.Runtime.Configuration.ClientConfiguration)">
+            <summary>
+            Initializes the Orleans client runtime in this Azure process from the provided client configuration object. 
+            If the configuration object is null, the initialization fails. 
+            </summary>
+            <param name="config">A ClientConfiguration object.</param>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureClient.Uninitialize">
+            <summary>
+            Uninitializes the Orleans client runtime in this Azure process. 
+            </summary>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureClient.DefaultConfiguration">
+            <summary>
+            Returns default client configuration object for passing to AzureClient.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Orleans.Runtime.Host.AzureSilo">
+            <summary>
+            Wrapper class for an Orleans silo running in the current host process.
+            </summary>
+        </member>
+        <member name="P:Orleans.Runtime.Host.AzureSilo.StartupRetryPause">
+            <summary>
+            Amount of time to pause before retrying if a secondary silo is unable to connect to the primary silo for this deployment.
+            Defaults to 5 seconds.
+            </summary>
+        </member>
+        <member name="P:Orleans.Runtime.Host.AzureSilo.MaxRetries">
+            <summary>
+            Number of times to retrying if a secondary silo is unable to connect to the primary silo for this deployment.
+            Defaults to 120 times.
+            </summary>
+        </member>
+        <member name="P:Orleans.Runtime.Host.AzureSilo.DataConnectionConfigurationSettingName">
+            <summary>
+            The name of the configuration key value for locating the DataConnectionString setting from the Azure configuration for this role.
+            Defaults to <c>DataConnectionString</c>
+            </summary>
+        </member>
+        <member name="P:Orleans.Runtime.Host.AzureSilo.SiloEndpointConfigurationKeyName">
+            <summary>
+            The name of the configuration key value for locating the OrleansSiloEndpoint setting from the Azure configuration for this role.
+            Defaults to <c>OrleansSiloEndpoint</c>
+            </summary>
+        </member>
+        <member name="P:Orleans.Runtime.Host.AzureSilo.ProxyEndpointConfigurationKeyName">
+            <summary>
+            The name of the configuration key value for locating the OrleansProxyEndpoint setting from the Azure configuration for this role.
+            Defaults to <c>OrleansProxyEndpoint</c>
+            </summary>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureSilo.#ctor">
+            <summary>
+            Constructor
+            </summary>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureSilo.Start">
+            <summary>
+            Initialize this Orleans silo for execution
+            </summary>
+            <returns><c>true</c> is the silo startup was successful</returns>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureSilo.Start(Orleans.Runtime.Configuration.ClusterConfiguration,System.String,System.String)">
+            <summary>
+            Initialize this Orleans silo for execution with the specified Azure deploymentId
+            </summary>
+            <param name="config">If null, Config data will be read from silo config file as normal, otherwise use the specified config data.</param>
+            <param name="deploymentId">Azure DeploymentId this silo is running under</param>
+            <param name="connectionString">Azure DataConnectionString. If null, defaults to the DataConnectionString setting from the Azure configuration for this role.</param>
+            <returns><c>true</c> is the silo startup was successful</returns>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureSilo.Run">
+            <summary>
+            Makes this Orleans silo begin executing and become active.
+            Note: This method call will only return control back to the caller when the silo is shutdown.
+            </summary>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureSilo.Run(System.Threading.CancellationToken)">
+            <summary>
+            Makes this Orleans silo begin executing and become active.
+            Note: This method call will only return control back to the caller when the silo is shutdown or 
+            an external request for cancellation has been issued.
+            </summary>
+            <param name="cancellationToken">Cancellation token.</param>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureSilo.Stop">
+            <summary>
+            Stop this Orleans silo executing.
+            </summary>
+        </member>
+        <member name="M:Orleans.Runtime.Host.AzureSilo.RunImpl(System.Nullable{System.Threading.CancellationToken})">
+            <summary>
+            Run method helper.
+            </summary>
+            <remarks>
+            Makes this Orleans silo begin executing and become active.
+            Note: This method call will only return control back to the caller when the silo is shutdown or 
+            an external request for cancellation has been issued.
+            </remarks>
+            <param name="cancellationToken">Optional cancellation token.</param>
+        </member>
+        <member name="T:Orleans.Runtime.Host.IServiceRuntimeWrapper">
+            <summary>
+            Interfacse exposed by ServiceRuntimeWrapper for functionality provided 
+            by Microsoft.WindowsAzure.ServiceRuntime.
+             </summary>
+        </member>
+        <member name="P:Orleans.Runtime.Host.IServiceRuntimeWrapper.DeploymentId">
+            <summary>
+            Deployment ID of the hosted service
+            </summary>
+        </member>
+        <member name="P:Orleans.Runtime.Host.IServiceRuntimeWrapper.InstanceName">
+            <summary>
+            Name of the role instance
+            </summary>
+        </member>
+        <member name="P:Orleans.Runtime.Host.IServiceRuntimeWrapper.RoleName">
+            <summary>
+            Name of the worker/web role
+            </summary>
+        </member>
+        <member name="P:Orleans.Runtime.Host.IServiceRuntimeWrapper.UpdateDomain">
+            <summary>
+            Update domain of the role instance
+            </summary>
+        </member>
+        <member name="P:Orleans.Runtime.Host.IServiceRuntimeWrapper.FaultDomain">
+            <summary>
+            Fault domain of the role instance
+            </summary>
+        </member>
+        <member name="P:Orleans.Runtime.Host.IServiceRuntimeWrapper.RoleInstanceCount">
+            <summary>
+            Number of instances in the worker/web role
+            </summary>
+        </member>
+        <member name="M:Orleans.Runtime.Host.IServiceRuntimeWrapper.GetIPEndpoint(System.String)">
+            <summary>
+            Returns IP endpoint by name
+            </summary>
+            <param name="endpointName">Name of the IP endpoint</param>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.Runtime.Host.IServiceRuntimeWrapper.GetConfigurationSettingValue(System.String)">
+            <summary>
+            Returns value of the given configuration setting
+            </summary>
+            <param name="configurationSettingName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.Runtime.Host.IServiceRuntimeWrapper.SubscribeForStoppingNotifcation(System.Object,System.EventHandler{System.Object})">
+            <summary>
+            Subscribes given even handler for role instance Stopping event
+            </summary>
+            /// <param name="handlerObject">Object that handler is part of, or null for a static method</param>
+            <param name="handler">Handler to subscribe</param>
+        </member>
+        <member name="M:Orleans.Runtime.Host.IServiceRuntimeWrapper.UnsubscribeFromStoppingNotifcation(System.Object,System.EventHandler{System.Object})">
+            <summary>
+            Unsubscribes given even handler from role instance Stopping event
+            </summary>
+            /// <param name="handlerObject">Object that handler is part of, or null for a static method</param>
+            <param name="handler">Handler to unsubscribe</param>
+        </member>
+        <member name="T:Orleans.Runtime.Host.ServiceRuntimeWrapper">
+            <summary>
+            The purpose of this class is to wrap the functionality provided 
+            by Microsoft.WindowsAzure.ServiceRuntime.dll, so that we can access it via Reflection,
+            and not have a compile-time dependency on it.
+            Microsoft.WindowsAzure.ServiceRuntime.dll doesn't have an official NuGet package.
+            By loading it via Reflection we solve this problem, and do not need an assembly 
+            binding redirect for it, as we can call any compatible version.
+            Microsoft.WindowsAzure.ServiceRuntime.dll hasn't changed in years, so the chance of a breaking change
+            is relatively low.
+            </summary>
+        </member>
+        <member name="T:Orleans.Storage.AzureBlobStorage">
+            <summary>
+            Simple storage provider for writing grain state data to Azure blob storage in JSON format.
+            </summary>
+            <remarks>
+            <para>
+            Required configuration params: <c>DataConnectionString</c>
+            </para>
+            <para>
+            Optional configuration params:
+            <c>ContainerName</c> -- defaults to <c>grainstate</c>
+            <c>SerializeTypeNames</c> -- defaults to <c>OrleansGrainState</c>
+            <c>PreserveReferencesHandling</c> -- defaults to <c>false</c>
+            <c>UseFullAssemblyNames</c> -- defaults to <c>false</c>
+            <c>IndentJSON</c> -- defaults to <c>false</c>
+            </para>
+            </remarks>
+            <example>
+            Example configuration for this storage provider in OrleansConfiguration.xml file:
+            <code>
+            &lt;OrleansConfiguration xmlns="urn:orleans">
+              &lt;Globals>
+                &lt;StorageProviders>
+                  &lt;Provider Type="Orleans.Storage.AzureBlobStorage" Name="AzureStore"
+                    DataConnectionString="UseDevelopmentStorage=true"
+                  />
+              &lt;/StorageProviders>
+            </code>
+            </example>
+        </member>
+        <member name="P:Orleans.Storage.AzureBlobStorage.Log">
+            <summary> Logger used by this storage provider instance. </summary>
+            <see cref="P:Orleans.Storage.IStorageProvider.Log"/>
+        </member>
+        <member name="P:Orleans.Storage.AzureBlobStorage.Name">
+            <summary> Name of this storage provider instance. </summary>
+            <see cref="P:Orleans.Providers.IProvider.Name"/>
+        </member>
+        <member name="M:Orleans.Storage.AzureBlobStorage.Init(System.String,Orleans.Providers.IProviderRuntime,Orleans.Providers.IProviderConfiguration)">
+            <summary> Initialization function for this storage provider. </summary>
+            <see cref="M:Orleans.Providers.IProvider.Init(System.String,Orleans.Providers.IProviderRuntime,Orleans.Providers.IProviderConfiguration)"/>
+        </member>
+        <member name="M:Orleans.Storage.AzureBlobStorage.Close">
+            <summary> Shutdown this storage provider. </summary>
+            <see cref="M:Orleans.Providers.IProvider.Close"/>
+        </member>
+        <member name="M:Orleans.Storage.AzureBlobStorage.ReadStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Read state data function for this storage provider. </summary>
+            <see cref="M:Orleans.Storage.IStorageProvider.ReadStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+        <member name="M:Orleans.Storage.AzureBlobStorage.WriteStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Write state data function for this storage provider. </summary>
+            <see cref="M:Orleans.Storage.IStorageProvider.WriteStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+        <member name="M:Orleans.Storage.AzureBlobStorage.ClearStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Clear / Delete state data function for this storage provider. </summary>
+            <see cref="M:Orleans.Storage.IStorageProvider.ClearStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+        <member name="T:Orleans.Storage.AzureTableStorage">
+            <summary>
+            Simple storage provider for writing grain state data to Azure table storage.
+            </summary>
+            <remarks>
+            <para>
+            Required configuration params: <c>DataConnectionString</c>
+            </para>
+            <para>
+            Optional configuration params:
+            <c>TableName</c> -- defaults to <c>OrleansGrainState</c>
+            <c>DeleteStateOnClear</c> -- defaults to <c>false</c>
+            </para>
+            </remarks>
+            <example>
+            Example configuration for this storage provider in OrleansConfiguration.xml file:
+            <code>
+            &lt;OrleansConfiguration xmlns="urn:orleans">
+              &lt;Globals>
+                &lt;StorageProviders>
+                  &lt;Provider Type="Orleans.Storage.AzureTableStorage" Name="AzureStore"
+                    DataConnectionString="UseDevelopmentStorage=true"
+                    DeleteStateOnClear="true"
+                  />
+              &lt;/StorageProviders>
+            </code>
+            </example>
+        </member>
+        <member name="P:Orleans.Storage.AzureTableStorage.Name">
+            <summary> Name of this storage provider instance. </summary>
+            <see cref="P:Orleans.Providers.IProvider.Name"/>
+        </member>
+        <member name="P:Orleans.Storage.AzureTableStorage.Log">
+            <summary> Logger used by this storage provider instance. </summary>
+            <see cref="P:Orleans.Storage.IStorageProvider.Log"/>
+        </member>
+        <member name="M:Orleans.Storage.AzureTableStorage.#ctor">
+            <summary> Default constructor </summary>
+        </member>
+        <member name="M:Orleans.Storage.AzureTableStorage.Init(System.String,Orleans.Providers.IProviderRuntime,Orleans.Providers.IProviderConfiguration)">
+            <summary> Initialization function for this storage provider. </summary>
+            <see cref="M:Orleans.Providers.IProvider.Init(System.String,Orleans.Providers.IProviderRuntime,Orleans.Providers.IProviderConfiguration)"/>
+        </member>
+        <member name="M:Orleans.Storage.AzureTableStorage.Close">
+            <summary> Shutdown this storage provider. </summary>
+            <see cref="M:Orleans.Providers.IProvider.Close"/>
+        </member>
+        <member name="M:Orleans.Storage.AzureTableStorage.ReadStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Read state data function for this storage provider. </summary>
+            <see cref="M:Orleans.Storage.IStorageProvider.ReadStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+        <member name="M:Orleans.Storage.AzureTableStorage.WriteStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Write state data function for this storage provider. </summary>
+            <see cref="M:Orleans.Storage.IStorageProvider.WriteStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+        <member name="M:Orleans.Storage.AzureTableStorage.ClearStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Clear / Delete state data function for this storage provider. </summary>
+            <remarks>
+            If the <c>DeleteStateOnClear</c> is set to <c>true</c> then the table row
+            for this grain will be deleted / removed, otherwise the table row will be
+            cleared by overwriting with default / null values.
+            </remarks>
+            <see cref="M:Orleans.Storage.IStorageProvider.ClearStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+        <member name="M:Orleans.Storage.AzureTableStorage.ConvertToStorageFormat(System.Object,Microsoft.WindowsAzure.Storage.Table.DynamicTableEntity)">
+            <summary>
+            Serialize to Azure storage format in either binary or JSON format.
+            </summary>
+            <param name="grainState">The grain state data to be serialized</param>
+            <param name="entity">The Azure table entity the data should be stored in</param>
+            <remarks>
+            See:
+            http://msdn.microsoft.com/en-us/library/system.web.script.serialization.javascriptserializer.aspx
+            for more on the JSON serializer.
+            </remarks>
+        </member>
+        <member name="M:Orleans.Storage.AzureTableStorage.ConvertFromStorageFormat(Microsoft.WindowsAzure.Storage.Table.DynamicTableEntity)">
+            <summary>
+            Deserialize from Azure storage format
+            </summary>
+            <param name="entity">The Azure table entity the stored data</param>
+        </member>
+        <member name="M:Orleans.Storage.AzureTableStorage.DecodeException(System.Exception,System.Net.HttpStatusCode@,System.String@,System.Boolean)">
+            <summary> Decodes Storage exceptions.</summary>
+        </member>
+        <member name="T:Orleans.Providers.Streams.PersistentStreams.AzureTableStorageStreamFailureHandler`1">
+            <summary>
+            Delivery failure handler that writes failures to azure table storage.
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="M:Orleans.Providers.Streams.PersistentStreams.AzureTableStorageStreamFailureHandler`1.#ctor(System.Boolean,System.String,System.String,System.String,System.Func{`0})">
+            <summary>
+            Delivery failure handler that writes failures to azure table storage.
+            </summary>
+            <param name="faultOnFailure"></param>
+            <param name="deploymentId"></param>
+            <param name="tableName"></param>
+            <param name="storageConnectionString"></param>
+            <param name="createEntity"></param>
+        </member>
+        <member name="P:Orleans.Providers.Streams.PersistentStreams.AzureTableStorageStreamFailureHandler`1.ShouldFaultSubsriptionOnError">
+            <summary>
+            Indicates if the subscription should be put in a fauted state upon stream failures
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.PersistentStreams.AzureTableStorageStreamFailureHandler`1.InitAsync">
+            <summary>
+            Initialization
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.Providers.Streams.PersistentStreams.AzureTableStorageStreamFailureHandler`1.OnDeliveryFailure(Orleans.Runtime.GuidId,System.String,Orleans.Streams.IStreamIdentity,Orleans.Streams.StreamSequenceToken)">
+            <summary>
+            Should be called when an event could not be delivered to a consumer, after exhausting retry attempts.
+            </summary>
+            <param name="subscriptionId"></param>
+            <param name="streamProviderName"></param>
+            <param name="streamIdentity"></param>
+            <param name="sequenceToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.Providers.Streams.PersistentStreams.AzureTableStorageStreamFailureHandler`1.OnSubscriptionFailure(Orleans.Runtime.GuidId,System.String,Orleans.Streams.IStreamIdentity,Orleans.Streams.StreamSequenceToken)">
+            <summary>
+            Should be called when a subscription requested by a consumer could not be setup, after exhausting retry attempts.
+            </summary>
+            <param name="subscriptionId"></param>
+            <param name="streamProviderName"></param>
+            <param name="streamIdentity"></param>
+            <param name="sequenceToken"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Orleans.Providers.Streams.PersistentStreams.StreamDeliveryFailureEntity">
+            <summary>
+            Delivery failure table storage entity.
+            </summary>
+        </member>
+        <member name="P:Orleans.Providers.Streams.PersistentStreams.StreamDeliveryFailureEntity.SubscriptionId">
+            <summary>
+            Id of the subscription on which this delivery failure occured.
+            </summary>
+        </member>
+        <member name="P:Orleans.Providers.Streams.PersistentStreams.StreamDeliveryFailureEntity.StreamProviderName">
+            <summary>
+            Name of the stream provider generating this failure.
+            </summary>
+        </member>
+        <member name="P:Orleans.Providers.Streams.PersistentStreams.StreamDeliveryFailureEntity.StreamGuid">
+            <summary>
+            Guid Id of the stream on which the failure occured.
+            </summary>
+        </member>
+        <member name="P:Orleans.Providers.Streams.PersistentStreams.StreamDeliveryFailureEntity.StreamNamespace">
+            <summary>
+            Namespace of the stream on which the failure occured.
+            </summary>
+        </member>
+        <member name="P:Orleans.Providers.Streams.PersistentStreams.StreamDeliveryFailureEntity.SequenceToken">
+            <summary>
+            Serialized sequence token of the event that failed delivery.
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.PersistentStreams.StreamDeliveryFailureEntity.SetPartitionKey(System.String)">
+            <summary>
+            Sets the partition key before persist call.
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.PersistentStreams.StreamDeliveryFailureEntity.MakeDefaultPartitionKey(System.String,System.String)">
+            <summary>
+            Default partition key
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.PersistentStreams.StreamDeliveryFailureEntity.SetRowkey">
+            <summary>
+            Sets the row key before persist call
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.PersistentStreams.StreamDeliveryFailureEntity.SetSequenceToken(Orleans.Streams.StreamSequenceToken)">
+            <summary>
+            Sets sequence token by serializing it to property.
+            </summary>
+            <param name="token"></param>
+        </member>
+        <member name="M:Orleans.Providers.Streams.PersistentStreams.StreamDeliveryFailureEntity.GetSequenceToken">
+            <summary>
+            Gets sequence token by deserializing it from property.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.Providers.Streams.PersistentStreams.StreamDeliveryFailureEntity.ReverseOrderTimestampTicks">
+            <summary>
+            Returns the number of ticks from now (UTC) to the year 9683.
+            </summary>
+            <remarks>
+            This is useful for ordering the most recent failures at the start of the partition.  While useful
+             for efficient table storage queries, under heavy failure load this may cause a hot spot in the 
+             table. This is not an expected occurrence, but if it happens, we recommend subdividing your row
+             key with some other field (stream namespace?).
+            </remarks>
+            <returns></returns>
+        </member>
+        <member name="T:Orleans.Providers.Streams.AzureQueue.AzureQueueAdapterFactory">
+            <summary> Factory class for Azure Queue based stream provider.</summary>
+        </member>
+        <member name="F:Orleans.Providers.Streams.AzureQueue.AzureQueueAdapterFactory.NumQueuesDefaultValue">
+            <summary> Default number of Azure Queue used in this stream provider.</summary>
+        </member>
+        <member name="F:Orleans.Providers.Streams.AzureQueue.AzureQueueAdapterFactory.DataConnectionStringPropertyName">
+            <summary>"DataConnectionString".</summary>
+        </member>
+        <member name="F:Orleans.Providers.Streams.AzureQueue.AzureQueueAdapterFactory.DeploymentIdPropertyName">
+            <summary>"DeploymentId".</summary>
+        </member>
+        <member name="P:Orleans.Providers.Streams.AzureQueue.AzureQueueAdapterFactory.StreamFailureHandlerFactory">
+            <summary>
+            Application level failure handler override.
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.AzureQueue.AzureQueueAdapterFactory.Init(Orleans.Providers.IProviderConfiguration,System.String,Orleans.Runtime.Logger,System.IServiceProvider)">
+            <summary> Init the factory.</summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.AzureQueue.AzureQueueAdapterFactory.CreateAdapter">
+            <summary>Creates the Azure Queue based adapter.</summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.AzureQueue.AzureQueueAdapterFactory.GetQueueAdapterCache">
+            <summary>Creates the adapter cache.</summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.AzureQueue.AzureQueueAdapterFactory.GetStreamQueueMapper">
+            <summary>Creates the factory stream queue mapper.</summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.AzureQueue.AzureQueueAdapterFactory.GetDeliveryFailureHandler(Orleans.Streams.QueueId)">
+            <summary>
+            Creates a delivery failure handler for the specified queue.
+            </summary>
+            <param name="queueId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Orleans.Providers.Streams.AzureQueue.AzureQueueAdapterReceiver">
+            <summary>
+            Recieves batches of messages from a single partition of a message queue.  
+            </summary>
+        </member>
+        <member name="T:Orleans.Providers.Streams.AzureQueue.AzureQueueStreamProvider">
+            <summary>
+            Persistent stream provider that uses azure queue for persistence
+            </summary>
+        </member>
+        <member name="T:Orleans.Providers.Streams.AzureQueue.AzureQueueStreamProviderUtils">
+            <summary>
+            Utility functions for azure queue Persistent stream provider.
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.AzureQueue.AzureQueueStreamProviderUtils.DeleteAllUsedAzureQueues(System.String,System.String,System.String)">
+            <summary>
+            Helper method for testing. Deletes all the queues used by the specifed stream provider.
+            </summary>
+            <param name="providerName">The Azure Queue stream privider name.</param>
+            <param name="deploymentId">The deployment ID hosting the stream provider.</param>
+            <param name="storageConnectionString">The azure storage connection string.</param>
+        </member>
+        <member name="M:Orleans.Providers.Streams.AzureQueue.AzureQueueStreamProviderUtils.ClearAllUsedAzureQueues(System.String,System.String,System.String)">
+            <summary>
+            Helper method for testing. Clears all messages in all the queues used by the specifed stream provider.
+            </summary>
+            <param name="providerName">The Azure Queue stream privider name.</param>
+            <param name="deploymentId">The deployment ID hosting the stream provider.</param>
+            <param name="storageConnectionString">The azure storage connection string.</param>
+        </member>
+        <member name="T:Orleans.Providers.Streams.AzureQueue.SimpleAzureQueueAdapterFactory">
+            <summary> Factory class for Simple Azure Queue based stream provider.</summary>
+        </member>
+        <member name="F:Orleans.Providers.Streams.AzureQueue.SimpleAzureQueueAdapterFactory.QUEUE_NAME_STRING">
+            <summary>"QueueName".</summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.AzureQueue.SimpleAzureQueueAdapterFactory.Init(Orleans.Providers.IProviderConfiguration,System.String,Orleans.Runtime.Logger,System.IServiceProvider)">
+            <summary> Init the factory.</summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.AzureQueue.SimpleAzureQueueAdapterFactory.CreateAdapter">
+            <summary>Creates the Simple Azure Queue based adapter.</summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.AzureQueue.SimpleAzureQueueAdapterFactory.GetQueueAdapterCache">
+            <summary>Creates the adapter cache.</summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.AzureQueue.SimpleAzureQueueAdapterFactory.GetStreamQueueMapper">
+            <summary>Creates the factory stream queue mapper.</summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.AzureQueue.SimpleAzureQueueAdapterFactory.GetDeliveryFailureHandler(Orleans.Streams.QueueId)">
+            <summary>
+            Creates a delivery failure handler for the specified queue.
+            </summary>
+            <param name="queueId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Orleans.Providers.Streams.AzureQueue.SimpleAzureQueueStreamProvider">
+            <summary>
+            Persistent stream provider that uses azure queue for persistence
+            </summary>
+        </member>
+        <member name="T:Orleans.AzureUtils.AzureQueueDefaultPolicies">
+             <summary>
+             How to use the Queue Storage Service: http://www.windowsazure.com/en-us/develop/net/how-to-guides/queue-service/
+             Windows Azure Storage Abstractions and their Scalability Targets: http://blogs.msdn.com/b/windowsazurestorage/archive/2010/05/10/windows-azure-storage-abstractions-and-their-scalability-targets.aspx
+             Naming Queues and Metadata: http://msdn.microsoft.com/en-us/library/windowsazure/dd179349.aspx
+             Windows Azure Queues and Windows Azure Service Bus Queues - Compared and Contrasted: http://msdn.microsoft.com/en-us/library/hh767287(VS.103).aspx
+             Status and Error Codes: http://msdn.microsoft.com/en-us/library/dd179382.aspx
+            
+             http://blogs.msdn.com/b/windowsazurestorage/archive/tags/scalability/
+             http://blogs.msdn.com/b/windowsazurestorage/archive/2010/12/30/windows-azure-storage-architecture-overview.aspx
+             http://blogs.msdn.com/b/windowsazurestorage/archive/2010/11/06/how-to-get-most-out-of-windows-azure-tables.aspx
+             
+             </summary>
+        </member>
+        <member name="T:Orleans.AzureUtils.AzureQueueDataManager">
+            <summary>
+            Utility class to encapsulate access to Azure queue storage.
+            </summary>
+            <remarks>
+            Used by Azure queue streaming provider.
+            </remarks>
+        </member>
+        <member name="P:Orleans.AzureUtils.AzureQueueDataManager.QueueName">
+            <summary> Name of the table queue instance is managing. </summary>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureQueueDataManager.#ctor(System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="queueName">Name of the queue to be connected to.</param>
+            <param name="storageConnectionString">Connection string for the Azure storage account used to host this table.</param>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureQueueDataManager.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Constructor.
+            </summary>
+            <param name="queueName">Name of the queue to be connected to.</param>
+            <param name="deploymentId">The deployment id of the Azure service hosting this silo. It will be concatenated to the queueName.</param>
+            <param name="storageConnectionString">Connection string for the Azure storage account used to host this table.</param>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureQueueDataManager.InitQueueAsync">
+            <summary>
+            Initializes the connection to the queue.
+            </summary>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureQueueDataManager.DeleteQueue">
+            <summary>
+            Deletes the queue.
+            </summary>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureQueueDataManager.ClearQueue">
+            <summary>
+            Clears the queue.
+            </summary>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureQueueDataManager.AddQueueMessage(Microsoft.WindowsAzure.Storage.Queue.CloudQueueMessage)">
+            <summary>
+            Adds a new message to the queue.
+            </summary>
+            <param name="message">Message to be added to the queue.</param>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureQueueDataManager.PeekQueueMessage">
+            <summary>
+            Peeks in the queue for latest message, without dequeueing it.
+            </summary>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureQueueDataManager.GetQueueMessage">
+            <summary>
+            Gets a new message from the queue.
+            </summary>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureQueueDataManager.GetQueueMessages(System.Int32)">
+            <summary>
+            Gets a number of new messages from the queue.
+            </summary>
+            <param name="count">Number of messages to get from the queue.</param>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureQueueDataManager.DeleteQueueMessage(Microsoft.WindowsAzure.Storage.Queue.CloudQueueMessage)">
+            <summary>
+            Deletes a messages from the queue.
+            </summary>
+            <param name="message">A message to be deleted from the queue.</param>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureQueueDataManager.GetApproximateMessageCount">
+            <summary>
+            Returns an approximate number of messages in the queue.
+            </summary>
+        </member>
+        <member name="T:Orleans.AzureUtils.AzureStorageUtils">
+            <summary>
+            General utility functions related to Azure storage.
+            </summary>
+            <remarks>
+            These functions are mostly intended for internal usage by Orleans runtime, but due to certain assembly packaging constrants this class needs to have public visibility.
+            </remarks>
+        </member>
+        <member name="F:Orleans.AzureUtils.AzureStorageUtils.ANY_ETAG">
+            <summary>
+            ETag of value "*" to match any etag for conditional table operations (update, nerge, delete).
+            </summary>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureStorageUtils.TableStorageDataNotFound(System.Exception)">
+            <summary>
+            Inspect an exception returned from Azure storage libraries to check whether it means that attempt was made to read some data that does not exist in storage table.
+            </summary>
+            <param name="exc">Exception that was returned by Azure storage library operation</param>
+            <returns><c>True</c> if this exception means the data being read was not present in Azure table storage</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureStorageUtils.ExtractRestErrorCode(System.Exception)">
+            <summary>
+            Extract REST error code from DataServiceClientException or DataServiceQueryException
+            </summary>
+            <param name="exc">Exception to be inspected.</param>
+            <returns>Returns REST error code if found, otherwise <c>null</c></returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureStorageUtils.EvaluateException(System.Exception,System.Net.HttpStatusCode@,System.String@,System.Boolean)">
+            <summary>
+            Examine a storage exception, and if applicable extracts the HTTP status code, and REST error code if <c>getRESTErrors=true</c>.
+            </summary>
+            <param name="e">Exeption to be examined.</param>
+            <param name="httpStatusCode">Output HTTP status code if applicable, otherwise HttpStatusCode.Unused (306)</param>
+            <param name="restStatus">When <c>getRESTErrors=true</c>, will output REST error code if applicable, otherwise <c>null</c></param>
+            <param name="getRESTErrors">Whether REST error code should also be examined / extracted.</param>
+            <returns>Returns <c>true</c> if HTTP status code and REST error were extracted.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureStorageUtils.IsRetriableHttpError(System.Net.HttpStatusCode,System.String)">
+            <summary>
+            Returns true if the specified HTTP status / error code is returned in a transient / retriable error condition
+            </summary>
+            <param name="httpStatusCode">HTTP error code value</param>
+            <param name="restStatusCode">REST error code value</param>
+            <returns><c>true</c> if this is a transient / retriable error condition</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureStorageUtils.IsContentionError(System.Net.HttpStatusCode)">
+            <summary>
+            Check whether a HTTP status code returned from a REST call might be due to a (temporary) storage contention error.
+            </summary>
+            <param name="httpStatusCode">HTTP status code to be examined.</param>
+            <returns>Returns <c>true</c> if the HTTP status code is due to storage contention.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureStorageUtils.IsNotFoundError(System.Net.HttpStatusCode)">
+            <summary>
+            Check whether a HTTP status code returned from a REST call might be due to a (temporary) storage contention error.
+            </summary>
+            <param name="httpStatusCode">HTTP status code to be examined.</param>
+            <returns>Returns <c>true</c> if the HTTP status code is due to storage contention.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureStorageUtils.SanitizeTableProperty(System.String)">
+            <summary>
+            Remove any characters that can't be used in Azure PartitionKey or RowKey values.
+            </summary>
+            <param name="key"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Orleans.AzureUtils.AzureTableDataManager`1">
+            <summary>
+            Utility class to encapsulate row-based access to Azure table storage.
+            </summary>
+            <remarks>
+            These functions are mostly intended for internal usage by Orleans runtime, but due to certain assembly packaging constrants this class needs to have public visibility.
+            </remarks>
+            <typeparam name="T">Table data entry used by this table / manager.</typeparam>
+        </member>
+        <member name="P:Orleans.AzureUtils.AzureTableDataManager`1.TableName">
+            <summary> Name of the table this instance is managing. </summary>
+        </member>
+        <member name="P:Orleans.AzureUtils.AzureTableDataManager`1.Logger">
+            <summary> TraceLogger for this table manager instance. </summary>
+        </member>
+        <member name="P:Orleans.AzureUtils.AzureTableDataManager`1.ConnectionString">
+            <summary> Connection string for the Azure storage account used to host this table. </summary>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.#ctor(System.String,System.String,Orleans.Runtime.TraceLogger)">
+            <summary>
+            Constructor
+            </summary>
+            <param name="tableName">Name of the table to be connected to.</param>
+            <param name="storageConnectionString">Connection string for the Azure storage account used to host this table.</param>
+            <param name="logger">Logger to use.</param>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.InitTableAsync">
+            <summary>
+            Connects to, or creates and initializes a new Azure table if it does not already exist.
+            </summary>
+            <returns>Completion promise for this operation.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.DeleteTableAsync">
+            <summary>
+            Deletes the Azure table.
+            </summary>
+            <returns>Completion promise for this operation.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.ClearTableAsync">
+            <summary>
+            Deletes all entities the Azure table.
+            </summary>
+            <returns>Completion promise for this operation.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.CreateTableEntryAsync(`0)">
+            <summary>
+            Create a new data entry in the Azure table (insert new, not update existing).
+            Fails if the data already exists.
+            </summary>
+            <param name="data">Data to be inserted into the table.</param>
+            <returns>Value promise with new Etag for this data entry after completing this storage operation.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.UpsertTableEntryAsync(`0)">
+            <summary>
+            Inserts a data entry in the Azure table: creates a new one if does not exists or overwrites (without eTag) an already existing version (the "update in place" semantincs).
+            </summary>
+            <param name="data">Data to be inserted or replaced in the table.</param>
+            <returns>Value promise with new Etag for this data entry after completing this storage operation.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.MergeTableEntryAsync(`0,System.String)">
+            <summary>
+            Merges a data entry in the Azure table.
+            </summary>
+            <param name="data">Data to be merged in the table.</param>
+            <param name="eTag">ETag to apply.</param>
+            <returns>Value promise with new Etag for this data entry after completing this storage operation.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.UpdateTableEntryAsync(`0,System.String)">
+            <summary>
+            Updates a data entry in the Azure table: updates an already existing data in the table, by using eTag.
+            Fails if the data does not already exist or of eTag does not match.
+            </summary>
+            <param name="data">Data to be updated into the table.</param>
+            /// <param name="dataEtag">ETag to use.</param>
+            <returns>Value promise with new Etag for this data entry after completing this storage operation.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.DeleteTableEntryAsync(`0,System.String)">
+            <summary>
+            Deletes an already existing data in the table, by using eTag.
+            Fails if the data does not already exist or if eTag does not match.
+            </summary>
+            <param name="data">Data entry to be deleted from the table.</param>
+            <param name="eTag">ETag to use.</param>
+            <returns>Completion promise for this storage operation.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.ReadSingleTableEntryAsync(System.String,System.String)">
+            <summary>
+            Read a single table entry from the storage table.
+            </summary>
+            <param name="partitionKey">The partition key for the entry.</param>
+            <param name="rowKey">The row key for the entry.</param>
+            <returns>Value promise for tuple containing the data entry and its corresponding etag.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.ReadAllTableEntriesForPartitionAsync(System.String)">
+            <summary>
+            Read all entries in one partition of the storage table.
+            NOTE: This could be an expensive and slow operation for large table partitions!
+            </summary>
+            <param name="partitionKey">The key for the partition to be searched.</param>
+            <returns>Enumeration of all entries in the specified table partition.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.ReadAllTableEntriesAsync">
+            <summary>
+            Read all entries in the table.
+            NOTE: This could be a very expensive and slow operation for large tables!
+            </summary>
+            <returns>Enumeration of all entries in the table.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.DeleteTableEntriesAsync(System.Collections.Generic.IReadOnlyCollection{System.Tuple{`0,System.String}})">
+            <summary>
+            Deletes a set of already existing data entries in the table, by using eTag.
+            Fails if the data does not already exist or if eTag does not match.
+            </summary>
+            <param name="collection">Data entries and their corresponding etags to be deleted from the table.</param>
+            <returns>Completion promise for this storage operation.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.ReadTableEntriesAndEtagsAsync(System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Read data entries and their corresponding eTags from the Azure table.
+            </summary>
+            <param name="predicate">Predicate function to use for querying the table and filtering the results.</param>
+            <returns>Enumeration of entries in the table which match the query condition.</returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.AzureTableDataManager`1.BulkInsertTableEntries(System.Collections.Generic.IReadOnlyCollection{`0})">
+            <summary>
+            Inserts a set of new data entries into the table.
+            Fails if the data does already exists.
+            </summary>
+            <param name="collection">Data entries to be inserted into the table.</param>
+            <returns>Completion promise for this storage operation.</returns>
+        </member>
+        <member name="T:Orleans.AzureUtils.AzureTableDefaultPolicies">
+            <summary>
+            Utility class for default retry / timeout settings for Azure storage.
+            </summary>
+            <remarks>
+            These functions are mostly intended for internal usage by Orleans runtime, but due to certain assembly packaging constrants this class needs to have public visibility.
+            </remarks>
+        </member>
+        <member name="M:Orleans.AzureUtils.OrleansSiloInstanceManager.ConvertToGatewayUri(Orleans.AzureUtils.SiloInstanceTableEntry)">
+            <summary>
+            Represent a silo instance entry in the gateway URI format.
+            </summary>
+            <param name="gateway">The input silo instance</param>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.OrleansSiloInstanceManager.TryCreateTableVersionEntryAsync">
+            <summary>
+            Insert (create new) row entry
+            </summary>
+        </member>
+        <member name="M:Orleans.AzureUtils.OrleansSiloInstanceManager.InsertSiloEntryConditionally(Orleans.AzureUtils.SiloInstanceTableEntry,Orleans.AzureUtils.SiloInstanceTableEntry,System.String)">
+            <summary>
+            Insert (create new) row entry
+            </summary>
+            <param name="siloEntry">Silo Entry to be written</param>
+            <param name="tableVersionEntry">Version row to update</param>
+            <param name="tableVersionEtag">Version row eTag</param>
+        </member>
+        <member name="M:Orleans.AzureUtils.OrleansSiloInstanceManager.UpdateSiloEntryConditionally(Orleans.AzureUtils.SiloInstanceTableEntry,System.String,Orleans.AzureUtils.SiloInstanceTableEntry,System.String)">
+            <summary>
+            Conditionally update the row for this entry, but only if the eTag matches with the current record in data store
+            </summary>
+            <param name="siloEntry">Silo Entry to be written</param>
+            <param name="entryEtag">ETag value for the entry being updated</param>
+            <param name="tableVersionEntry">Version row to update</param>
+            <param name="versionEtag">ETag value for the version row</param>
+            <returns></returns>
+        </member>
+        <member name="T:Orleans.AzureUtils.StatsTableDataManager">
+            <summary>
+            Publishes silo or client statistics to Azure Table
+            </summary>
+        </member>
+        <member name="M:Orleans.AzureUtils.StatsTableDataManager.ReportStats(System.Collections.Generic.List{Orleans.Runtime.ICounter})">
+            <summary>
+            Writes a set of statistics to storage.
+            </summary>
+            <param name="statsCounters">Statistics to write</param>
+            <returns></returns>
+        </member>
+        <member name="T:Orleans.AzureUtils.TableQueryFilterBuilder">
+            <summary>
+            Helper functions for building table queries.
+            </summary>
+        </member>
+        <member name="M:Orleans.AzureUtils.TableQueryFilterBuilder.MatchPartitionKeyFilter(System.String)">
+            <summary>
+            Builds query string to match partitionkey
+            </summary>
+            <param name="partitionKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.TableQueryFilterBuilder.MatchRowKeyFilter(System.String)">
+            <summary>
+            Builds query string to match rowkey
+            </summary>
+            <param name="rowKey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.AzureUtils.TableQueryFilterBuilder.MatchPartitionKeyAndRowKeyFilter(System.String,System.String)">
+            <summary>
+            Builds a query string that matches a specific partitionkey and rowkey.
+            </summary>
+            <param name="partitionKey"></param>
+            <param name="rowKey"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

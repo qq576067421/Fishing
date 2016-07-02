@@ -1,0 +1,918 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrleansCodeGenerator</name>
+    </assembly>
+    <members>
+        <member name="T:Orleans.CodeGenerator.GeneratedSyntax">
+            <summary>
+            Represents generated code syntax.
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.GeneratedSyntax.SourceAssemblies">
+            <summary>
+            Gets or sets the collection of assemblies which this syntax was generated for.
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.GeneratedSyntax.Syntax">
+            <summary>
+            Gets or sets generated abstract syntax tree for the source assemblies.
+            </summary>
+        </member>
+        <member name="T:Orleans.CodeGenerator.SerializerGenerationManager">
+            <summary>
+            The serializer generation manager.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.SerializerGenerationManager.Log">
+            <summary>
+            The logger.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.SerializerGenerationManager.TypesToProcess">
+            <summary>
+            The types to process.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.SerializerGenerationManager.ProcessedTypes">
+            <summary>
+            The processed types.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.SerializerGenerationManager.KnownGenericIntefaceTypes">
+            <summary>
+            The generic interface types whose type arguments needs serializators generation
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.SerializerGenerationManager.KnownGenericBaseTypes">
+            <summary>
+            The generic base types whose type arguments needs serializators generation
+            </summary>
+        </member>
+        <member name="M:Orleans.CodeGenerator.SerializerGenerationManager.#ctor">
+            <summary>
+            Initializes members of the <see cref="T:Orleans.CodeGenerator.SerializerGenerationManager"/> class.
+            </summary>
+        </member>
+        <member name="T:Orleans.CodeGenerator.SerializerGenerator">
+            <summary>
+            Code generator which generates serializers.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.SerializerGenerator.ClassSuffix">
+            <summary>
+            The suffix appended to the name of generated classes.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.SerializerGenerator.RegistererClassSuffix">
+            <summary>
+            The suffix appended to the name of the generic serializer registration class.
+            </summary>
+        </member>
+        <member name="M:Orleans.CodeGenerator.SerializerGenerator.GenerateClass(System.Type,System.Action{System.Type})">
+            <summary>
+            Generates the class for the provided grain types.
+            </summary>
+            <param name="type">The grain interface type.</param>
+            <param name="onEncounteredType">
+            The callback invoked when a type is encountered.
+            </param>
+            <returns>
+            The generated class.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.SerializerGenerator.GenerateDeserializerMethod(System.Type,System.Collections.Generic.List{Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember})">
+            <summary>
+            Returns syntax for the deserializer method.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="fields">The fields.</param>
+            <returns>Syntax for the deserializer method.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.SerializerGenerator.GenerateDeepCopierMethod(System.Type,System.Collections.Generic.List{Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember})">
+            <summary>
+            Returns syntax for the deep copier method.
+            </summary>
+            <param name="type">The type.</param>
+            <param name="fields">The fields.</param>
+            <returns>Syntax for the deep copier method.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.SerializerGenerator.GenerateStaticFields(System.Collections.Generic.List{Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember})">
+            <summary>
+            Returns syntax for the static fields of the serializer class.
+            </summary>
+            <param name="fields">The fields.</param>
+            <returns>Syntax for the static fields of the serializer class.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.SerializerGenerator.GetObjectCreationExpressionSyntax(System.Type)">
+            <summary>
+            Returns syntax for initializing a new instance of the provided type.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>Syntax for initializing a new instance of the provided type.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.SerializerGenerator.GenerateRegisterMethod(System.Type)">
+            <summary>
+            Returns syntax for the serializer registration method.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>Syntax for the serializer registration method.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.SerializerGenerator.GenerateConstructor(System.String)">
+            <summary>
+            Returns syntax for the constructor.
+            </summary>
+            <param name="className">The name of the class.</param>
+            <returns>Syntax for the constructor.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.SerializerGenerator.GenerateMasterRegisterMethod(System.Type,Microsoft.CodeAnalysis.CSharp.Syntax.TypeSyntax)">
+            <summary>
+            Returns syntax for the generic serializer registration method for the provided type..
+            </summary>
+            <param name="type">The type which is supported by this serializer.</param>
+            <param name="serializerType">The type of the serializer.</param>
+            <returns>Syntax for the generic serializer registration method for the provided type..</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.SerializerGenerator.GetFields(System.Type)">
+            <summary>
+            Returns a sorted list of the fields of the provided type.
+            </summary>
+            <param name="type">The type.</param>
+            <returns>A sorted list of the fields of the provided type.</returns>
+        </member>
+        <member name="T:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember">
+            <summary>
+            Represents a field.
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.FieldInfo">
+            <summary>
+            Gets or sets the underlying <see cref="P:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.FieldInfo"/> instance.
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.FieldNumber">
+            <summary>
+            Sets the ordinal assigned to this field.
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.InfoFieldName">
+            <summary>
+            Gets the name of the field info field.
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.GetterFieldName">
+            <summary>
+            Gets the name of the getter field.
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.SetterFieldName">
+            <summary>
+            Gets the name of the setter field.
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.IsGettableProperty">
+            <summary>
+            Gets a value indicating whether or not this field represents a property with an accessible, non-obsolete getter. 
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.IsSettableProperty">
+            <summary>
+            Gets a value indicating whether or not this field represents a property with an accessible, non-obsolete setter. 
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.Type">
+            <summary>
+            Gets syntax representing the type of this field.
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.PropertyInfo">
+            <summary>
+            Gets the <see cref="P:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.PropertyInfo"/> which this field is the backing property for, or
+            <see langword="null" /> if this is not the backing field of an auto-property.
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.IsObsolete">
+            <summary>
+            Gets a value indicating whether or not this field is obsolete.
+            </summary>
+        </member>
+        <member name="M:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.GetGetter(Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax,System.Boolean)">
+            <summary>
+            Returns syntax for retrieving the value of this field, deep copying it if neccessary.
+            </summary>
+            <param name="instance">The instance of the containing type.</param>
+            <param name="forceAvoidCopy">Whether or not to ensure that no copy of the field is made.</param>
+            <returns>Syntax for retrieving the value of this field.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.GetSetter(Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax,Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax)">
+            <summary>
+            Returns syntax for setting the value of this field.
+            </summary>
+            <param name="instance">The instance of the containing type.</param>
+            <param name="value">Syntax for the new value.</param>
+            <returns>Syntax for setting the value of this field.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.GetValueExpression(Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax)">
+            <summary>
+            Returns syntax for retrieving the value of this field.
+            </summary>
+            <param name="instance">The instance of the containing type.</param>
+            <returns>Syntax for retrieving the value of this field.</returns>
+        </member>
+        <member name="T:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.Comparer">
+            <summary>
+            A comparer for <see cref="T:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember"/> which compares by name.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.Comparer.Singleton">
+            <summary>
+            The singleton instance.
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.SerializerGenerator.FieldInfoMember.Comparer.Instance">
+            <summary>
+            Gets the singleton instance of this class.
+            </summary>
+        </member>
+        <member name="T:Orleans.CodeGenerator.RoslynCodeGenerator">
+            <summary>
+            Implements a code generator using the Roslyn C# compiler.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.RoslynCodeGenerator.CompiledAssemblies">
+            <summary>
+            The compiled assemblies.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.RoslynCodeGenerator.Logger">
+            <summary>
+            The logger.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.RoslynCodeGenerator.SerializerGenerationManager">
+            <summary>
+            The serializer generation manager.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.RoslynCodeGenerator.StaticInstance">
+            <summary>
+            The static instance.
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.RoslynCodeGenerator.Instance">
+            <summary>
+            Gets the static instance.
+            </summary>
+        </member>
+        <member name="M:Orleans.CodeGenerator.RoslynCodeGenerator.AddGeneratedAssembly(System.String,System.Byte[])">
+            <summary>
+            Adds a pre-generated assembly.
+            </summary>
+            <param name="targetAssemblyName">
+            The name of the assembly the provided <paramref name="generatedAssembly"/> targets.
+            </param>
+            <param name="generatedAssembly">
+            The generated assembly.
+            </param>
+        </member>
+        <member name="M:Orleans.CodeGenerator.RoslynCodeGenerator.GenerateAndLoadForAllAssemblies">
+            <summary>
+            Generates code for all loaded assemblies and loads the output.
+            </summary>
+        </member>
+        <member name="M:Orleans.CodeGenerator.RoslynCodeGenerator.GenerateAndLoadForAssemblies(System.Reflection.Assembly[])">
+            <summary>
+            Generates and loads code for the specified inputs.
+            </summary>
+            <param name="inputs">The assemblies to generate code for.</param>
+        </member>
+        <member name="M:Orleans.CodeGenerator.RoslynCodeGenerator.GenerateAndLoadForAssembly(System.Reflection.Assembly)">
+            <summary>
+            Ensures that code generation has been run for the provided assembly.
+            </summary>
+            <param name="input">
+            The assembly to generate code for.
+            </param>
+        </member>
+        <member name="M:Orleans.CodeGenerator.RoslynCodeGenerator.GenerateSourceForAssembly(System.Reflection.Assembly)">
+            <summary>
+            Generates source code for the provided assembly.
+            </summary>
+            <param name="input">
+            The assembly to generate source for.
+            </param>
+            <returns>
+            The generated source.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.RoslynCodeGenerator.GetGeneratedAssemblies">
+            <summary>
+            Returns the collection of generated assemblies as pairs of target assembly name to raw assembly bytes.
+            </summary>
+            <returns>The collection of generated assemblies.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.RoslynCodeGenerator.TryLoadGeneratedAssemblyFromCache(System.Reflection.Assembly)">
+            <summary>
+            Attempts to load a generated assembly from the cache.
+            </summary>
+            <param name="targetAssembly">
+            The target assembly which the cached counterpart is generated for.
+            </param>
+        </member>
+        <member name="M:Orleans.CodeGenerator.RoslynCodeGenerator.CompileAndLoad(Orleans.CodeGenerator.GeneratedSyntax)">
+            <summary>
+            Compiles the provided syntax tree, and loads and returns the result.
+            </summary>
+            <param name="generatedSyntax">The syntax tree.</param>
+            <returns>The compilation output.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.RoslynCodeGenerator.GenerateForAssemblies(System.Collections.Generic.List{System.Reflection.Assembly},System.Boolean)">
+            <summary>
+            Generates a syntax tree for the provided assemblies.
+            </summary>
+            <param name="assemblies">The assemblies to generate code for.</param>
+            <param name="runtime">Whether or not runtime code generation is being performed.</param>
+            <returns>The generated syntax tree.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.RoslynCodeGenerator.GetTypesWithGeneratedSupportClasses">
+            <summary>
+            Get types which have corresponding generated classes.
+            </summary>
+            <returns>Types which have corresponding generated classes marked.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.RoslynCodeGenerator.ShouldGenerateCodeForAssembly(System.Reflection.Assembly)">
+            <summary>
+            Returns a value indicating whether or not code should be generated for the provided assembly.
+            </summary>
+            <param name="assembly">The assembly.</param>
+            <returns>A value indicating whether or not code should be generated for the provided assembly.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.RoslynCodeGenerator.RegisterGeneratedCodeTargets(System.Reflection.Assembly)">
+            <summary>
+            Registers the input assembly with this class.
+            </summary>
+            <param name="input">The assembly to register.</param>
+        </member>
+        <member name="T:Orleans.CodeGenerator.RoslynCodeGenerator.GeneratedAssembly">
+            <summary>
+            Represents a generated assembly.
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.RoslynCodeGenerator.GeneratedAssembly.Loaded">
+            <summary>
+            Gets or sets a value indicating whether or not the assembly has been loaded.
+            </summary>
+        </member>
+        <member name="P:Orleans.CodeGenerator.RoslynCodeGenerator.GeneratedAssembly.RawBytes">
+            <summary>
+            Gets or sets a serialized representation of the assembly.
+            </summary>
+        </member>
+        <member name="T:Orleans.CodeGenerator.CodeGenerationException">
+            <summary>
+            The code generation exception.
+            </summary>
+        </member>
+        <member name="M:Orleans.CodeGenerator.CodeGenerationException.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orleans.CodeGenerator.CodeGenerationException"/> class.
+            </summary>
+        </member>
+        <member name="M:Orleans.CodeGenerator.CodeGenerationException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orleans.CodeGenerator.CodeGenerationException"/> class.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+        </member>
+        <member name="M:Orleans.CodeGenerator.CodeGenerationException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orleans.CodeGenerator.CodeGenerationException"/> class.
+            </summary>
+            <param name="message">
+            The message.
+            </param>
+            <param name="innerException">
+            The inner exception.
+            </param>
+        </member>
+        <member name="M:Orleans.CodeGenerator.CodeGenerationException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Orleans.CodeGenerator.CodeGenerationException"/> class.
+            </summary>
+            <param name="info">
+            The info.
+            </param>
+            <param name="context">
+            The context.
+            </param>
+        </member>
+        <member name="T:Orleans.CodeGenerator.CodeGeneratorCommon">
+            <summary>
+            Methods common to multiple code generators.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.CodeGeneratorCommon.CodeGeneratorName">
+            <summary>
+            The name of these code generators.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.CodeGeneratorCommon.ClassPrefix">
+            <summary>
+            The prefix for class names.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.CodeGeneratorCommon.CodeGeneratorVersion">
+            <summary>
+            The current version.
+            </summary>
+        </member>
+        <member name="M:Orleans.CodeGenerator.CodeGeneratorCommon.CompileAssembly(Orleans.CodeGenerator.GeneratedSyntax,System.String)">
+            <summary>
+            Generates and compiles an assembly for the provided grains.
+            </summary>
+            <param name="generatedSyntax">
+            The generated code.
+            </param>
+            <param name="assemblyName">
+            The name for the generated assembly.
+            </param>
+            <returns>
+            The raw assembly.
+            </returns>
+            <exception cref="T:Orleans.CodeGenerator.CodeGenerationException">
+            An error occurred generating code.
+            </exception>
+        </member>
+        <member name="M:Orleans.CodeGenerator.CodeGeneratorCommon.GenerateGrainInterfaceAndMethodSwitch(System.Type,Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax,System.Func{System.Reflection.MethodInfo,Microsoft.CodeAnalysis.CSharp.Syntax.StatementSyntax[]})">
+            <summary>
+            Generates switch cases for the provided grain type.
+            </summary>
+            <param name="grainType">
+            The grain type.
+            </param>
+            <param name="methodIdArgument">
+            The method id argument, which is used to select the correct switch label.
+            </param>
+            <param name="generateMethodHandler">
+            The function used to generate switch block statements for each method.
+            </param>
+            <returns>
+            The switch cases for the provided grain type.
+            </returns>
+        </member>
+        <member name="T:Orleans.CodeGenerator.GrainMethodInvokerGenerator">
+            <summary>
+            Code generator which generates <see cref="T:Orleans.CodeGeneration.IGrainMethodInvoker"/> for grains.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.GrainMethodInvokerGenerator.ClassSuffix">
+            <summary>
+            The suffix appended to the name of generated classes.
+            </summary>
+        </member>
+        <member name="M:Orleans.CodeGenerator.GrainMethodInvokerGenerator.GenerateClass(System.Type)">
+            <summary>
+            Generates the class for the provided grain types.
+            </summary>
+            <param name="grainType">
+            The grain interface type.
+            </param>
+            <returns>
+            The generated class.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.GrainMethodInvokerGenerator.GenerateInterfaceIdProperty(System.Type)">
+            <summary>
+            Returns method declaration syntax for the InterfaceId property.
+            </summary>
+            <param name="grainType">The grain type.</param>
+            <returns>Method declaration syntax for the InterfaceId property.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.GrainMethodInvokerGenerator.GenerateInvokeMethod(System.Type)">
+            <summary>
+            Generates syntax for the <see cref="M:Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(Orleans.Runtime.IAddressable,Orleans.CodeGeneration.InvokeMethodRequest)"/> method.
+            </summary>
+            <param name="grainType">
+            The grain type.
+            </param>
+            <returns>
+            Syntax for the <see cref="M:Orleans.CodeGeneration.IGrainMethodInvoker.Invoke(Orleans.Runtime.IAddressable,Orleans.CodeGeneration.InvokeMethodRequest)"/> method.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.GrainMethodInvokerGenerator.GenerateExtensionInvokeMethod(System.Type)">
+            <summary>
+            Generates syntax for the <see cref="T:Orleans.CodeGeneration.IGrainExtensionMethodInvoker"/> invoke method.
+            </summary>
+            <param name="grainType">
+            The grain type.
+            </param>
+            <returns>
+            Syntax for the <see cref="T:Orleans.CodeGeneration.IGrainExtensionMethodInvoker"/> invoke method.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.GrainMethodInvokerGenerator.GenerateInvokeMethod(System.Type,System.Reflection.MethodInfo)">
+            <summary>
+            Generates syntax for an invoke method.
+            </summary>
+            <param name="grainType">
+            The grain type.
+            </param>
+            <param name="invokeMethod">
+            The invoke method to generate.
+            </param>
+            <returns>
+            Syntax for an invoke method.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.GrainMethodInvokerGenerator.GenerateInvokeForMethod(System.Type,Microsoft.CodeAnalysis.CSharp.Syntax.IdentifierNameSyntax,System.Reflection.MethodInfo,Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax)">
+            <summary>
+            Generates syntax to invoke a method on a grain.
+            </summary>
+            <param name="grainType">
+            The grain type.
+            </param>
+            <param name="grain">
+            The grain instance expression.
+            </param>
+            <param name="method">
+            The method.
+            </param>
+            <param name="arguments">
+            The arguments expression.
+            </param>
+            <returns>
+            Syntax to invoke a method on a grain.
+            </returns>
+        </member>
+        <member name="T:Orleans.CodeGenerator.GrainReferenceGenerator">
+            <summary>
+            Code generator which generates <see cref="T:Orleans.Runtime.GrainReference"/>s for grains.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.GrainReferenceGenerator.ClassSuffix">
+            <summary>
+            The suffix appended to the name of generated classes.
+            </summary>
+        </member>
+        <member name="F:Orleans.CodeGenerator.GrainReferenceGenerator.CheckGrainObserverParamInternalExpression">
+            <summary>
+            A reference to the CheckGrainObserverParamInternal method.
+            </summary>
+        </member>
+        <member name="M:Orleans.CodeGenerator.GrainReferenceGenerator.GenerateClass(System.Type,System.Action{System.Type})">
+            <summary>
+            Generates the class for the provided grain types.
+            </summary>
+            <param name="grainType">
+            The grain interface type.
+            </param>
+            <param name="onEncounteredType">
+            The callback which is invoked when a type is encountered.
+            </param>
+            <returns>
+            The generated class.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.GrainReferenceGenerator.GenerateConstructors(System.String)">
+            <summary>
+            Generates constructors.
+            </summary>
+            <param name="className">The class name.</param>
+            <returns>Constructor syntax for the provided class name.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.GrainReferenceGenerator.GenerateInvokeMethods(System.Type,System.Action{System.Type})">
+            <summary>
+            Generates invoker methods.
+            </summary>
+            <param name="grainType">The grain type.</param>
+            <param name="onEncounteredType">
+            The callback which is invoked when a type is encountered.
+            </param>
+            <returns>Invoker methods for the provided grain type.</returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.GrainReferenceGenerator.GetInvokeOptions(System.Reflection.MethodInfo)">
+            <summary>
+            Returns syntax for the options argument to <see cref="M:Orleans.Runtime.GrainReference.InvokeMethodAsync``1(System.Int32,System.Object[],Orleans.CodeGeneration.InvokeMethodOptions,Orleans.Runtime.SiloAddress)"/> and <see cref="M:Orleans.Runtime.GrainReference.InvokeOneWayMethod(System.Int32,System.Object[],Orleans.CodeGeneration.InvokeMethodOptions,Orleans.Runtime.SiloAddress)"/>.
+            </summary>
+            <param name="method">The method which an invoke call is being generated for.</param>
+            <returns>
+            Argument syntax for the options argument to <see cref="M:Orleans.Runtime.GrainReference.InvokeMethodAsync``1(System.Int32,System.Object[],Orleans.CodeGeneration.InvokeMethodOptions,Orleans.Runtime.SiloAddress)"/> and
+            <see cref="M:Orleans.Runtime.GrainReference.InvokeOneWayMethod(System.Int32,System.Object[],Orleans.CodeGeneration.InvokeMethodOptions,Orleans.Runtime.SiloAddress)"/>, or <see langword="null"/> if no options are to be specified.
+            </returns>
+        </member>
+        <member name="T:Orleans.CodeGenerator.Utilities.StringExtensions">
+            <summary>
+            Extensions to the <see cref="T:System.String"/> class to support code generation.
+            </summary>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.StringExtensions.GetLiteralExpression(System.String)">
+            <summary>
+            Returns the provided string as a literal expression.
+            </summary>
+            <param name="str">
+            The string.
+            </param>
+            <returns>
+            The literal expression.
+            </returns>
+        </member>
+        <member name="T:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions">
+            <summary>
+            The syntax factory extensions.
+            </summary>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.GetTypeSyntax(System.Type,System.Boolean,System.Boolean)">
+            <summary>
+            Returns <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.TypeSyntax"/> for the provided <paramref name="type"/>.
+            </summary>
+            <param name="type">
+            The type.
+            </param>
+            <param name="includeNamespace">
+            A value indicating whether or not to include the namespace name.
+            </param>
+            <param name="includeGenericParameters">
+            Whether or not to include the names of generic parameters in the result.
+            </param>
+            <returns>
+            <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.TypeSyntax"/> for the provided <paramref name="type"/>.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.GetNameSyntax(System.Type,System.Boolean)">
+            <summary>
+            Returns <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.NameSyntax"/> specified <paramref name="type"/>.
+            </summary>
+            <param name="type">
+            The type.
+            </param>
+            <param name="includeNamespace">
+            A value indicating whether or not to include the namespace name.
+            </param>
+            <returns>
+            <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.NameSyntax"/> specified <paramref name="type"/>.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.GetNameSyntax(System.Reflection.MethodInfo)">
+            <summary>
+            Returns <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.NameSyntax"/> specified <paramref name="method"/>.
+            </summary>
+            <param name="method">
+            The method.
+            </param>
+            <returns>
+            <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.NameSyntax"/> specified <paramref name="method"/>.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.GetBindingFlagsParenthesizedExpressionSyntax(Microsoft.CodeAnalysis.CSharp.SyntaxKind,System.Reflection.BindingFlags[])">
+            <summary>
+            Returns <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ParenthesizedExpressionSyntax"/>  representing parenthesized binary expression of  <paramref name="bindingFlags"/>.
+            </summary>
+            <param name="operationKind">
+            The kind of the binary expression.
+            </param> 
+            <param name="bindingFlags">
+            The binding flags.
+            </param>
+            <returns>
+            <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ParenthesizedExpressionSyntax"/> representing parenthesized binary expression of <paramref name="bindingFlags"/>.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.GetArrayTypeSyntax(System.Type,System.Boolean)">
+            <summary>
+            Returns <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ArrayTypeSyntax"/> representing the array form of <paramref name="type"/>.
+            </summary>
+            <param name="type">
+            The type.
+            </param>
+            <param name="includeNamespace">
+            A value indicating whether or not to include the namespace name.
+            </param>
+            <returns>
+            <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.ArrayTypeSyntax"/> representing the array form of <paramref name="type"/>.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.GetDeclarationSyntax(System.Reflection.MethodInfo)">
+            <summary>
+            Returns the method declaration syntax for the provided method.
+            </summary>
+            <param name="method">
+            The method.
+            </param>
+            <returns>
+            The method declaration syntax for the provided method.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.GetDeclarationSyntax(System.Reflection.ConstructorInfo,System.String)">
+            <summary>
+            Returns the method declaration syntax for the provided constructor.
+            </summary>
+            <param name="constructor">
+            The constructor.
+            </param>
+            <param name="typeName">
+            The name of the type which the constructor will reside on.
+            </param>
+            <returns>
+            The method declaration syntax for the provided constructor.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.GetOrCreateName(System.Reflection.ParameterInfo,System.Int32)">
+            <summary>
+            Returns the name of the provided parameter.
+            If the parameter has no name (possible in F#),
+            it returns a name computed by suffixing "arg" with the parameter's index
+            </summary>
+            <param name="parameter"> The parameter. </param>
+            <param name="parameterIndex"> The parameter index in the list of parameters. </param>
+            <returns> The parameter name. </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.GetParameterListSyntax(System.Reflection.MethodInfo)">
+            <summary>
+            Returns the parameter list syntax for the provided method.
+            </summary>
+            <param name="method">
+            The method.
+            </param>
+            <returns>
+            The parameter list syntax for the provided method.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.GetParameterListSyntax(System.Reflection.ConstructorInfo)">
+            <summary>
+            Returns the parameter list syntax for the provided constructor
+            </summary>
+            <param name="constructor">
+            The constructor.
+            </param>
+            <returns>
+            The parameter list syntax for the provided constructor.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.GetTypeConstraintSyntax(System.Type)">
+            <summary>
+            Returns type constraint syntax for the provided generic type argument.
+            </summary>
+            <param name="type">
+            The type.
+            </param>
+            <returns>
+            Type constraint syntax for the provided generic type argument.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.Member(Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax,System.String)">
+            <summary>
+            Returns member access syntax.
+            </summary>
+            <param name="instance">
+            The instance.
+            </param>
+            <param name="member">
+            The member.
+            </param>
+            <returns>
+            The resulting <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberAccessExpressionSyntax"/>.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.Qualify(Microsoft.CodeAnalysis.CSharp.Syntax.NameSyntax,System.String)">
+            <summary>
+            Returns qualified name syntax.
+            </summary>
+            <param name="instance">
+            The instance.
+            </param>
+            <param name="member">
+            The member.
+            </param>
+            <returns>
+            The resulting <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberAccessExpressionSyntax"/>.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.Member(Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax,System.String,System.Type[])">
+            <summary>
+            Returns member access syntax.
+            </summary>
+            <param name="instance">
+            The instance.
+            </param>
+            <param name="member">
+            The member.
+            </param>
+            <param name="genericTypes">
+            The generic type parameters.
+            </param>
+            <returns>
+            The resulting <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberAccessExpressionSyntax"/>.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.Member``2(Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax,System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Type[])">
+            <summary>
+            Returns member access syntax.
+            </summary>
+            <typeparam name="TInstance">
+            The class type.
+            </typeparam>
+            <typeparam name="T">
+            The member return type.
+            </typeparam>
+            <param name="instance">
+            The instance.
+            </param>
+            <param name="member">
+            The member.
+            </param>
+            <param name="genericTypes">
+            The generic type parameters.
+            </param>
+            <returns>
+            The resulting <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberAccessExpressionSyntax"/>.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.Invoke``1(System.Linq.Expressions.Expression{System.Func{``0}})">
+            <summary>
+            Returns method invocation syntax.
+            </summary>
+            <typeparam name="T">
+            The method return type.
+            </typeparam>
+            <param name="expression">
+            The invocation expression.
+            </param>
+            <returns>
+            The resulting <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.InvocationExpressionSyntax"/>.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.Invoke(System.Linq.Expressions.Expression{System.Action},Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax)">
+            <summary>
+            Returns method invocation syntax.
+            </summary>
+            <param name="expression">
+            The invocation expression.
+            </param>
+            <param name="instance">
+            The instance to invoke this method on, or <see langword="null"/> for static invocation.
+            </param>
+            <returns>
+            The resulting <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.InvocationExpressionSyntax"/>.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.Invoke``1(System.Linq.Expressions.Expression{System.Action{``0}},Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax)">
+            <summary>
+            Returns method invocation syntax.
+            </summary>
+            <typeparam name="T">The argument type of <paramref name="expression"/>.</typeparam>
+            <param name="expression">
+            The invocation expression.
+            </param>
+            <param name="instance">
+            The instance to invoke this method on, or <see langword="null"/> for static invocation.
+            </param>
+            <returns>
+            The resulting <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.InvocationExpressionSyntax"/>.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.Member(Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax,Microsoft.CodeAnalysis.CSharp.Syntax.IdentifierNameSyntax)">
+            <summary>
+            Returns member access syntax.
+            </summary>
+            <param name="instance">
+            The instance.
+            </param>
+            <param name="member">
+            The member.
+            </param>
+            <returns>
+            The resulting <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberAccessExpressionSyntax"/>.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.Member(Microsoft.CodeAnalysis.CSharp.Syntax.ExpressionSyntax,Microsoft.CodeAnalysis.CSharp.Syntax.GenericNameSyntax)">
+            <summary>
+            Returns member access syntax.
+            </summary>
+            <param name="instance">
+            The instance.
+            </param>
+            <param name="member">
+            The member.
+            </param>
+            <returns>
+            The resulting <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberAccessExpressionSyntax"/>.
+            </returns>
+        </member>
+        <member name="M:Orleans.CodeGenerator.Utilities.SyntaxFactoryExtensions.Qualify(Microsoft.CodeAnalysis.CSharp.Syntax.NameSyntax,Microsoft.CodeAnalysis.CSharp.Syntax.IdentifierNameSyntax)">
+            <summary>
+            Returns member access syntax.
+            </summary>
+            <param name="instance">
+            The instance.
+            </param>
+            <param name="member">
+            The member.
+            </param>
+            <returns>
+            The resulting <see cref="T:Microsoft.CodeAnalysis.CSharp.Syntax.MemberAccessExpressionSyntax"/>.
+            </returns>
+        </member>
+    </members>
+</doc>

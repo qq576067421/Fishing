@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{636F7FC1-F769-418A-B83E-6A23DE49D7CF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fishing.Common</RootNamespace>
+    <AssemblyName>Fishing.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Output\Bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Output\Bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GF.Common">
+      <HintPath>..\..\ShareLib\GF.Core\GF.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="GF.Sqlite">
+      <HintPath>..\..\ShareLib\GF.Core\GF.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FishScene\BaseEntity.cs" />
+    <Compile Include="FishScene\BaseEntityKeeper.cs" />
+    <Compile Include="FishScene\BaseEntityTable.cs" />
+    <Compile Include="FishScene\BaseFishLordMgr.cs" />
+    <Compile Include="FishScene\BaseJsonSerializer.cs" />
+    <Compile Include="FishScene\Coordinate.cs" />
+    <Compile Include="FishScene\DynamicSystem.cs" />
+    <Compile Include="FishScene\EffectMgr.cs" />
+    <Compile Include="FishScene\LogicType.cs" />
+    <Compile Include="FishScene\LogicUtility.cs" />
+    <Compile Include="FishScene\MassEntity.cs" />
+    <Compile Include="FishScene\RouteParaCurve.cs" />
+    <Compile Include="FishScene\ParticleSystemDataPrototype.cs" />
+    <Compile Include="FishScene\ParticleSystemKeeper.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseAffector\AddRandomRouteAffector.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseAffector\AddRouteAffector.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseAffector\AngleSpeedAffector.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseAffector\DestroyAffector.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseAffector\EntityAffector.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseAffector\StartMoveAffector.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseAffector\StopAffector.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseGenerator\CircleGenerator.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseGenerator\DivergencePointGenerator.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseGenerator\EntityGenerator.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseGenerator\FixGenerator.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseGenerator\IntervalDivergenceGenerator.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseGenerator\LineGenerator.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseGenerator\NormalGenerator.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseGenerator\RandomGenerator.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseGenerator\RedFishGenerator.cs" />
+    <Compile Include="FishScene\ParticleSystem\BaseGenerator\RoundCircleGenerator.cs" />
+    <Compile Include="FishScene\ParticleSystem\EntityParticleSystem.cs" />
+    <Compile Include="FishScene\ParticleSystem\EntityParticleSystemData.cs" />
+    <Compile Include="FishScene\ParticleSystem\GeneratorAndAffectorKeeper.cs" />
+    <Compile Include="FishScene\ParticleSystem\ParticleSystemEntityKeeper.cs" />
+    <Compile Include="FishScene\ParticleSystem\ParticleSystemFactory.cs" />
+    <Compile Include="ComponentDef\DefActor.cs" />
+    <Compile Include="ComponentDef\DefActorMirror.cs" />
+    <Compile Include="ComponentDef\DefApp.cs" />
+    <Compile Include="ComponentDef\DefBag.cs" />
+    <Compile Include="ComponentDef\DefActorMirrorAi.cs" />
+    <Compile Include="ComponentDef\DefDesktop.cs" />
+    <Compile Include="ComponentDef\DefEquipMirror.cs" />
+    <Compile Include="ComponentDef\DefLogin.cs" />
+    <Compile Include="ComponentDef\DefPlayerFriend.cs" />
+    <Compile Include="ComponentDef\DefPlayerLobby.cs" />
+    <Compile Include="ComponentDef\DefPlayerMirror.cs" />
+    <Compile Include="ComponentDef\DefPlayerDesktop.cs" />
+    <Compile Include="ComponentDef\DefPlayerMailBox.cs" />
+    <Compile Include="ComponentDef\DefPlayerRanking.cs" />
+    <Compile Include="ComponentDef\DefPlayerTrade.cs" />
+    <Compile Include="ComponentDef\DefEquip.cs" />
+    <Compile Include="ComponentDef\DefPlayerTask.cs" />
+    <Compile Include="ComponentDef\DefStatus.cs" />
+    <Compile Include="ComponentDef\DefPlayerChat.cs" />
+    <Compile Include="ComponentDef\DefStatusMirror.cs" />
+    <Compile Include="ComponentDef\EtApp.cs" />
+    <Compile Include="ComponentDef\EtDesktop.cs" />
+    <Compile Include="ComponentDef\EtLogin.cs" />
+    <Compile Include="ComponentDef\EtPlayer.cs" />
+    <Compile Include="ComponentDef\EtPlayerMirror.cs" />
+    <Compile Include="FishScene\Route.cs" />
+    <Compile Include="FishScene\RouteBezier.cs" />
+    <Compile Include="FishScene\RouteLine.cs" />
+    <Compile Include="FishScene\RouteObject.cs" />
+    <Compile Include="FishScene\RouteObjectMgr.cs" />
+    <Compile Include="FishScene\SceneBox.cs" />
+    <Compile Include="FishScene\TurretDataTable.cs" />
+    <Compile Include="FishScene\TurretHelper.cs" />
+    <Compile Include="Main\Effect.cs" />
+    <Compile Include="Main\EffectMgr.cs" />
+    <Compile Include="Main\GameType.cs" />
+    <Compile Include="Main\UnitConsumables.cs" />
+    <Compile Include="Main\TaskBase.cs" />
+    <Compile Include="Main\TaskMgr.cs" />
+    <Compile Include="Main\Item.cs" />
+    <Compile Include="Main\Unit.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectFrameAnimation.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataBuff.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectAOE.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectCreateCoin.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectFlySword.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectFullScreen.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectHypericumBullet.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectLockScreen.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectPlayAudio.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectRadiationLighting.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectScreenShock.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectSeaWave.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectSpreadFish.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectTrace.cs" />
+    <Compile Include="TableData\Fish\Fish\TbDataFishCompose.cs" />
+    <Compile Include="TableData\Fish\Fish\TbDataFishEachCompose.cs" />
+    <Compile Include="TableData\Fish\Fish\TbDataFormation.cs" />
+    <Compile Include="TableData\Fish\Fish\TbDataRoute.cs" />
+    <Compile Include="TableData\Fish\Fish\TbDataShoal.cs" />
+    <Compile Include="TableData\Fish\TbDataBackgroundSprite.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectCompose.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataEffectName.cs" />
+    <Compile Include="TableData\Fish\TbDataBullet.cs" />
+    <Compile Include="TableData\Fish\Fish\TbDataFish.cs" />
+    <Compile Include="TableData\Fish\Fish\TbDataFishEvenFour.cs" />
+    <Compile Include="TableData\Fish\Fish\TbDataFishEvenFive.cs" />
+    <Compile Include="TableData\Fish\TbDataFishnet.cs" />
+    <Compile Include="TableData\Fish\TbDataGeneralLevel.cs" />
+    <Compile Include="TableData\Fish\TbDataLevel.cs" />
+    <Compile Include="TableData\Fish\TbDataMap.cs" />
+    <Compile Include="TableData\Fish\Fish\TbDataOutFishGroup.cs" />
+    <Compile Include="TableData\Fish\Effect\TbDataParticle.cs" />
+    <Compile Include="TableData\Fish\TbDataPlayerExp.cs" />
+    <Compile Include="TableData\Fish\TbDataPlayerHead.cs" />
+    <Compile Include="TableData\Fish\TbDataPlayerProp.cs" />
+    <Compile Include="TableData\Fish\TbDataPlayerTitle.cs" />
+    <Compile Include="TableData\Fish\TbDataRoom.cs" />
+    <Compile Include="TableData\Fish\TbDataSingleDuringLevelProp.cs" />
+    <Compile Include="TableData\Fish\TbDataSinglePlayerLife.cs" />
+    <Compile Include="TableData\Fish\TbDataSinglePreLevelProp.cs" />
+    <Compile Include="TableData\Fish\TbDataSpecialLevel.cs" />
+    <Compile Include="TableData\Fish\TbDataTurret.cs" />
+    <Compile Include="TableData\Fish\TbDataVipLevel.cs" />
+    <Compile Include="TableData\TbDataBot.cs" />
+    <Compile Include="TableData\TbDataChatIco.cs" />
+    <Compile Include="TableData\TbDataChatIcoType.cs" />
+    <Compile Include="TableData\TbDataColorCode.cs" />
+    <Compile Include="TableData\TbDataActorLevel.cs" />
+    <Compile Include="TableData\TbDataDesktopInfo.cs" />
+    <Compile Include="TableData\TbDataItemType.cs" />
+    <Compile Include="TableData\TbDataEffect.cs" />
+    <Compile Include="TableData\TbDataOperateType.cs" />
+    <Compile Include="TableData\TbDataPlayer.cs" />
+    <Compile Include="Main\Bt.cs" />
+    <Compile Include="Main\CommonType.cs" />
+    <Compile Include="ComponentDef\DefPlayer.cs" />
+    <Compile Include="TableData\TbDataItem.cs" />
+    <Compile Include="TableData\TbDataMgr.cs" />
+    <Compile Include="TableData\TbDataPlayerProfileSkin.cs" />
+    <Compile Include="TableData\TbDataStatus.cs" />
+    <Compile Include="TableData\TbDataTask.cs" />
+    <Compile Include="TableData\TbDataTaskCollectItem.cs" />
+    <Compile Include="TableData\TbDataTaskDialogue.cs" />
+    <Compile Include="TableData\TbDataTaskKillMonster.cs" />
+    <Compile Include="TableData\TbDataTips.cs" />
+    <Compile Include="TableData\TbDataTrade.cs" />
+    <Compile Include="TableData\TbDataTradeInfo.cs" />
+    <Compile Include="TableData\TbDataUnitConsumables.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ToolTips\ConsumToolTipDetail.cs" />
+    <Compile Include="ToolTips\ConsumToolTipHead.cs" />
+    <Compile Include="ToolTips\IToolTipDetail.cs" />
+    <Compile Include="ToolTips\IToolTipHead.cs" />
+    <Compile Include="ToolTips\ToolTipEnd.cs" />
+    <Compile Include="ToolTips\ToolTipHelper.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy   /D /F /I /R /Y /K /S /E    ..\..\..\Common\Fishing.Common    ..\..\..\Client\Assets\Plugins\Fishing.Common
+rd /s /q ..\..\..\Client\Assets\Plugins\Fishing.Common\obj
+rd /s /q ..\..\..\Client\Assets\Plugins\Fishing.Common\Properties</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

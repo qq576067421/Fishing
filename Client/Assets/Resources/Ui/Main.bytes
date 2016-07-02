@@ -1,0 +1,10 @@
+p20p0.xml|237|<component size="1280,800">
+  <displayList>
+    <image id="n0" name="n0" src="px3r1f" pkg="e2ilf5a4" xy="0,0" size="0,164"/>
+    <image id="n1" name="n1" src="px3rb" pkg="e2ilf5a4" xy="0,0" size="1280,800"/>
+  </displayList>
+</component>package.xml|169|<packageDescription id="et4emg1w" name="Main">
+  <resources>
+    <component id="p20p0" name="Main" exported="true" size="1280,800"/>
+  </resources>
+</packageDescription>

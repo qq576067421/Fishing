@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="enrbs27q" jpegQuality="80" compressPNG="true">
+  <resources>
+    <component id="p20p0" name="Login" folder="" file="p20p0.xml" exported="true"/>
+    <folder id="p20p1" name="image" folder=""/>
+    <image id="px3r2" name="LoadingBk" folder="p20p1" qualityOption="source" file="px3r2.png" size="960,640"/>
+    <folder id="rbto3" name="component" folder=""/>
+    <component id="rbto4" name="DlgLogin" folder="rbto3" file="rbto4.xml"/>
+  </resources>
+  <publish name="Login"/>
+</packageDescription>

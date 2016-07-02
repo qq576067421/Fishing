@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ClientConfiguration xmlns="urn:orleans">
+  <GatewayProvider ProviderType="Config"/>
+  <!--<Gateway Address="localhost" Port="30000"/>-->
+  <!--
+  <SystemStore SystemStoreType="SqlServer" DeploymentId="Fishing" 
+    DataConnectionString="Data Source =121.40.153.103\SQLExpress;Initial Catalog =Fishing;User Id =sa;Password =123321;"/>
+  -->
+  <!--
+  <SystemStore SystemStoreType="ZooKeeper" DeploymentId="Fishing"
+    DataConnectionString="139.196.105.80:2181"/>
+  -->
+  <SystemStore SystemStoreType="Custom" CustomGatewayProviderAssemblyName="OrleansConsulUtils"
+    DataConnectionString="http://localhost:8500" DeploymentId="Fishing" />
+  <Statistics MetricsTableWriteInterval="30s" PerfCounterWriteInterval="30s"
+    LogWriteInterval="300s" WriteLogStatisticsToTable="true" StatisticsCollectionLevel="Info"/>
+  <Tracing DefaultTraceLevel="Info"  TraceToConsole="true" TraceToFile="{0}-{1}.log" BulkMessageLimit="1000">
+    <TraceLevelOverride LogPrefix="Application" TraceLevel="Info" />
+    <TraceLevelOverride LogPrefix="Runtime" TraceLevel="Info" />
+    <TraceLevelOverride LogPrefix="Grain" TraceLevel="Info" />
+    <TraceLevelOverride LogPrefix="Provider" TraceLevel="Info" />
+  </Tracing>
+</ClientConfiguration>

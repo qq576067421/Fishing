@@ -1,0 +1,7 @@
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Orleans.SDK.targets
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Configuration\OrleansConfiguration.xsd
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Intermediate\Orleans.dll
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Intermediate\Orleans.pdb
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Orleans.dll
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Orleans.pdb
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Orleans.XML

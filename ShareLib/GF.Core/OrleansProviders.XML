@@ -1,0 +1,460 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrleansProviders</name>
+    </assembly>
+    <members>
+        <member name="T:Orleans.Runtime.Configuration.BuiltInProvidersConfigurationExtensions">
+            <summary>
+            Extension methods for configuration classes specific to OrleansProviders.dll 
+            </summary>
+        </member>
+        <member name="M:Orleans.Runtime.Configuration.BuiltInProvidersConfigurationExtensions.AddMemoryStorageProvider(Orleans.Runtime.Configuration.ClusterConfiguration,System.String,System.Int32)">
+            <summary>
+            Adds a storage provider of type <see cref="T:Orleans.Storage.MemoryStorage"/>
+            </summary>
+            <param name="config">The cluster configuration object to add provider to.</param>
+            <param name="providerName">The provider name.</param>
+            <param name="numStorageGrains">The number of storage grains to use.</param>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Common.CachedMessageBlock`1">
+            <summary>
+            CachedMessageBlock is a block of tightly packed structures containing tracking data for cached messages.  This data is 
+              tightly packed to reduced GC pressure.  The tracking data is used by the queue cache to walk the cache serving ordered
+              queue messages by stream.
+            </summary>
+            <typeparam name="TCachedMessage">Tightly packed structure.  Struct should contain only value types.</typeparam>
+        </member>
+        <member name="P:Orleans.Providers.Streams.Common.CachedMessageBlock`1.Node">
+            <summary>
+            Linked list node, so this message block can be kept in a linked list
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Common.CachedMessageBlock`1.Remove">
+            <summary>
+            Removes a message from the start of the block (oldest data).  Returns true if more items are still available.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Common.FixedSizeObjectPool`1">
+            <summary>
+            Object pool that roughly ensures only a specified number of the objects are allowed to be allocated. 
+            When more objects are allocated then is specified, previously allocated objects will be signaled to be purged in order.
+            When objects are signaled, they should be returned to the pool.  How this is done is an implementation 
+              detail of the object.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Common.FixedSizeObjectPool`1.#ctor(System.Int32,System.Func{Orleans.Providers.Streams.Common.IObjectPool{`0},`0})">
+            <summary>
+            Manages a memory pool of poolSize blocks.
+            Whenever we've allocated more blocks than the poolSize, we signal the oldest allocated block to purge
+              itself and return to the pool.
+            </summary>
+            <param name="poolSize"></param>
+            <param name="factoryFunc"></param>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Common.FixedSizeBuffer">
+            <summary>
+            Manages a contiguous block of memory.
+            Calls purge action with itself as the purge request when it's signaled to purge.
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Common.FixedSizeBuffer.SetPurgeAction(System.Action{System.IDisposable})">
+            <summary>
+            Sets the purge callback that will be called when this buffer is being purged.  It notifies
+              users of the buffer that the buffer is no longer valid.  This class is passed to the purge as a
+              disposable.  When all resources referencing this buffer are released, this buffer needs be disposed.
+            </summary>
+            <param name="purge"></param>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Common.FixedSizeBuffer.TryGetSegment(System.Int32,System.ArraySegment{System.Byte}@)">
+            <summary>
+            Try to get a segment with a buffer of the specified size from this block.
+            Fail if there is not enough space available
+            </summary>
+            <param name="size"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Common.FixedSizeBuffer.SignalPurge">
+            <summary>
+            Reset state and calls purge with its buffer, indicating that any segments using that address are no longer valid.
+            </summary>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Common.ICacheDataAdapter`2">
+            <summary>
+            Pooled queue cache stores data in tightly packed structures that need to be transformed to various
+              other formats quickly.  Since the data formats may change by queue type and data format,
+              this interface allows adapter developers to build custom data transforms appropriate for 
+              the various types of queue data.
+            </summary>
+            <typeparam name="TQueueMessage"></typeparam>
+            <typeparam name="TCachedMessage"></typeparam>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Common.IObjectPool`1">
+            <summary>
+            Simple object pool Interface.
+            Objects allocated should be returned to the pool when disposed.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Common.PooledResource`1.SignalPurge">
+            <summary>
+            If this object is to be used in a fixed size object pool, this call should be
+              overridden with the purge implementation that returns the object to the pool.
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Common.PooledResource`1.OnResetState">
+            <summary>
+            Notifies the object that it has been purged, so it can reset itself to
+              the state of a newly allocated object.
+            </summary>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Common.PooledQueueCache`2">
+            <summary>
+            The PooledQueueCache is a cache that is intended to serve as a message cache in an IQueueCache.
+            It is capable of storing large numbers of messages (gigs worth of messages) for extended periods
+              of time (minutes to indefinite), while incurring a minimal performance hit due to garbage collection.
+            This pooled cache allocates memory and never releases it. It keeps freed resources available in pools 
+              that remain in application use through the life of the service. This means these objects go to gen2,
+              are compacted, and then stay there. This is relatively cheap, as the only cost they now incur is
+              the cost of checking to see if they should be freed in each collection cycle. Since this cache uses
+              small numbers of large objects with relatively simple object graphs, they are less costly to check
+              then large numbers of smaller objects with more complex object graphs.
+            For performance reasons this cache is designed to more closely align with queue specific data.  This is,
+              in part, why, unlike the SimpleQueueCache, this cache does not implement IQueueCache.  It is intended
+              to be used in queue specific implementations of IQueueCache.
+            </summary>
+            <typeparam name="TQueueMessage">Queue specific data</typeparam>
+            <typeparam name="TCachedMessage">Tightly packed cached structure.  Should only contain value types.</typeparam>
+        </member>
+        <member name="P:Orleans.Providers.Streams.Common.PooledQueueCache`2.OnPurged">
+            <summary>
+            Called with the last item puraged after a cache purge has run.
+            For ordered reliable queues we shouldn't need to notify on every purged event, only on the last event 
+              of every set of events that get purged.
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Common.PooledQueueCache`2.GetCursor(Orleans.Streams.IStreamIdentity,Orleans.Streams.StreamSequenceToken)">
+            <summary>
+            Acquires a cursor to enumerate through the messages in the cache at the provided sequenceToken, 
+              filtered on the specified stream.
+            </summary>
+            <param name="streamIdentity">stream identity</param>
+            <param name="sequenceToken"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Common.PooledQueueCache`2.TryGetNextMessage(System.Object,Orleans.Streams.IBatchContainer@)">
+            <summary>
+            Acquires the next message in the cache at the provided cursor
+            </summary>
+            <param name="cursorObj"></param>
+            <param name="message"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Common.PooledQueueCache`2.Purge(System.IDisposable)">
+            <summary>
+            Record that we need to purge all messages associated with purge request in the next purge cycle
+            </summary>
+            <param name="purgeRequest"></param>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Common.CachedMessagePool`2">
+            <summary>
+            Pool of tightly packed cached messages that are kept in large blocks to reduce GC pressure.
+            </summary>
+            <typeparam name="TQueueMessage"></typeparam>
+            <typeparam name="TCachedMessage">Tightly packed structure.  Struct should contain only value types.</typeparam>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Common.CachedMessagePool`2.#ctor(Orleans.Providers.Streams.Common.ICacheDataAdapter{`0,`1})">
+            <summary>
+            Allocates a pool of cached message blocks.
+            </summary>
+            <param name="cacheDataAdapter"></param>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Common.CachedMessagePool`2.AllocateMessage(`0,System.DateTime,Orleans.Providers.Streams.Common.StreamPosition@)">
+            <summary>
+            Allocates a message in a block and returns the block the message is in.
+            </summary>
+            <param name="queueMessage"></param>
+            <param name="dequeueTimeUtc"></param>
+            <param name="streamPosition"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Common.ObjectPool`1">
+            <summary>
+            Simple object pool that uses a stack to store available objects.
+            </summary>
+            <typeparam name="T"></typeparam>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Common.StreamPosition">
+            <summary>
+            Stream position uniquely identifies the position of an event in a stream.
+            If acquiring a stream position for a batch of events, the stream position will be of the first event in the batch.
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Common.SimpleQueueCache.TryGetNextMessage(Orleans.Providers.Streams.Common.SimpleQueueCacheCursor,Orleans.Streams.IBatchContainer@)">
+            <summary>
+            Aquires the next message in the cache at the provided cursor
+            </summary>
+            <param name="cursor"></param>
+            <param name="batch"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Generator.GeneratorAdapterConfig">
+            <summary>
+            This configuration class is used to configure the GeneratorStreamProvider.
+            It tells the stream provider how many queues to create, and which generator to use to generate event streams.
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Generator.GeneratorAdapterConfig.WriteProperties(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Utility function to convert config to property bag for use in stream provider configuration
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Generator.GeneratorAdapterConfig.PopulateFromProviderConfig(Orleans.Providers.IProviderConfiguration)">
+            <summary>
+            Utility function to populate config from provider config
+            </summary>
+            <param name="providerConfiguration"></param>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Generator.GeneratorAdapterFactory">
+            <summary>
+            Adapter factory for stream generator stream provider.
+            This factory acts as the adapter and the adapter factory.  It creates receivers that use configurable generator
+              to generate event streams, rather than reading them from storage.
+            </summary>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Generator.GeneratorStreamProvider">
+            <summary>
+            This is a persistent stream provider that generates it's own events rather than reading them from storage.
+            This is primarily for test purposes.
+            </summary>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Generator.SimpleGenerator">
+            <summary>
+            Simple Generator
+            Generates a single stream of a configurable number of events.  One event per poll.
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Generator.SimpleGenerator.TryReadEvents(System.DateTime,System.Collections.Generic.List{Orleans.Streams.IBatchContainer}@)">
+            <summary>
+            Untill we've generated the configured number of events, return a single generated event
+            </summary>
+            <param name="utcNow"></param>
+            <param name="events"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Generator.SimpleGeneratorConfig">
+            <summary>
+            Simple generator configuration class.
+            This class is used to configure a generator stream provider to generate streams using the SimpleGenerator
+            </summary>
+        </member>
+        <member name="P:Orleans.Providers.Streams.Generator.SimpleGeneratorConfig.EventsInStream">
+            <summary>
+            Nuber of events to generate on this stream
+            </summary>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Generator.SimpleGeneratorConfig.WriteProperties(System.Collections.Generic.Dictionary{System.String,System.String})">
+            <summary>
+            Utility function to convert config to property bag for use in stream provider configuration
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.Providers.Streams.Generator.SimpleGeneratorConfig.PopulateFromProviderConfig(Orleans.Providers.IProviderConfiguration)">
+            <summary>
+            Utility function to populate config from provider config
+            </summary>
+            <param name="providerConfiguration"></param>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Generator.IStreamGenerator">
+            <summary>
+            Interface of generators used by the GeneratorStreamProvider.  Any method of generating events
+             must conform to this interface to be used by the GeneratorStreamProvider.
+            </summary>
+        </member>
+        <member name="T:Orleans.Providers.Streams.Generator.IStreamGeneratorConfig">
+            <summary>
+            Interface of configuration for generators used by the GeneratorStreamProvider.  This interface covers
+              the minimal set of information the stream provider needs to configure a generator to generate data.  Generators should
+              add any additional configuration information needed to it's implementation of this interface.
+            </summary>
+        </member>
+        <member name="T:Orleans.Storage.MemoryStorage">
+            <summary>
+            This is a simple in-memory grain implementation of a storage provider.
+            </summary>
+            <remarks>
+            This storage provider is ONLY intended for simple in-memory Development / Unit Test scenarios.
+            This class should NOT be used in Production environment, 
+             because [by-design] it does not provide any resilience 
+             or long-term persistence capabilities.
+            </remarks>
+            <example>
+            Example configuration for this storage provider in OrleansConfiguration.xml file:
+            <code>
+            &lt;OrleansConfiguration xmlns="urn:orleans">
+              &lt;Globals>
+                &lt;StorageProviders>
+                  &lt;Provider Type="Orleans.Storage.MemoryStorage" Name="MemoryStore" />
+              &lt;/StorageProviders>
+            </code>
+            </example>
+        </member>
+        <member name="P:Orleans.Storage.MemoryStorage.Name">
+            <summary> Name of this storage provider instance. </summary>
+            <see cref="P:Orleans.Providers.IProvider.Name"/>
+        </member>
+        <member name="P:Orleans.Storage.MemoryStorage.Log">
+            <summary> Logger used by this storage provider instance. </summary>
+            <see cref="P:Orleans.Storage.IStorageProvider.Log"/>
+        </member>
+        <member name="M:Orleans.Storage.MemoryStorage.#ctor">
+            <summary> Default constructor. </summary>
+        </member>
+        <member name="M:Orleans.Storage.MemoryStorage.#ctor(System.Int32)">
+            <summary> Constructor - use the specificed number of store grains. </summary>
+            <param name="numStoreGrains">Number of store grains to use.</param>
+        </member>
+        <member name="M:Orleans.Storage.MemoryStorage.Init(System.String,Orleans.Providers.IProviderRuntime,Orleans.Providers.IProviderConfiguration)">
+            <summary> Initialization function for this storage provider. </summary>
+            <see cref="M:Orleans.Providers.IProvider.Init(System.String,Orleans.Providers.IProviderRuntime,Orleans.Providers.IProviderConfiguration)"/>
+        </member>
+        <member name="M:Orleans.Storage.MemoryStorage.Close">
+            <summary> Shutdown function for this storage provider. </summary>
+        </member>
+        <member name="M:Orleans.Storage.MemoryStorage.ReadStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Read state data function for this storage provider. </summary>
+            <see cref="M:Orleans.Storage.IStorageProvider.ReadStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+        <member name="M:Orleans.Storage.MemoryStorage.WriteStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Write state data function for this storage provider. </summary>
+            <see cref="M:Orleans.Storage.IStorageProvider.WriteStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+        <member name="M:Orleans.Storage.MemoryStorage.ClearStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Delete / Clear state data function for this storage provider. </summary>
+            <see cref="M:Orleans.Storage.IStorageProvider.ClearStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+        <member name="T:Orleans.Storage.MemoryStorageWithLatency">
+            <summary>
+            This is a simple in-memory implementation of a storage provider which presents fixed latency of storage calls.
+            This class is useful for system testing and investigation of the effects of storage latency.
+            </summary>
+            <remarks>
+            This storage provider is ONLY intended for simple in-memory Test scenarios.
+            This class should NOT be used in Production environment, 
+             because [by-design] it does not provide any resilience 
+             or long-term persistence capabilities.
+            </remarks>
+            <example>
+            Example configuration for this storage provider in OrleansConfiguration.xml file:
+            <code>
+            &lt;OrleansConfiguration xmlns="urn:orleans">
+              &lt;Globals>
+                &lt;StorageProviders>
+                  &lt;Provider Type="Orleans.Storage.MemoryStorageWithLatency" Name="MemoryStoreWithLatency" Latency="00:00:00.500"/>
+              &lt;/StorageProviders>
+            </code>
+            </example>
+        </member>
+        <member name="M:Orleans.Storage.MemoryStorageWithLatency.#ctor">
+            <summary> Default constructor. </summary>
+        </member>
+        <member name="M:Orleans.Storage.MemoryStorageWithLatency.Init(System.String,Orleans.Providers.IProviderRuntime,Orleans.Providers.IProviderConfiguration)">
+            <summary> Initialization function for this storage provider. </summary>
+            <see cref="M:Orleans.Providers.IProvider.Init(System.String,Orleans.Providers.IProviderRuntime,Orleans.Providers.IProviderConfiguration)"/>
+        </member>
+        <member name="M:Orleans.Storage.MemoryStorageWithLatency.Close">
+            <summary> Shutdown function for this storage provider. </summary>
+        </member>
+        <member name="M:Orleans.Storage.MemoryStorageWithLatency.ReadStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Read state data function for this storage provider. </summary>
+            <see cref="M:Orleans.Storage.IStorageProvider.ReadStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+        <member name="M:Orleans.Storage.MemoryStorageWithLatency.WriteStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Write state data function for this storage provider. </summary>
+            <see cref="M:Orleans.Storage.IStorageProvider.WriteStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+        <member name="M:Orleans.Storage.MemoryStorageWithLatency.ClearStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Delete / Clear state data function for this storage provider. </summary>
+            <see cref="M:Orleans.Storage.IStorageProvider.ClearStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+        <member name="T:Orleans.Storage.ShardedStorageProvider">
+            <summary>
+            Simple storage provider for writing grain state data shared across a number of other storage providers.
+            </summary>
+            <remarks>
+            <para>
+            Required nested configuration elements: 
+            <c>Provider</c> -- References by-name to other provider instances defined elsewheer in thios configuration file.
+            </para>
+            <para>
+            A consistent hash functions (default is Jenkins Hash) is used to decide which
+            shard (in the order they are defined in the config file) is responsible for storing 
+            state data for a specified grain, then the Read / Write / Clear request 
+            is bridged over to the appropriate underlying provider for execution.
+            </para>
+            <para>
+            See http://en.wikipedia.org/wiki/Jenkins_hash for more information about the Jenkins Hash function.
+            </para>
+            </remarks>
+            <example>
+            Example configuration for this storage provider in OrleansConfiguration.xml file:
+            <code>
+            &lt;OrleansConfiguration xmlns="urn:orleans">
+              &lt;Globals>
+                &lt;StorageProviders>
+                  &lt;Provider Type="Orleans.Storage.AzureTableStorage" Name="AzureStore1" DataConnectionString="..." />
+                  &lt;Provider Type="Orleans.Storage.AzureTableStorage" Name="AzureStore2" DataConnectionString="..." />
+                  &lt;Provider Type="Orleans.Storage.ShardedStorageProvider" Name="ShardedAzureStore">
+                    &lt;Provider Name="AzureStore1"/>
+                    &lt;Provider Name="AzureStore2"/>
+                  &lt;/Provider>
+                &lt;/StorageProviders>
+            </code>
+            </example>
+        </member>
+        <member name="M:Orleans.Storage.ShardedStorageProvider.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="P:Orleans.Storage.ShardedStorageProvider.Name">
+            <summary> Name of this storage provider instance. </summary>
+            <see cref="P:Orleans.Providers.IProvider.Name"/>
+        </member>
+        <member name="P:Orleans.Storage.ShardedStorageProvider.Log">
+            <summary> Logger used by this storage provider instance. </summary>
+            <see cref="P:Orleans.Storage.IStorageProvider.Log"/>
+        </member>
+        <member name="M:Orleans.Storage.ShardedStorageProvider.HashFunction(System.String,Orleans.Runtime.GrainReference)">
+            <summary>
+            Return a hash value derived from the input grain type and id values.
+            </summary>
+            <param name="grainType">Fully qualified class type name for this grain</param>
+            <param name="grainReference">GrainI reference for this grain</param>
+            <returns>Stable hash value for this grain</returns>
+        </member>
+        <member name="M:Orleans.Storage.ShardedStorageProvider.Init(System.String,Orleans.Providers.IProviderRuntime,Orleans.Providers.IProviderConfiguration)">
+            <summary> Initialization function for this storage provider. </summary>
+            <see cref="M:Orleans.Providers.IProvider.Init(System.String,Orleans.Providers.IProviderRuntime,Orleans.Providers.IProviderConfiguration)"/>
+        </member>
+        <member name="M:Orleans.Storage.ShardedStorageProvider.Close">
+            <summary> Shutdown function for this storage provider. </summary>
+        </member>
+        <member name="M:Orleans.Storage.ShardedStorageProvider.ReadStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Read state data function for this storage provider. </summary>
+            <see cref="M:Orleans.Storage.IStorageProvider.ReadStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+        <member name="M:Orleans.Storage.ShardedStorageProvider.WriteStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Write state data function for this storage provider. </summary>
+            <see cref="M:Orleans.Storage.IStorageProvider.WriteStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+        <member name="M:Orleans.Storage.ShardedStorageProvider.ClearStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)">
+            <summary> Deleet / Clear state data function for this storage provider. </summary>
+            <see cref="M:Orleans.Storage.IStorageProvider.ClearStateAsync(System.String,Orleans.Runtime.GrainReference,Orleans.IGrainState)"/>
+        </member>
+    </members>
+</doc>

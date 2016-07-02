@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrleansZooKeeperUtils</name>
+    </assembly>
+    <members>
+        <member name="T:Orleans.Runtime.Host.ZooKeeperBasedMembershipTable">
+            <summary>
+            A Membership Table implementation using Apache Zookeeper 3.4.6 https://zookeeper.apache.org/doc/r3.4.6/
+            </summary>
+            <remarks>
+            A brief overview of ZK features used: The data is represented by a tree of nodes (similar to a file system). 
+            Every node is addressed by a path and can hold data as a byte array and has a version. When a node is created, 
+            its version is 0. Upon updates, the version is atomically incremented. An update can also be conditional on an 
+            expected current version. A transaction can hold several operations, which succeed or fail atomically.
+            when creating a zookeeper client, one can set a base path where all operations are relative to.
+            
+            In this implementation:
+            Every Orleans deployment has a node   /UniqueDeploymentId
+            Every Silo's state is saved in        /UniqueDeploymentId/IP:Port@Gen
+            Every Silo's IAmAlive is saved in     /UniqueDeploymentId/IP:Port@Gen/IAmAlive
+            IAmAlive is saved in a separate node because its updates are unconditional.
+            
+            a node's ZK version is its ETag:
+            the table version is the version of /UniqueDeploymentId
+            the silo entry version is the version of /UniqueDeploymentId/IP:Port@Gen
+            </remarks>
+        </member>
+        <member name="F:Orleans.Runtime.Host.ZooKeeperBasedMembershipTable.deploymentConnectionString">
+            <summary>
+            The deployment connection string. for eg. "192.168.1.1,192.168.1.2/DeploymentId"
+            </summary>
+        </member>
+        <member name="F:Orleans.Runtime.Host.ZooKeeperBasedMembershipTable.deploymentPath">
+            <summary>
+            the node name for this deployment. for eg. /DeploymentId
+            </summary>
+        </member>
+        <member name="F:Orleans.Runtime.Host.ZooKeeperBasedMembershipTable.rootConnectionString">
+            <summary>
+            The root connection string. for eg. "192.168.1.1,192.168.1.2"
+            </summary>
+        </member>
+        <member name="M:Orleans.Runtime.Host.ZooKeeperBasedMembershipTable.InitializeMembershipTable(Orleans.Runtime.Configuration.GlobalConfiguration,System.Boolean,Orleans.Runtime.TraceLogger)">
+            <summary>
+            Initializes the ZooKeeper based membership table.
+            </summary>
+            <param name="config">The configuration for this instance.</param>
+            <param name="tryInitPath">if set to true, we'll try to create a node named "/DeploymentId"</param>
+            <param name="traceLogger">The logger to be used by this instance</param>
+            <returns></returns>
+        </member>
+        <member name="M:Orleans.Runtime.Host.ZooKeeperBasedMembershipTable.GetRow(org.apache.zookeeper.ZooKeeper,Orleans.Runtime.SiloAddress)">
+            <summary>
+            Reads the nodes /IP:Port@Gen and /IP:Port@Gen/IAmAlive (which together is one row)
+            </summary>
+            <param name="zk">The zookeeper instance used for the read</param>
+            <param name="siloAddress">The silo address.</param>
+        </member>
+        <member name="T:Orleans.Runtime.Host.ZooKeeperBasedMembershipTable.ZooKeeperWatcher">
+            <summary>
+            the state of every ZooKeeper client and its push notifications are published using watchers.
+            in orleans the watcher is only for debugging purposes
+            </summary>
+        </member>
+    </members>
+</doc>

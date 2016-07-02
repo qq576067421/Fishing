@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrleansDependencyInjection</name>
+    </assembly>
+    <members>
+        <member name="T:Orleans.Runtime.Startup.ConfigureStartupBuilder">
+            <summary>
+            Configure dependency injection at startup
+            </summary>
+        </member>
+    </members>
+</doc>

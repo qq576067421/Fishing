@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{95AF8867-5BB7-4F04-A86E-9D428BDC0C4D}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fishing.Gateway</RootNamespace>
+    <AssemblyName>Fishing.Gateway</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Output\Bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <NoWarn>4014</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Output\Bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GF.Common">
+      <HintPath>..\..\ShareLib\GF.Core\GF.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="GF.Server">
+      <HintPath>..\..\ShareLib\GF.Core\GF.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="GF.Sqlite">
+      <HintPath>..\..\ShareLib\GF.Core\GF.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="Orleans">
+      <HintPath>..\..\ShareLib\GF.Core\Orleans.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansRuntime">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Component\BaseApp.cs" />
+    <Compile Include="Component\BaseBag.cs" />
+    <Compile Include="Component\BaseEquip.cs" />
+    <Compile Include="Component\BaseLogin.cs" />
+    <Compile Include="Component\BasePlayer.cs" />
+    <Compile Include="Component\BasePlayerChat.cs" />
+    <Compile Include="Component\BasePlayerDesktop.cs" />
+    <Compile Include="Component\BasePlayerLobby.cs" />
+    <Compile Include="Component\BasePlayerMailBox.cs" />
+    <Compile Include="Component\BasePlayerRanking.cs" />
+    <Compile Include="Component\BasePlayerTask.cs" />
+    <Compile Include="Component\BasePlayerTrade.cs" />
+    <Compile Include="Component\BaseStatus.cs" />
+    <Compile Include="Component\BasePlayerFriend.cs" />
+    <Compile Include="Main\CellPlayerObserver.cs" />
+    <Compile Include="Main\Program.cs" />
+    <Compile Include="Main\ProgramConfig.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="BaseClientConfiguration.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Fishing.Common\Fishing.Common.csproj">
+      <Project>{636f7fc1-f769-418a-b83e-6a23de49d7cf}</Project>
+      <Name>Fishing.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fishing.GrainInterface\Fishing.GrainInterface.csproj">
+      <Project>{4fded322-b9d0-4585-8432-1954a11cc41e}</Project>
+      <Name>Fishing.GrainInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fishing.Grain\Fishing.Grain.csproj">
+      <Project>{3811aa0d-d33a-401b-adcf-9c616b5d289d}</Project>
+      <Name>Fishing.Grain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

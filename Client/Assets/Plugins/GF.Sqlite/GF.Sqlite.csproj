@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{47B5D60F-BE8D-4CCF-8125-800B991A6502}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GF.Sqlite</RootNamespace>
+    <AssemblyName>GF.Sqlite</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Output\Bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Output\Bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Impl\alter_c.cs" />
+    <Compile Include="Impl\analyze_c.cs" />
+    <Compile Include="Impl\attach_c.cs" />
+    <Compile Include="Impl\auth_c.cs" />
+    <Compile Include="Impl\backup_c.cs" />
+    <Compile Include="Impl\bitvec_c.cs" />
+    <Compile Include="Impl\btmutex_c.cs" />
+    <Compile Include="Impl\BtreeInt_h.cs" />
+    <Compile Include="Impl\btree_c.cs" />
+    <Compile Include="Impl\Btree_h.cs" />
+    <Compile Include="Impl\build_c.cs" />
+    <Compile Include="Impl\callback_c.cs" />
+    <Compile Include="Impl\complete_c.cs" />
+    <Compile Include="Impl\crypto.cs" />
+    <Compile Include="Impl\ctime_c.cs" />
+    <Compile Include="Impl\date_c.cs" />
+    <Compile Include="Impl\Delegates.cs" />
+    <Compile Include="Impl\delete_c.cs" />
+    <Compile Include="Impl\expr_c.cs" />
+    <Compile Include="Impl\fault_c.cs" />
+    <Compile Include="Impl\fkey_c.cs" />
+    <Compile Include="Impl\func_c.cs" />
+    <Compile Include="Impl\global_c.cs" />
+    <Compile Include="Impl\hash_c.cs" />
+    <Compile Include="Impl\Hash_h.cs" />
+    <Compile Include="Impl\hwtime_c.cs" />
+    <Compile Include="Impl\insert_c.cs" />
+    <Compile Include="Impl\journal_c.cs" />
+    <Compile Include="Impl\keywordhash_h.cs" />
+    <Compile Include="Impl\legacy_c.cs" />
+    <Compile Include="Impl\loadext_c.cs" />
+    <Compile Include="Impl\main_c.cs" />
+    <Compile Include="Impl\malloc_c.cs" />
+    <Compile Include="Impl\memjournal_c.cs" />
+    <Compile Include="Impl\mem_Pool.cs" />
+    <Compile Include="Impl\mutex_c.cs" />
+    <Compile Include="Impl\mutex_h.cs" />
+    <Compile Include="Impl\mutex_noop_c.cs" />
+    <Compile Include="Impl\mutex_w32.cs" />
+    <Compile Include="Impl\notify_c.cs" />
+    <Compile Include="Impl\opcodes_c.cs" />
+    <Compile Include="Impl\opcodes_h.cs" />
+    <Compile Include="Impl\os_c.cs" />
+    <Compile Include="Impl\os_common_h.cs" />
+    <Compile Include="Impl\os_h.cs" />
+    <Compile Include="Impl\os_win_c.cs" />
+    <Compile Include="Impl\pager_c.cs" />
+    <Compile Include="Impl\pager_h.cs" />
+    <Compile Include="Impl\parse_c.cs" />
+    <Compile Include="Impl\parse_h.cs" />
+    <Compile Include="Impl\pcache1_c.cs" />
+    <Compile Include="Impl\pcache_c.cs" />
+    <Compile Include="Impl\pcache_h.cs" />
+    <Compile Include="Impl\pragma_c.cs" />
+    <Compile Include="Impl\prepare_c.cs" />
+    <Compile Include="Impl\printf_c.cs" />
+    <Compile Include="Impl\random_c.cs" />
+    <Compile Include="Impl\resolve_c.cs" />
+    <Compile Include="Impl\rowset_c.cs" />
+    <Compile Include="Impl\select_c.cs" />
+    <Compile Include="Impl\sqlite3_h.cs" />
+    <Compile Include="Impl\sqliteInt_h.cs" />
+    <Compile Include="Impl\sqliteLimit_h.cs" />
+    <Compile Include="Impl\status_c.cs" />
+    <Compile Include="Impl\stream_c.cs" />
+    <Compile Include="Impl\stream_h.cs" />
+    <Compile Include="Impl\table_c.cs" />
+    <Compile Include="Impl\tokenize_c.cs" />
+    <Compile Include="Impl\trigger_c.cs" />
+    <Compile Include="Impl\update_c.cs" />
+    <Compile Include="Impl\utf_c.cs" />
+    <Compile Include="Impl\util_c.cs" />
+    <Compile Include="Impl\vacuum_c.cs" />
+    <Compile Include="Impl\vdbeapi_c.cs" />
+    <Compile Include="Impl\vdbeaux_c.cs" />
+    <Compile Include="Impl\vdbeblob_c.cs" />
+    <Compile Include="Impl\VdbeInt_h.cs" />
+    <Compile Include="Impl\vdbemem_c.cs" />
+    <Compile Include="Impl\vdbetrace_c.cs" />
+    <Compile Include="Impl\vdbe_c.cs" />
+    <Compile Include="Impl\Vdbe_h.cs" />
+    <Compile Include="Impl\vtab_c.cs" />
+    <Compile Include="Impl\walker_c.cs" />
+    <Compile Include="Impl\wal_c.cs" />
+    <Compile Include="Impl\wal_h.cs" />
+    <Compile Include="Impl\where_c.cs" />
+    <Compile Include="Impl\_Custom.cs" />
+    <Compile Include="Main\SQLiteAsync.cs" />
+    <Compile Include="Main\SQLiteDB.cs" />
+    <Compile Include="Main\SQLiteManager.cs" />
+    <Compile Include="Main\SQLiteQuery.cs" />
+    <Compile Include="Main\ThreadQueue.cs" />
+    <Compile Include="Other\DemoObject.cs" />
+    <Compile Include="Other\DemoObject2.cs" />
+    <Compile Include="Other\DemoObject3.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Other\info.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rd /s /q   $(SolutionDir)GF.Unity\Assets\Plugins\GF.Sqlite
+xcopy /f /i /r /y /k /e  $(ProjectDir)*.*   $(SolutionDir)GF.Unity\Assets\Plugins\GF.Sqlite\
+rd /s /q   $(SolutionDir)GF.Unity\Assets\Plugins\GF.Sqlite\obj
+rd /s /q   $(SolutionDir)GF.Unity\Assets\Plugins\GF.Sqlite\Properties</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

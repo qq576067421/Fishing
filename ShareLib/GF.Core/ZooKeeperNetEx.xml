@@ -1,0 +1,1925 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ZooKeeperNetEx</name>
+    </assembly>
+    <members>
+        <member name="M:org.apache.zookeeper.MiscEx.isConnected(org.apache.zookeeper.ZooKeeper.States)">
+            Returns whether we are connected to a server (which
+            could possibly be read-only, if this client is allowed
+            to go to read-only mode)
+            
+        </member>
+        <member name="T:org.apache.zookeeper.NodeResult">
+            <summary>
+            this class is the base class for all return values of ZooKeeper methods
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.NodeResult.Stat">
+            <summary>
+            The Node stat
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.DataResult">
+            <summary>
+            this class is the return value of the public getDataAsync methods
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.DataResult.Data">
+            <summary>
+            The node data
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.ChildrenResult">
+            <summary>
+            this class is the return value of the public getChildrenAsync methods
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ChildrenResult.Children">
+            <summary>
+            The node's children
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.ACLResult">
+            <summary>
+            this class is the return value of the public getACLAsync methods
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ACLResult.Acls">
+            <summary>
+            The node acls
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.ClientCnxn">
+             This class manages the socket i/o for the client. ClientCnxn maintains a list
+             of available servers to connect to and "transparently" switches servers it is
+             connected to as needed.
+            
+        </member>
+        <member name="F:org.apache.zookeeper.ClientCnxn.pendingQueue">
+            These are the packets that have been sent and are waiting for a response.
+        </member>
+        <member name="F:org.apache.zookeeper.ClientCnxn.outgoingQueue">
+            These are the packets that need to be sent.
+        </member>
+        <member name="F:org.apache.zookeeper.ClientCnxn.negotiatedSessionTimeout">
+            The timeout in ms the client negotiated with the server. This is the
+            "real" timeout, not the timeout request by the client (which may have
+            been increased/decreased by the server which applies bounds to this
+            value.
+        </member>
+        <member name="F:org.apache.zookeeper.ClientCnxn.readOnly">
+            If true, the connection is allowed to go to r-o mode. This field's value
+            is sent, besides other data, during session creation handshake. If the
+            server on the other side of the wire is partitioned it'll accept
+            read-only clients only.
+        </member>
+        <member name="F:org.apache.zookeeper.ClientCnxn.closing">
+            Set to true when close is called. Latches the connection such that we
+            don't attempt to re-connect to the server if in the middle of closing the
+            connection (client sends session disconnect to server as part of close
+            operation)
+        </member>
+        <member name="F:org.apache.zookeeper.ClientCnxn.hostProvider">
+            A set of ZooKeeper hosts this client could connect to.
+        </member>
+        <member name="T:org.apache.zookeeper.ClientCnxn.Packet">
+            This class allows us to pass the headers and the relevant records around.
+        </member>
+        <member name="F:org.apache.zookeeper.ClientCnxn.Packet.clientPath">
+            Client's view of the path (may differ due to chroot) *
+        </member>
+        <member name="F:org.apache.zookeeper.ClientCnxn.Packet.serverPath">
+            Servers's view of the path (may differ due to chroot) *
+        </member>
+        <member name="M:org.apache.zookeeper.ClientCnxn.Packet.#ctor(org.apache.zookeeper.proto.RequestHeader,org.apache.zookeeper.proto.ReplyHeader,org.apache.jute.Record,org.apache.jute.Record,org.apache.zookeeper.ZooKeeper.WatchRegistration)">
+            Convenience ctor 
+        </member>
+        <member name="M:org.apache.zookeeper.ClientCnxn.#ctor(System.String,org.apache.zookeeper.client.HostProvider,System.Int32,org.apache.zookeeper.ZooKeeper,org.apache.zookeeper.ClientWatchManager,System.Int64,System.Byte[],System.Boolean)">
+             Creates a connection object. The actual network connect doesn't get
+             established until needed. The start() instance method must be called
+             subsequent to construction.
+            
+             @param chrootPath
+                        - the chroot of this client. Should be removed from this Class
+                        in ZOOKEEPER-838
+             @param hostProvider
+                        the list of ZooKeeper servers to connect to
+             @param sessionTimeout
+                        the timeout for connections.
+             @param zooKeeper
+                        the zookeeper object that this connection is related to.
+             @param watcher
+                        watcher for this connection
+             @param clientCnxnSocket
+                        the socket implementation used (e.g. NIO/Netty)
+             @param sessionId
+                        session id if re-establishing session
+             @param sessionPasswd
+                        session passwd if re-establishing session
+             @param canBeReadOnly
+                        whether the connection is allowed to go to read-only mode in
+                        case of partitioning
+             @throws IOException
+        </member>
+        <member name="F:org.apache.zookeeper.ClientCnxn.sessionState">
+            This is really the queued session state until the event task
+            actually processes the event and hands it to the watcher. But for all
+            intents and purposes this is the state.
+        </member>
+        <member name="M:org.apache.zookeeper.ClientCnxn.onConnected(System.Int32,System.Int64,System.Byte[],System.Boolean)">
+            Callback invoked by the ClientCnxnSocket once a connection has been
+            established.
+            
+            @param _negotiatedSessionTimeout
+            @param _sessionId
+            @param _sessionPasswd
+            @param isRO
+            @throws IOException
+        </member>
+        <member name="M:org.apache.zookeeper.ClientCnxn.disconnect">
+            Shutdown the send/event tasks. This method should not be called
+            directly - rather it should be called as part of close operation. This
+            method is primarily here to allow the tests to verify disconnection
+            behavior.
+        </member>
+        <member name="M:org.apache.zookeeper.ClientCnxn.closeAsync">
+             Close the connection, which includes; send session disconnect to the
+             server, shutdown the send/event tasks.
+            
+        </member>
+        <member name="T:org.apache.zookeeper.ClientCnxnSocket">
+            <summary>
+            A ClientCnxnSocket does the lower level communication with a socket
+            implementation.
+            
+            This code has been moved out of ClientCnxn so that a Netty implementation can
+            be provided as an alternative to the NIO socket code.
+            
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ClientCnxnSocket.sessionId">
+            <summary>
+            The sessionId is only available here for Log and Exception messages.
+            Otherwise the socket doesn't need to know it.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.ClientCnxnSocketNIO.createSock">
+            <summary>
+            create a socket channel. </summary>
+            <returns> the created socket channel </returns>
+        </member>
+        <member name="M:org.apache.zookeeper.ClientCnxnSocketNIO.registerAndConnect(System.Net.Sockets.Socket,System.Net.IPEndPoint)">
+            <summary>
+            register with the selection and connect </summary>
+            <param name="sock"> the <seealso cref="T:System.Net.Sockets.Socket"/> </param>
+            <param name="addr"> the address of remote host </param>
+        </member>
+        <member name="M:org.apache.zookeeper.ClientCnxnSocketNIO.getRemoteSocketAddress">
+            <summary>
+            Returns the address to which the socket is connected.
+            </summary>
+            <returns> ip address of the remote side of the connection or null if not
+                    connected </returns>
+        </member>
+        <member name="M:org.apache.zookeeper.ClientCnxnSocketNIO.getLocalSocketAddress">
+            <summary>
+            Returns the local address to which the socket is bound.
+            </summary>
+            <returns> ip address of the remote side of the connection or null if not
+                    connected </returns>
+        </member>
+        <member name="M:org.apache.zookeeper.ClientWatchManager.materialize(org.apache.zookeeper.Watcher.Event.KeeperState,org.apache.zookeeper.Watcher.Event.EventType,System.String)">
+            Return a set of watchers that should be notified of the event. The 
+            manager must not notify the watcher(s), however it will update it's 
+            internal structure as if the watches had triggered. The intent being 
+            that the callee is now responsible for notifying the watchers of the 
+            event, possibly at some later time.
+            
+            @param state event state
+            @param type event type
+            @param path event path
+            @return
+        </member>
+        <member name="T:org.apache.zookeeper.CreateMode">
+            <summary>
+            The type of node creation
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.CreateMode.PERSISTENT">
+            <summary>
+            The znode will not be automatically deleted upon client's disconnect.
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.CreateMode.PERSISTENT_SEQUENTIAL">
+            <summary>
+            The znode will not be automatically deleted upon client's disconnect,
+            and its name will be appended with a monotonically increasing number.
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.CreateMode.EPHEMERAL">
+            <summary>
+            The znode will be deleted upon the client's disconnect.
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.CreateMode.EPHEMERAL_SEQUENTIAL">
+            <summary>
+            The znode will be deleted upon the client's disconnect, and its name
+            will be appended with a monotonically increasing number.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.CreateMode.isEphemeral">
+            <summary>
+            Determines whether this instance is ephemeral.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:org.apache.zookeeper.CreateMode.isSequential">
+            <summary>
+            Determines whether this instance is sequential.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:org.apache.zookeeper.CreateMode.fromFlag(System.Int32)">
+            Map an integer value to a CreateMode value
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException">
+            <summary>
+            ZooKeeper Base Exception
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.results">
+            All multi-requests that result in an exception retain the results
+            here so that it is possible to examine the problems in the catch
+            scope.  Non-multi requests will get a null if they try to access
+            these results.
+        </member>
+        <member name="M:org.apache.zookeeper.KeeperException.create(System.Int32,System.String)">
+             All non-specific keeper exceptions should be constructed via
+             this factory method in order to guarantee consistency in error
+             codes and such.  If you know the error code, then you should
+             construct the special purpose exception directly.  That will
+             allow you to have the most specific possible declarations of
+             what exceptions might actually be thrown.
+            
+             @param code The error code of your new exception.  This will
+             also determine the specific type of the exception that is
+             returned.
+             @return The specialized exception, presumably to be thrown by
+             the caller.
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.Code">
+            Codes which represent the various KeeperException
+            types. This enum replaces the deprecated earlier static final int
+            constants. The old, deprecated, values are in "camel case" while the new
+            enum values are in all CAPS.
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.OK">
+            Everything is OK 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.RUNTIMEINCONSISTENCY">
+            A runtime inconsistency was found 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.DATAINCONSISTENCY">
+            A data inconsistency was found 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.CONNECTIONLOSS">
+            Connection to the server has been lost 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.MARSHALLINGERROR">
+            Error while marshalling or unmarshalling data 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.UNIMPLEMENTED">
+            Operation is unimplemented 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.OPERATIONTIMEOUT">
+            Operation timeout 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.BADARGUMENTS">
+            Invalid arguments 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.NONODE">
+            Node does not exist 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.NOAUTH">
+            Not authenticated 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.BADVERSION">
+            Version conflict 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.NOCHILDRENFOREPHEMERALS">
+            Ephemeral nodes may not have children 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.NODEEXISTS">
+            The node already exists 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.NOTEMPTY">
+            The node has children 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.SESSIONEXPIRED">
+            The session has been expired by the server 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.INVALIDCALLBACK">
+            Invalid callback specified 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.INVALIDACL">
+            Invalid ACL specified 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.AUTHFAILED">
+            Client authentication failed 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.SESSIONMOVED">
+            Session moved to another server, so operation is ignored 
+        </member>
+        <member name="F:org.apache.zookeeper.KeeperException.Code.NOTREADONLY">
+            <summary>
+            State-changing request is passed to read-only server </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.KeeperException.getCode">
+            Read the error Code for this exception
+            @return the error Code for this exception
+        </member>
+        <member name="M:org.apache.zookeeper.KeeperException.getPath">
+            Read the path for this exception
+            @return the path associated with this error, null if none
+        </member>
+        <member name="M:org.apache.zookeeper.KeeperException.getResults">
+             If this exception was thrown by a multi-request then the (partial) results
+             and error codes can be retrieved using this getter.
+             @return A copy of the list of results from the operations in the multi-request.
+             
+             @since 3.4.0
+            
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.AuthFailedException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.AUTHFAILED"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.BadArgumentsException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.BADARGUMENTS"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.BadVersionException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.BADVERSION"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.ConnectionLossException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.CONNECTIONLOSS"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.DataInconsistencyException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.DATAINCONSISTENCY"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.InvalidACLException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.INVALIDACL"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.InvalidCallbackException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.INVALIDCALLBACK"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.MarshallingErrorException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.MARSHALLINGERROR"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.NoAuthException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.NOAUTH"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.NoChildrenForEphemeralsException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.NOCHILDRENFOREPHEMERALS"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.NodeExistsException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.NODEEXISTS"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.NoNodeException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.NONODE"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.NotEmptyException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.NOTEMPTY"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.OperationTimeoutException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.OPERATIONTIMEOUT"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.RuntimeInconsistencyException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.RUNTIMEINCONSISTENCY"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.SessionExpiredException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.SESSIONEXPIRED"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.SessionMovedException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.SESSIONMOVED"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.NotReadOnlyException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.NOTREADONLY"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.KeeperException.UnimplementedException">
+            <summary>
+            <see cref="F:org.apache.zookeeper.KeeperException.Code.UNIMPLEMENTED"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.MultiResponse">
+            <summary>
+            Handles the response from a multi request.  Such a response consists of
+            a sequence of responses each prefixed by a MultiResponse that indicates
+            the type of the response.  The end of the list is indicated by a MultiHeader
+            with a negative type.  Each individual response is in the same format as
+            with the corresponding operation in the original request list.
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.MultiTransactionRecord">
+            <summary>
+            Encodes a composite transaction.  In the wire format, each transaction
+            consists of a single MultiHeader followed by the appropriate request.
+            Each of these MultiHeaders has a type which indicates
+            the type of the following transaction or a negative number if no more transactions
+            are included.
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.Op">
+            <summary>
+                Represents a single operation in a multi-operation transaction.  Each operation can be a create, update
+                or delete or can just be a version check.
+                Sub-classes of Op each represent each detailed type but should not normally be referenced except via
+                the provided factory methods.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.Op.create(System.String,System.Byte[],System.Collections.Generic.List{org.apache.zookeeper.data.ACL},System.Int32)">
+            <summary>
+                Constructs a create operation.  Arguments are as for the ZooKeeper method of the same name.
+            </summary>
+            <param name="path">
+                the path for the node
+            </param>
+            <param name="data">
+                the initial data for the node
+            </param>
+            <param name="acl">
+                the acl for the node
+            </param>
+            <param name="flags">
+                specifying whether the node to be created is ephemeral
+                and/or sequential but using the integer encoding.
+            </param>
+        </member>
+        <member name="M:org.apache.zookeeper.Op.create(System.String,System.Byte[],System.Collections.Generic.List{org.apache.zookeeper.data.ACL},org.apache.zookeeper.CreateMode)">
+            <summary>
+                Constructs a create operation.  Arguments are as for the ZooKeeper method of the same name.
+            </summary>
+            <param name="path">
+                the path for the node
+            </param>
+            <param name="data">
+                the initial data for the node
+            </param>
+            <param name="acl">
+                the acl for the node
+            </param>
+            <param name="createMode">
+                specifying whether the node to be created is ephemeral
+                and/or sequential
+            </param>
+        </member>
+        <member name="M:org.apache.zookeeper.Op.delete(System.String,System.Int32)">
+            <summary>
+                Constructs a delete operation.  Arguments are as for the ZooKeeper method of the same name.
+            </summary>
+            <param name="path">
+                the path of the node to be deleted.
+            </param>
+            <param name="version">
+                the expected node version.
+            </param>
+        </member>
+        <member name="M:org.apache.zookeeper.Op.setData(System.String,System.Byte[],System.Int32)">
+            <summary>
+                Constructs an update operation.  Arguments are as for the ZooKeeper method of the same name.
+            </summary>
+            <param name="path">
+                the path of the node
+            </param>
+            <param name="data">
+                the data to set
+            </param>
+            <param name="version">
+                the expected matching version
+            </param>
+        </member>
+        <member name="M:org.apache.zookeeper.Op.check(System.String,System.Int32)">
+            <summary>
+                Constructs an version check operation.  Arguments are as for the ZooKeeper.setData method except that
+                no data is provided since no update is intended.  The purpose for this is to allow read-modify-write
+                operations that apply to multiple znodes, but where some of the znodes are involved only in the read,
+                not the write.  A similar effect could be achieved by writing the same data back, but that leads to
+                way more version updates than are necessary and more writing in general.
+            </summary>
+            <param name="path">
+                the path of the node
+            </param>
+            <param name="version">
+                the expected matching version
+            </param>
+        </member>
+        <member name="M:org.apache.zookeeper.Op.get_Type">
+            Gets the integer type code for an Op.  This code should be as from ZooDefs.OpCode
+            @see ZooDefs.OpCode
+            @return  The type code.
+        </member>
+        <member name="M:org.apache.zookeeper.Op.getPath">
+            Gets the path for an Op.
+            @return  The path.
+        </member>
+        <member name="M:org.apache.zookeeper.Op.toRequestRecord">
+                Encodes an op for wire transmission.
+            <returns> An appropriate Record structure. </returns>
+        </member>
+        <member name="M:org.apache.zookeeper.Op.withChroot(System.String)">
+            <summary>
+                Reconstructs the transaction with the chroot prefix.
+            </summary>
+            <returns> transaction with chroot. </returns>
+        </member>
+        <member name="M:org.apache.zookeeper.Op.validate">
+            <summary>
+                Performs client path validations.
+            </summary>
+            <exception cref="T:System.ArgumentException">
+                if an invalid path is specified
+            </exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.BadArgumentsException">
+                if an invalid create mode flag is specified
+            </exception>
+        </member>
+        <member name="T:org.apache.zookeeper.OpResult">
+            <summary>
+            Encodes the result of a single part of a multiple operation commit.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.OpResult.get_Type">
+             <summary>
+             Encodes the return type as from <see cref="T:org.apache.zookeeper.ZooDefs.OpCode"/>.  Can be used
+            to dispatch to the correct cast needed for getting the desired
+            additional result data
+             </summary>
+             <returns>an integer identifying what kind of operation this result came from.</returns>
+        </member>
+        <member name="T:org.apache.zookeeper.OpResult.CreateResult">
+            <summary>
+            A result from a create operation.  This kind of result allows the
+            path to be retrieved since the create might have been a sequential
+            create.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.OpResult.CreateResult.getPath">
+            <summary>
+            Gets the path.
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.OpResult.DeleteResult">
+            <summary>
+            A result from a delete operation.  No special values are available.
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.OpResult.SetDataResult">
+            <summary>
+            A result from a setData operation.  This kind of result provides access
+            to the Stat structure from the update.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.OpResult.SetDataResult.getStat">
+            <summary>
+            Gets the stat.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:org.apache.zookeeper.OpResult.CheckResult">
+            <summary>
+            A result from a version check operation.  No special values are available.
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.OpResult.ErrorResult">
+            <summary>
+            An error result from any kind of operation.  The point of error results
+            is that they contain an error code which helps understand what happened. </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.OpResult.ErrorResult.getErr">
+            <summary>
+            Gets the error.
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.Quotas">
+            <summary>
+            Path Quotas
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.Quotas.procZookeeper">
+            <summary>
+            the zookeeper nodes that acts as the management and status node
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.Quotas.quotaZookeeper">
+            <summary>
+            the zookeeper quota node that acts as the quota management node for zookeeper
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.Quotas.limitNode">
+            <summary>
+            the limit node that has the limit of a subtree
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.Quotas.statNode">
+            <summary>
+            the stat node that monitors the limit of a subtree.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.Quotas.quotaPath(System.String)">
+            <summary>
+            return the quota path associated with this prefix.
+            </summary>
+            <param name="path">the actual path in zookeeper</param>
+            <returns>the limit quota path</returns>
+        </member>
+        <member name="M:org.apache.zookeeper.Quotas.statPath(System.String)">
+            <summary>
+            return the stat quota path associated with this prefix.
+            </summary>
+            <param name="path">the actual path in zookeeper</param>
+            <returns>the stat quota path</returns>
+        </member>
+        <member name="T:org.apache.zookeeper.StatsTrack">
+            <summary>
+            a class that represents the stats associated with quotas
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.StatsTrack.#ctor">
+            <summary>
+            a default constructor for
+            stats
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.StatsTrack.#ctor(System.String)">
+            <summary>
+            the stat string should be of the form count=int,bytes=long
+            if stats is called with null the count and bytes are initialized
+            to -1. </summary>
+            <param name="stats"> the stat string to be initialized with </param>
+        </member>
+        <member name="F:org.apache.zookeeper.StatsTrack.Count">
+            <summary>
+            get the count of nodes allowed as part of quota
+            </summary>
+            <returns> the count as part of this string </returns>
+        </member>
+        <member name="F:org.apache.zookeeper.StatsTrack.Bytes">
+            <summary>
+            get the count of bytes allowed as part of quota
+            </summary>
+            <returns> the bytes as part of this string </returns>
+        </member>
+        <member name="M:org.apache.zookeeper.StatsTrack.ToString">
+            <summary>
+            returns the string that maps to this stat tracking.
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.Transaction">
+            <summary>
+            Provides a builder style interface for doing multiple updates. This is
+            really just a thin layer on top of <see cref="M:org.apache.zookeeper.ZooKeeper.multiAsync(System.Collections.Generic.List{org.apache.zookeeper.Op})"/>.
+            
+            @since 3.4.0
+            
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.Transaction.create(System.String,System.Byte[],System.Collections.Generic.List{org.apache.zookeeper.data.ACL},org.apache.zookeeper.CreateMode)">
+            <summary>
+                Constructs a create operation.  Arguments are as for the ZooKeeper method of the same name.
+            </summary>
+            <param name="path">
+                the path for the node
+            </param>
+            <param name="data">
+                the initial data for the node
+            </param>
+            <param name="acl">
+                the acl for the node
+            </param>
+            <param name="createMode">
+                specifying whether the node to be created is ephemeral
+                and/or sequential.
+            </param>
+        </member>
+        <member name="M:org.apache.zookeeper.Transaction.delete(System.String,System.Int32)">
+            <summary>
+                Constructs a delete operation.  Arguments are as for the ZooKeeper method of the same name.
+            </summary>
+            <param name="path">
+                the path of the node to be deleted.
+            </param>
+            <param name="version">
+                the expected node version.
+            </param>
+        </member>
+        <member name="M:org.apache.zookeeper.Transaction.check(System.String,System.Int32)">
+            <summary>
+                Constructs an version check operation.  Arguments are as for the ZooKeeper.setData method except that
+                no data is provided since no update is intended.  The purpose for this is to allow read-modify-write
+                operations that apply to multiple znodes, but where some of the znodes are involved only in the read,
+                not the write.  A similar effect could be achieved by writing the same data back, but that leads to
+                way more version updates than are necessary and more writing in general.
+            </summary>
+            <param name="path">
+                the path of the node
+            </param>
+            <param name="version">
+                the expected matching version
+            </param>
+        </member>
+        <member name="M:org.apache.zookeeper.Transaction.setData(System.String,System.Byte[],System.Int32)">
+            <summary>
+                Constructs an update operation.  Arguments are as for the ZooKeeper method of the same name.
+            </summary>
+            <param name="path">
+                the path of the node
+            </param>
+            <param name="data">
+                the data to set
+            </param>
+            <param name="version">
+                the expected matching version
+            </param>
+        </member>
+        <member name="M:org.apache.zookeeper.Transaction.commitAsync">
+            <summary>
+            Commits the transaction.
+            </summary>
+            <returns>the results of each op</returns>
+        </member>
+        <member name="T:org.apache.zookeeper.WatchedEvent">
+            <summary>
+            an incoming event
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.WatchedEvent.#ctor(org.apache.zookeeper.proto.WatcherEvent)">
+            Convert a WatcherEvent sent over the wire into a full-fledged WatcherEvent
+        </member>
+        <member name="M:org.apache.zookeeper.WatchedEvent.getState">
+            <summary>
+            Gets the state of the client.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.WatchedEvent.get_Type">
+            <summary>
+            Gets the node type.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.WatchedEvent.getPath">
+            <summary>
+            Gets the ndoe path.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.WatchedEvent.ToString">
+            <summary/>
+        </member>
+        <member name="M:org.apache.zookeeper.WatchedEvent.getWrapper">
+            Convert WatchedEvent to type that can be sent over network
+        </member>
+        <member name="T:org.apache.zookeeper.Watcher">
+            <summary>
+            This is a base class that an event handler class must implement. 
+            A ZooKeeper client will get various events from the ZooKeepr server it connects to. 
+            An application using such a client handles these events by registering a callback object 
+            with the client. The callback object is expected to be an instance of a class that implements 
+            Watcher class.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.Watcher.process(org.apache.zookeeper.WatchedEvent)">
+            <summary>
+            Processes the specified event.
+            </summary>
+            <param name="event">The event.</param>
+            <returns></returns>
+        </member>
+        <member name="T:org.apache.zookeeper.Watcher.Event">
+            <summary/>
+        </member>
+        <member name="T:org.apache.zookeeper.Watcher.Event.KeeperState">
+            <summary>
+            The state of the client from the server point of view
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.Watcher.Event.KeeperState.Disconnected">
+            <summary>
+            The client is in the disconnected state - it is not connected
+            to any server in the ensemble.
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.Watcher.Event.KeeperState.SyncConnected">
+            <summary>
+            The client is in the connected state - it is connected
+            to a server in the ensemble (one of the servers specified
+            in the host connection parameter during ZooKeeper client
+            creation).
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.Watcher.Event.KeeperState.AuthFailed">
+            <summary>
+            The authentication failed
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.Watcher.Event.KeeperState.ConnectedReadOnly">
+            <summary>
+            The client is connected to a read-only server, that is the
+            server which is not currently connected to the majority.
+            The only operations allowed after receiving this state is
+            read operations.
+            This state is generated for read-only clients only since
+            read/write clients aren't allowed to connect to r/o servers.
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.Watcher.Event.KeeperState.Expired">
+            <summary>
+            The serving cluster has expired this session. The ZooKeeper
+            client connection (the session) is no longer valid. You must
+            create a new client connection (instantiate a new ZooKeeper
+            instance) if you with to access the ensemble.
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.Watcher.Event.EventType">
+            <summary>
+            Enumeration of types of events that may occur on the ZooKeeper
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.Watcher.Event.EventType.None">
+            <summary/>
+        </member>
+        <member name="F:org.apache.zookeeper.Watcher.Event.EventType.NodeCreated">
+            <summary>
+            a node created
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.Watcher.Event.EventType.NodeDeleted">
+            <summary>
+            a node deleted
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.Watcher.Event.EventType.NodeDataChanged">
+            <summary>
+            a node data changed
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.Watcher.Event.EventType.NodeChildrenChanged">
+            <summary>
+            a node children changed
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.ZKUtil">
+            <summary>
+            Some ZooKeeper Utilities
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.ZKUtil.deleteRecursiveAsync(org.apache.zookeeper.ZooKeeper,System.String)">
+            <summary>
+            Recursively delete the node with the given path. 
+            <para>
+            Important: All versions, of all nodes, under the given node are deleted.
+            </para>
+            <para>
+            If there is an error with deleting one of the sub-nodes in the tree, 
+            this operation would abort and would be the responsibility of the app to handle the same.
+            
+            </para>
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.ZKUtil.listSubTreeBFS(org.apache.zookeeper.ZooKeeper,System.String)">
+            <summary>
+            BFS Traversal of the system under pathRoot, with the entries in the list, in the 
+            same order as that of the traversal.
+            <para>
+            <b>Important:</b> This is <i>not an atomic snapshot</i> of the tree ever, but the
+             state as it exists across multiple RPCs from zkClient to the ensemble.
+            For practical purposes, it is suggested to bring the clients to the ensemble 
+            down (i.e. prevent writes to pathRoot) to 'simulate' a snapshot behavior.   
+            
+            </para>
+            </summary>
+            <param name="zk"> the zookeeper handle </param>
+            <param name="pathRoot"> The znode path, for which the entire subtree needs to be listed. </param>
+            <exception cref="T:org.apache.zookeeper.KeeperException">  </exception>
+        </member>
+        <member name="T:org.apache.zookeeper.ZooDefs">
+            <summary/>
+        </member>
+        <member name="T:org.apache.zookeeper.ZooDefs.Perms">
+            <summary>
+            ZooKeeper Permissions
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooDefs.Perms.READ">
+            <summary>
+            read permission
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooDefs.Perms.WRITE">
+            <summary>
+            write permission
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooDefs.Perms.CREATE">
+            <summary>
+            create permission
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooDefs.Perms.DELETE">
+            <summary>
+            delete permission
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooDefs.Perms.ADMIN">
+            <summary>
+            admin permission
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooDefs.Perms.ALL">
+            <summary>
+            All permissions
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.ZooDefs.Ids">
+            <summary/>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooDefs.Ids.ANYONE_ID_UNSAFE">
+            <summary>
+            This Id represents anyone.
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooDefs.Ids.AUTH_IDS">
+            <summary>
+            This Id is only usable to set ACLs. It will get substituted with the 
+            Id's the client authenticated with.
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooDefs.Ids.OPEN_ACL_UNSAFE">
+            <summary>
+            This is a completely open ACL
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooDefs.Ids.CREATOR_ALL_ACL">
+            <summary>
+            This ACL gives the creators authentication id's all permissions.
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooDefs.Ids.READ_ACL_UNSAFE">
+            <summary>
+            This ACL gives the world the ability to read.
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.ZooKeeper">
+             <summary>
+             This is the main class of ZooKeeper client library. To use a ZooKeeper
+             service, an application must first instantiate an object of ZooKeeper class.
+             All the iterations will be done by calling the methods of ZooKeeper class.
+             The methods of this class are thread-safe unless otherwise noted.
+             </summary>
+             <remarks>
+             Once a connection to a server is established, a session ID is assigned to the
+             client. The client will send heart beats to the server periodically to keep
+             the session valid.
+             
+             The application can call ZooKeeper APIs through a client as long as the
+             session ID of the client remains valid.
+             
+             If for some reason, the client fails to send heart beats to the server for a
+             prolonged period of time (exceeding the sessionTimeout value, for instance),
+             the server will expire the session, and the session ID will become invalid.
+             The client object will no longer be usable. To make ZooKeeper API calls, the
+             application must create a new client object.
+             
+             If the ZooKeeper server the client currently connects to fails or otherwise
+             does not respond, the client will automatically try to connect to another
+             server before its session ID expires. If successful, the application can
+             continue to use the client.
+             
+             The ZooKeeper API methods are either synchronous or asynchronous. Synchronous
+             methods blocks until the server has responded. Asynchronous methods just queue
+             the request for sending and return immediately. They take a callback object that
+             will be executed either on successful execution of the request or on error with
+             an appropriate return code (rc) indicating the error.
+             
+             Some successful ZooKeeper API calls can leave watches on the "data nodes" in
+             the ZooKeeper server. Other successful ZooKeeper API calls can trigger those
+             watches. Once a watch is triggered, an event will be delivered to the client
+             which left the watch at the first place. Each watch can be triggered only
+             once. Thus, up to one event will be delivered to a client for every watch it
+             leaves.
+             
+             A client needs an object of a class implementing Watcher interface for
+             processing the events delivered to the client.
+            
+             When a client drops current connection and re-connects to a server, all the
+             existing watches are considered as being triggered but the undelivered events
+             are lost. To emulate this, the client will generate a special event to tell
+             the event handler a connection has been dropped. This special event has type
+             EventNone and state sKeeperStateDisconnected
+             </remarks>
+        </member>
+        <member name="T:org.apache.zookeeper.ZooKeeper.ZKWatchManager">
+            <summary>
+            Manage watchers and handle events generated by the ClientCnxn object.
+            We are implementing this as a nested class of ZooKeeper so that
+            the public methods will not be exposed as part of the ZooKeeper client API.
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.ZooKeeper.WatchRegistration">
+            <summary>
+            Register a watcher for a particular path.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.WatchRegistration.register(System.Int32)">
+            <summary>
+            Register the watcher with the set of watches on path.
+            </summary>
+            <param name="rc">the result code of the operation that attempted to add the watch on the path.</param>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.WatchRegistration.shouldAddWatch(System.Int32)">
+            <summary>
+            Determine whether the watch should be added based on return code.
+            </summary>
+            <param name="rc">the result code of the operation that attempted to add the watch on the node</param>
+            <returns>true if the watch should be added, otw false</returns>
+        </member>
+        <member name="T:org.apache.zookeeper.ZooKeeper.ExistsWatchRegistration">
+            <summary>
+            Handle the special case of exists watches - they add a watcher
+            even in the case where NONODE result code is returned.
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.ZooKeeper.States">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooKeeper.States.CONNECTING">
+            <summary>
+            Connecting to ZooKeeper Server
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooKeeper.States.CONNECTED">
+            <summary>
+            Connected to ZooKeeper Service
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooKeeper.States.CONNECTEDREADONLY">
+            <summary>
+            Connecting to ZooKeeper Service
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooKeeper.States.CLOSED">
+            <summary>
+            Closed Connection to ZooKeeper Service
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooKeeper.States.AUTH_FAILED">
+            <summary>
+            Authentication Failed with ZooKeeper Service
+            </summary>
+        </member>
+        <member name="F:org.apache.zookeeper.ZooKeeper.States.NOT_CONNECTED">
+            <summary>
+            No Connected to ZooKeeper Service
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.#ctor(System.String,System.Int32,org.apache.zookeeper.Watcher,System.Boolean)">
+            <summary>
+            To create a ZooKeeper client object, the application needs to pass a connection string containing a comma separated list 
+            of host:port pairs, each corresponding to a ZooKeeper server.
+            Session establishment is asynchronous. This constructor will initiate connection to the server and return immediately - 
+            potentially (usually) before the session is fully established. The watcher argument specifies the watcher that will be 
+            notified of any changes in state. This notification can come at any point before or after the constructor call has returned.
+            The instantiated ZooKeeper client object will pick an arbitrary server from the connectstring and attempt to connect to it.
+            If establishment of the connection fails, another server in the connect string will be tried (the order is non-deterministic, as we random shuffle the list)
+            , until a connection is established. The client will continue attempts until the session is explicitly closed 
+            (or the session is expired by the server).
+            Added in 3.2.0: An optional "chroot" suffix may also be appended to the connection string. This will run the client 
+            commands while interpreting all paths relative to this root (similar to the unix chroot command).
+            </summary>
+            <param name="connectstring">comma separated host:port pairs, each corresponding to a zk server. 
+            e.g. "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002" If the optional chroot suffix is used the example would look like:
+            "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002/app/a" where the client would be rooted at "/app/a" and all paths would 
+            be relative to this root - ie getting/setting/etc... "/foo/bar" would result in operations being run on "/app/a/foo/bar" 
+            (from the server perspective).</param>
+            <param name="sessionTimeout"> session timeout in milliseconds</param>
+            <param name="watcher">a watcher object which will be notified of state changes, may also be notified for node events</param>
+            <param name="canBeReadOnly">(added in 3.4) whether the created client is allowed to go to read-only mode in case of 
+            partitioning. Read-only mode basically means that if the client can't find any majority servers but there's partitioned 
+            server it could reach, it connects to one in read-only mode, i.e. read requests are allowed while write requests are not.
+            It continues seeking for majority in the background.</param>
+            <exception cref="T:System.ArgumentException">when <paramref name="connectstring"/>parsed or resolved to an empty list. also when given chroot is invalid"/></exception>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.#ctor(System.String,System.Int32,org.apache.zookeeper.Watcher,System.Int64,System.Byte[],System.Boolean)">
+            <summary>
+            To create a ZooKeeper client object, the application needs to pass a connection string containing a comma separated list 
+            of host:port pairs, each corresponding to a ZooKeeper server.
+            Session establishment is asynchronous. This constructor will initiate connection to the server and return immediately - 
+            potentially (usually) before the session is fully established. The watcher argument specifies the watcher that will be 
+            notified of any changes in state. This notification can come at any point before or after the constructor call has returned.
+            The instantiated ZooKeeper client object will pick an arbitrary server from the connectstring and attempt to connect to it.
+            If establishment of the connection fails, another server in the connect string will be tried (the order is non-deterministic, as we random shuffle the list)
+            , until a connection is established. The client will continue attempts until the session is explicitly closed 
+            (or the session is expired by the server).
+            Added in 3.2.0: An optional "chroot" suffix may also be appended to the connection string. This will run the client 
+            commands while interpreting all paths relative to this root (similar to the unix chroot command).
+            Use <see cref="M:org.apache.zookeeper.ZooKeeper.getSessionId"/> and <see cref="M:org.apache.zookeeper.ZooKeeper.getSessionPasswd"/> on an established client connection, these values must be 
+            passed as sessionId and sessionPasswd respectively if reconnecting. Otherwise, if not reconnecting, use the other 
+            constructor which does not require these parameters.
+            </summary>
+            <param name="connectString">comma separated host:port pairs, each corresponding to a zk server. 
+            e.g. "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002" If the optional chroot suffix is used the example would look like:
+            "127.0.0.1:3000,127.0.0.1:3001,127.0.0.1:3002/app/a" where the client would be rooted at "/app/a" and all paths would 
+            be relative to this root - ie getting/setting/etc... "/foo/bar" would result in operations being run on "/app/a/foo/bar" 
+            (from the server perspective).</param>
+            <param name="sessionTimeout"> session timeout in milliseconds</param>
+            <param name="watcher">a watcher object which will be notified of state changes, may also be notified for node events</param>
+            <param name="sessionId">specific session id to use if reconnecting</param>
+            <param name="sessionPasswd">password for this session</param>
+            <param name="canBeReadOnly">(added in 3.4) whether the created client is allowed to go to read-only mode in case of 
+            partitioning. Read-only mode basically means that if the client can't find any majority servers but there's partitioned 
+            server it could reach, it connects to one in read-only mode, i.e. read requests are allowed while write requests are not.
+            It continues seeking for majority in the background.</param>
+            <exception cref="T:System.ArgumentException">when <paramref name="connectString"/> parsed or resolved to an empty list. also when given chroot is invalid"/></exception>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.getSessionId">
+            <summary>
+            The session id for this ZooKeeper client instance. The value returned is not valid until the client connects to a 
+            server and may change after a re-connect. This method is NOT thread safe.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.getSessionPasswd">
+            <summary>
+            The session password for this ZooKeeper client instance. The value returned is not valid until the client connects to 
+            a server and may change after a re-connect.This method is NOT thread safe
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.getSessionTimeout">
+            <summary>
+            The negotiated session timeout for this ZooKeeper client instance.The value returned is not valid until the client 
+            connects to a server and may change after a re-connect.This method is NOT thread safe.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.addAuthInfo(System.String,System.Byte[])">
+             <summary>
+             Add the specified scheme:auth information to this connection.
+            
+             This method is NOT thread safe
+             </summary>
+             <param name="scheme">The scheme.</param>
+             <param name="auth">The auth.</param>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.closeAsync">
+            <summary>
+            Close this client object. Once the client is closed, its session becomes
+            invalid. All the ephemeral nodes in the ZooKeeper server associated with
+            the session will be removed. The watches left on those nodes (and on
+            their parents) will be triggered.
+            </summary>   
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.prependChroot(System.String)">
+            <summary>
+            Prepend the chroot to the client path (if present). The expectation of
+            this function is that the client path has been validated before this
+            function is called
+            </summary>
+            <param name="clientPath">The path to the node.</param>
+            <returns>server view of the path (chroot prepended to client path)</returns>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.createAsync(System.String,System.Byte[],System.Collections.Generic.List{org.apache.zookeeper.data.ACL},org.apache.zookeeper.CreateMode)">
+            <summary>
+            Create a node with the given path. The node data will be the given data,
+            and node acl will be the given acl.
+            
+            This operation, if successful, will trigger all the watches left on the
+            node of the given path by exists and getData API calls, and the watches
+            left on the parent node by getChildren API calls.
+            
+            If a node is created successfully, the ZooKeeper server will trigger the
+            watches on the path left by exists calls, and the watches on the parent
+            of the node by getChildrenAsync calls
+            
+            The maximum allowable size of the data array is 1 MB (1,048,576 bytes).
+            Arrays larger than this will cause a KeeperExecption to be thrown.
+            </summary>
+            <param name="path">The path for the node.</param>
+            <param name="data">The data for the node.</param>
+            <param name="acl">The acl for the node.</param>
+            <param name="createMode">specifying whether the node to be created is ephemeral and/or sequential. 
+            An ephemeral node will be removed by the ZK server automatically when the session associated with the creation of the node expires.
+            A sequential node will be the given path plus a suffix "i" where i is the current sequential number of the node. 
+            The sequence number is always fixed length of 10 digits, 0 padded. Once such a node is created, the sequential number will be incremented by one.
+            </param>
+            <returns>the actual path of the created node</returns>
+            <exception cref="T:org.apache.zookeeper.KeeperException.NoChildrenForEphemeralsException">An ephemeral node cannot have children.</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.NoNodeException">the parent node does not exist</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.NodeExistsException">a node with the same actual path already exists.(Never happens when CreateMode is sequential)</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.InvalidACLException">the ACL is invalid, null, or empty</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.ConnectionLossException">the connection has been lost, you should retry</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.SessionExpiredException">the server says the session has expired, you should create a new client</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException">the server signals an error with a non-zero error code</exception>
+            <exception cref="T:System.ArgumentException">when <paramref name="path"/> is invalid</exception>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.deleteAsync(System.String,System.Int32)">
+            <summary>
+            Delete the node with the given path.
+            This operation, if successful, will trigger all the watches on the node of the given path left by existsAsync calls, 
+            and the watches on the parent node left by getChildrenAsync calls.
+            </summary>
+            <param name="path">The path to delete</param>
+            <param name="version">The version matches the node's version(if the given  version is -1, it matches any node's versions).</param>
+            <exception cref="T:org.apache.zookeeper.KeeperException.NoNodeException">the parent node does not exist</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.NotEmptyException">the node has children</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.BadVersionException">the given version does not match the node's version</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.ConnectionLossException">the connection has been lost, you should retry</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.SessionExpiredException">the server says the session has expired, you should create a new client</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException">the server signals an error with a non-zero error code</exception> 
+            <exception cref="T:System.ArgumentException">when <paramref name="path"/> is invalid</exception>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.multiAsync(System.Collections.Generic.List{org.apache.zookeeper.Op})">
+            <summary>
+            Executes multiple ZooKeeper operations or none of them.
+            </summary>
+            <param name="ops">A list that contains the operations to be done.
+            These should be created using the factory methods on <see cref="T:org.apache.zookeeper.Op"/></param>
+            <remarks>
+            Note: The maximum allowable size of all of the data arrays in all of the setData operations in this single 
+            request is typically 1 MB (1,048,576 bytes). This limit is specified on the server via
+            <a href="http://zookeeper.apache.org/doc/current/zookeeperAdmin.html#Unsafe+Options">jute.maxbuffer</a>.
+            Requests larger than this will cause a KeeperException to be thrown.
+            @since 3.4.0
+            </remarks>
+            <returns>A list of results, one for each input Op, the order of
+            which exactly matches the order of the <paramref name="ops"/> input
+            operations.</returns>
+            <exception cref="T:org.apache.zookeeper.KeeperException">If the operation could not be completed due to some error in doing one of 
+            the specified ops.contains partial results and error details, see <see cref="M:org.apache.zookeeper.KeeperException.getResults"/></exception> 
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.transaction">
+            <summary>
+            A Transaction is a thin wrapper on the <see cref="M:org.apache.zookeeper.ZooKeeper.multiAsync(System.Collections.Generic.List{org.apache.zookeeper.Op})"/> method which provides a builder object 
+            that can be used to construct and commit an atomic set of operations. @since 3.4.0
+            </summary>
+            <returns>Transaction builder object</returns>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.existsAsync(System.String,org.apache.zookeeper.Watcher)">
+            <summary>
+            Return the stat of the node of the given path. Return null if no such a
+            node exists.
+            If the watch is non-null and the call is successful (no exception is thrown),
+            a watch will be left on the node with the given path. The watch will be
+            triggered by a successful operation that creates/delete the node or sets
+            the data on the node.
+            </summary>
+            <param name="path">the node path</param>
+            <param name="watcher">explicit watcher</param>
+            <returns>the stat of the node of the given path; return null if no such a node exists.</returns>
+            <exception cref="T:org.apache.zookeeper.KeeperException.ConnectionLossException">the connection has been lost, you should retry</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.SessionExpiredException">the server says the session has expired, you should create a new client</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException">the server signals an error with a non-zero error code</exception> 
+            <exception cref="T:System.ArgumentException">when <paramref name="path"/> is invalid</exception>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.existsAsync(System.String,System.Boolean)">
+            <summary>
+            Return the stat of the node of the given path. Return null if no such a
+            node exists.
+            If the watch is true and the call is successful (no exception is thrown),
+            a watch will be left on the node with the given path. The watch will be
+            triggered by a successful operation that creates/delete the node or sets
+            the data on the node.
+            </summary>
+            <param name="path">the node path</param>
+            <param name="watch">whether need to watch this node</param>
+            <returns>the stat of the node of the given path; return null if no such a node exists.</returns>
+            <exception cref="T:org.apache.zookeeper.KeeperException.ConnectionLossException">the connection has been lost, you should retry</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.SessionExpiredException">the server says the session has expired, you should create a new client</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException">the server signals an error with a non-zero error code</exception> 
+            <exception cref="T:System.ArgumentException">when <paramref name="path"/> is invalid</exception>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.getDataAsync(System.String,org.apache.zookeeper.Watcher)">
+            <summary>
+            Returns the data and the stat of the node of the given path.
+            If the watch is non-null and the call is successful (no exception is
+            thrown), a watch will be left on the node with the given path. The watch
+            will be triggered by a successful operation that sets data on the node, or
+            deletes the node.
+            </summary>
+            <returns>the data and the stat of the node of the given path</returns>
+            <exception cref="T:org.apache.zookeeper.KeeperException.NoNodeException">if no node with the given path exists.</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.ConnectionLossException">the connection has been lost, you should retry</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.SessionExpiredException">the server says the session has expired, you should create a new client</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException">the server signals an error with a non-zero error code</exception> 
+            <exception cref="T:System.ArgumentException">when <paramref name="path"/> is invalid</exception>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.getDataAsync(System.String,System.Boolean)">
+            <summary>
+            Return the data and the stat of the node of the given path.
+            If the watch is true and the call is successful (no exception is
+            thrown), a watch will be left on the node with the given path. The watch
+            will be triggered by a successful operation that sets data on the node, or
+            deletes the node.
+            </summary>
+            <param name="path">the given path</param>
+            <param name="watch">whether need to watch this node</param>
+            <returns>
+            the data and the stat of the node of the given path
+            </returns>
+            <exception cref="T:org.apache.zookeeper.KeeperException.NoNodeException">if no node with the given path exists.</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.ConnectionLossException">the connection has been lost, you should retry</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.SessionExpiredException">the server says the session has expired, you should create a new client</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException">the server signals an error with a non-zero error code</exception>
+            <exception cref="T:System.ArgumentException">when <paramref name="path"/> is invalid</exception>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.setDataAsync(System.String,System.Byte[],System.Int32)">
+            <summary>
+            Set the data for the node of the given path if such a node exists and the
+            given version matches the version of the node (if the given version is
+            -1, it matches any node's versions). Return the stat of the node.
+            This operation, if successful, will trigger all the watches on the node
+            of the given path left by getData calls.
+            The maximum allowable size of the data array is 1 MB (1,048,576 bytes).
+            Arrays larger than this will cause a KeeperExecption to be thrown.
+            </summary>
+            <param name="path">the path of the node</param>
+            <param name="data">the data to set</param>
+            <param name="version">the expected matching version</param>
+            <returns>the state of the node</returns>
+            <exception cref="T:org.apache.zookeeper.KeeperException.NoNodeException">if no node with the given path exists.</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.BadVersionException">the given version does not match the node's version</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.ConnectionLossException">the connection has been lost, you should retry</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.SessionExpiredException">the server says the session has expired, you should create a new client</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException">the server signals an error with a non-zero error code</exception> 
+            <exception cref="T:System.ArgumentException">when <paramref name="path"/> is invalid</exception>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.getACLAsync(System.String)">
+            <summary>
+            Return the ACL and stat of the node of the given path.
+            </summary>
+            <param name="path">the given path for the node</param>
+            <returns>the ACL array of the given node</returns>
+            <exception cref="T:org.apache.zookeeper.KeeperException.NoNodeException">if no node with the given path exists.</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.ConnectionLossException">the connection has been lost, you should retry</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.SessionExpiredException">the server says the session has expired, you should create a new client</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException">the server signals an error with a non-zero error code</exception> 
+            <exception cref="T:System.ArgumentException">when <paramref name="path"/> is invalid</exception>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.setACLAsync(System.String,System.Collections.Generic.List{org.apache.zookeeper.data.ACL},System.Int32)">
+            <summary>
+            Set the ACL for the node of the given path if such a node exists and the
+            given version matches the version of the node. Return the stat of the
+            node.
+            </summary>
+            <param name="path">node path</param>
+            <param name="acl">acl</param>
+            <param name="version">version</param>
+            <returns></returns>
+            <exception cref="T:org.apache.zookeeper.KeeperException.BadVersionException">the given version does not match the node's version</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.NoNodeException">if no node with the given path exists.</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.ConnectionLossException">the connection has been lost, you should retry</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.SessionExpiredException">the server says the session has expired, you should create a new client</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException">the server signals an error with a non-zero error code</exception> 
+            <exception cref="T:System.ArgumentException">when <paramref name="path"/> is invalid</exception> 
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.getChildrenAsync(System.String,org.apache.zookeeper.Watcher)">
+            <summary>
+            For the given znode path return the stat and children list.
+            If the watch is non-null and the call is successful (no exception is thrown),
+            a watch will be left on the node with the given path. The watch will be
+            triggered by a successful operation that deletes the node of the given
+            path or creates/delete a child under the node.
+            The list of children returned is not sorted and no guarantee is provided
+            as to its natural or lexical order.
+            @since 3.3.0
+            </summary>
+            <param name="path">path</param>
+            <param name="watcher">explicit watcher</param>
+            <returns>an unordered children of the node with the given path</returns>
+            <exception cref="T:org.apache.zookeeper.KeeperException.NoNodeException">if no node with the given path exists.</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.ConnectionLossException">the connection has been lost, you should retry</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.SessionExpiredException">the server says the session has expired, you should create a new client</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException">the server signals an error with a non-zero error code</exception>
+            <exception cref="T:System.ArgumentException">when <paramref name="path" /> is invalid</exception>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.getChildrenAsync(System.String,System.Boolean)">
+            <summary>
+            For the given znode path return the stat and children list.
+            If the watch is true and the call is successful (no exception is thrown),
+            a watch will be left on the node with the given path. The watch will be
+            triggered by a successful operation that deletes the node of the given
+            path or creates/delete a child under the node.
+            The list of children returned is not sorted and no guarantee is provided
+            as to its natural or lexical order.
+            @since 3.3.0
+            </summary>
+            <param name="path">The path.</param>
+            <param name="watch">watch</param>
+            <returns>an unordered children of the node with the given path</returns>
+            <exception cref="T:org.apache.zookeeper.KeeperException.NoNodeException">if no node with the given path exists.</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.ConnectionLossException">the connection has been lost, you should retry</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.SessionExpiredException">the server says the session has expired, you should create a new client</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException">the server signals an error with a non-zero error code</exception>
+            <exception cref="T:System.ArgumentException">when <paramref name="path" /> is invalid</exception>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.sync(System.String)">
+            <summary>
+            Asynchronous sync. Flushes channel between process and leader.
+            </summary>
+            <param name="path">path</param>
+            <exception cref="T:org.apache.zookeeper.KeeperException.ConnectionLossException">the connection has been lost, you should retry</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException.SessionExpiredException">the server says the session has expired, you should create a new client</exception>
+            <exception cref="T:org.apache.zookeeper.KeeperException">the server signals an error with a non-zero error code</exception>  
+            <exception cref="T:System.ArgumentException">when <paramref name="path"/> is invalid</exception>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.getState">
+            <summary>
+            Gets the current state of the connection
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.ToString">
+            <summary>
+            string representation of this ZooKeeper client. Suitable for things
+            like logging.
+            
+            Do NOT count on the format of this string, it may change without
+            warning.
+            
+            @since 3.3.0
+            </summary>
+        </member>
+        <member name="P:org.apache.zookeeper.ZooKeeper.LogToFile">
+            <summary>
+            Should ZooKeeper log be written to a file named <see cref="P:org.apache.zookeeper.ZooKeeper.LogFileName"/>
+            </summary>
+        </member>
+        <member name="P:org.apache.zookeeper.ZooKeeper.LogToTrace">
+            <summary>
+            Should ZooKeeper log be written to trace.
+            The log level is controlled by <see cref="P:org.apache.zookeeper.ZooKeeper.LogLevel"/>
+            </summary>
+        </member>
+        <member name="P:org.apache.zookeeper.ZooKeeper.LogFileName">
+            <summary>
+            The file name of the log used when <see cref="P:org.apache.zookeeper.ZooKeeper.LogToFile"/> is true.
+            The log level is controlled by <see cref="P:org.apache.zookeeper.ZooKeeper.LogLevel"/>
+            </summary>
+        </member>
+        <member name="P:org.apache.zookeeper.ZooKeeper.LogLevel">
+            <summary>
+            The minimum log level that should be written to the output. The output can be set via the
+            <see cref="P:org.apache.zookeeper.ZooKeeper.LogToTrace"/>, <see cref="P:org.apache.zookeeper.ZooKeeper.LogToFile"/> and <see cref="P:org.apache.zookeeper.ZooKeeper.CustomLogConsumer"/>
+            </summary>
+        </member>
+        <member name="P:org.apache.zookeeper.ZooKeeper.CustomLogConsumer">
+            <summary>
+            This is for providing an external logger. 
+            The log level is controlled by <see cref="P:org.apache.zookeeper.ZooKeeper.LogLevel"/>
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.Using(System.String,System.Int32,org.apache.zookeeper.Watcher,System.Int64,System.Byte[],System.Func{org.apache.zookeeper.ZooKeeper,System.Threading.Tasks.Task},System.Boolean)">
+            <summary>
+            Creates a ZK with <see cref="M:org.apache.zookeeper.ZooKeeper.#ctor(System.String,System.Int32,org.apache.zookeeper.Watcher,System.Int64,System.Byte[],System.Boolean)"/> and pass it to <paramref name="zkMethod"/>
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.Using``1(System.String,System.Int32,org.apache.zookeeper.Watcher,System.Int64,System.Byte[],System.Func{org.apache.zookeeper.ZooKeeper,System.Threading.Tasks.Task{``0}},System.Boolean)">
+            <summary>
+            Creates a ZK with <see cref="M:org.apache.zookeeper.ZooKeeper.#ctor(System.String,System.Int32,org.apache.zookeeper.Watcher,System.Int64,System.Byte[],System.Boolean)"/> and pass it to <paramref name="zkMethod"/>
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.Using(System.String,System.Int32,org.apache.zookeeper.Watcher,System.Func{org.apache.zookeeper.ZooKeeper,System.Threading.Tasks.Task},System.Boolean)">
+            <summary>
+            Creates a ZK with <see cref="M:org.apache.zookeeper.ZooKeeper.#ctor(System.String,System.Int32,org.apache.zookeeper.Watcher,System.Boolean)"/> and pass it to <paramref name="zkMethod"/>
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.ZooKeeper.Using``1(System.String,System.Int32,org.apache.zookeeper.Watcher,System.Func{org.apache.zookeeper.ZooKeeper,System.Threading.Tasks.Task{``0}},System.Boolean)">
+            <summary>
+            Creates a ZK with <see cref="M:org.apache.zookeeper.ZooKeeper.#ctor(System.String,System.Int32,org.apache.zookeeper.Watcher,System.Boolean)"/> and pass it to <paramref name="zkMethod"/>
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.client.ConnectStringParser">
+            <summary>
+            A parser for ZooKeeper Client connect strings.
+            
+            This class is not meant to be seen or used outside of ZooKeeper itself.
+            
+            The chrootPath member should be replaced by a Path object in issue
+            ZOOKEEPER-849.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.client.DnsResolver.GetHostAddressesAsync(System.String)">
+            <summary>
+            The method "Dns.GetHostAddressesAsync" doesn't exist in .NET 4
+            But, it isn't really async in .NET 4.5 and up. The internal implementation
+            just queues a blocking call on the thread pool. see: http://stackoverflow.com/questions/11480742/dns-begingethost-methods-blocking
+            Therefore, the .NET 4 implementation here is equivalent to "Dns.GetHostAddressesAsync".
+            In .NET Core the implementation is OS specific, so real async implementations
+            might exist.
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.client.DynamicHostProvider">
+            <summary>
+            This HostProvider resolves its hosts on first call to next(). Then, after 
+            returning all resolved IPs, it resolves again.
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.client.HostProvider">
+            <summary>
+            A set of hosts a ZooKeeper client should connect to.
+            
+            Classes implementing this interface must guarantee the following:
+            
+            * Every call to next() returns an IPEndPoint. So the iterator never
+            ends.
+            
+            * The size() of a HostProvider may never be zero.
+            
+            A HostProvider must return resolved IPEndPoint instances on next(),
+            but it's up to the HostProvider, when it wants to do the resolving.
+            
+            Different HostProvider could be imagined:
+            
+            * A HostProvider that loads the list of Hosts from an URL or from DNS 
+            * A HostProvider that re-resolves the IPEndPoint after a timeout. 
+            * A HostProvider that prefers nearby hosts.
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.client.HostProvider.next(System.Int32)">
+            <summary>
+            The next host to try to connect to.
+            
+            For a spinDelay of 0 there should be no wait.
+            </summary>
+            <param name="spinDelay">
+                Milliseconds to wait if all hosts have been tried once. </param>
+        </member>
+        <member name="M:org.apache.zookeeper.client.HostProvider.onConnected">
+            <summary>
+            Notify the HostProvider of a successful connection.
+            
+            The HostProvider may use this notification to reset it's inner state.
+            </summary>
+        </member>
+        <member name="T:org.apache.zookeeper.common.PathUtils">
+            <summary>
+            Path related utilities
+            </summary>
+        </member>
+        <member name="M:org.apache.zookeeper.common.PathUtils.validatePath(System.String,System.Boolean)">
+            <summary>
+            validate the provided znode path string </summary>
+            <param name="path"> znode path string </param>
+            <param name="isSequential"> if the path is being created
+            with a sequential flag </param>
+            <exception cref="T:System.ArgumentException"> if the path is invalid </exception>
+        </member>
+        <member name="M:org.apache.zookeeper.common.PathUtils.validatePath(System.String)">
+            <summary>
+            Validate the provided znode path string </summary>
+            <param name="path"> znode path string </param>
+            <exception cref="T:System.ArgumentException"> if the path is invalid </exception>
+        </member>
+        <member name="M:org.apache.jute.BinaryInputArchive.#ctor(org.apache.utils.BigEndianBinaryReader)">
+            Creates a new instance of BinaryInputArchive 
+        </member>
+        <member name="M:org.apache.jute.BinaryOutputArchive.#ctor(org.apache.utils.BigEndianBinaryWriter)">
+            Creates a new instance of BinaryOutputArchive 
+        </member>
+        <member name="T:org.apache.jute.Index">
+             Interface that acts as an iterator for deserializing maps.
+             The deserializer returns an instance that the record uses to
+             read vectors and maps. An example of usage is as follows:
+            
+             <code>
+             Index idx = startVector(...);
+             while (!idx.done()) {
+               .... // read element of a vector
+               idx.incr();
+             }
+             </code>
+            
+        </member>
+        <member name="T:org.apache.jute.InputArchive">
+             Interface that all the Deserializers have to implement.
+            
+        </member>
+        <member name="T:org.apache.jute.OutputArchive">
+             Interface that alll the serializers have to implement.
+            
+        </member>
+        <member name="T:org.apache.jute.Record">
+            Interface that is implemented by generated classes.
+            
+        </member>
+        <member name="T:org.apache.utils.EnumUtil`1">
+            <summary>
+            Utility methods for enum values. This static type will fail to initialize 
+            (throwing a <see cref="T:System.TypeInitializationException"/>) if
+            you try to provide a value that is not an enum.
+            </summary>
+            <typeparam name="T">An enum type. </typeparam>
+        </member>
+        <member name="M:org.apache.utils.EnumUtil`1.DefinedCast(System.Object)">
+            <summary>
+            In the .NET Framework, objects can be cast to enum values which are not
+            defined for their type. This method provides a simple fail-fast check
+            that the enum value is defined, and creates a cast at the same time.
+            Cast the given value as the given enum type.
+            Throw an exception if the value is not defined for the given enum type.
+            </summary>
+            <param name="enumValue"></param>
+            <exception cref="T:System.InvalidCastException">
+            If the given value is not a defined value of the enum type.
+            </exception>
+            <returns></returns>
+        </member>
+        <member name="T:org.apache.utils.BigEndianBinaryReader">
+            <summary>
+            Equivalent of System.IO.BinaryReader, but with either endianness, depending on
+            the EndianBitConverter it is constructed with. No data is buffered in the
+            reader; the client may seek within the stream at will.
+            </summary>
+        </member>
+        <member name="F:org.apache.utils.BigEndianBinaryReader.byteBuffer">
+            <summary>
+            Buffer used for temporary storage before conversion into primitives
+            </summary>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBinaryReader.#ctor(System.IO.Stream)">
+            <summary>
+            Constructs a new binary reader with the given bit converter, reading
+            to the given stream, using the given encoding.
+            </summary>
+            <param name="stream">Stream to read data from</param>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBinaryReader.ReadBoolean">
+            <summary>
+            Reads a boolean from the stream. 1 byte is read.
+            </summary>
+            <returns>The boolean read</returns>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBinaryReader.ReadInt32">
+            <summary>
+            Reads a 32-bit signed integer from the stream, using the bit converter
+            for this reader. 4 bytes are read.
+            </summary>
+            <returns>The 32-bit integer read</returns>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBinaryReader.ReadInt64">
+            <summary>
+            Reads a 64-bit signed integer from the stream, using the bit converter
+            for this reader. 8 bytes are read.
+            </summary>
+            <returns>The 64-bit integer read</returns>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBinaryReader.ReadBytesOrThrow(System.Int32)">
+            <summary>
+            Reads the specified number of bytes, returning them in a new byte array.
+            If not enough bytes are available before the end of the stream, this
+            method will throw an IOException.
+            </summary>
+            <param name="count">The number of bytes to read</param>
+            <returns>The bytes read</returns>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBinaryReader.ReadInternal(System.Byte[],System.Int32)">
+            <summary>
+            Reads the given number of bytes from the stream, throwing an exception
+            if they can't all be read.
+            </summary>
+            <param name="data">Buffer to read into</param>
+            <param name="size">Number of bytes to read</param>
+        </member>
+        <member name="T:org.apache.utils.BigEndianBinaryWriter">
+            <summary>
+            Equivalent of System.IO.BinaryWriter, but with big endianness
+            </summary>
+        </member>
+        <member name="F:org.apache.utils.BigEndianBinaryWriter.buffer">
+            <summary>
+            Buffer used for temporary storage during conversion from primitives
+            </summary>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBinaryWriter.#ctor(System.IO.Stream)">
+            <summary>
+            Constructs a new binary writer with big endian converter, writing
+            to the given stream.
+            </summary>
+            <param name="stream">Stream to write data to</param>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBinaryWriter.Write(System.Boolean)">
+            <summary>
+            Writes a boolean value to the stream. 1 byte is written.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBinaryWriter.Write(System.Int32)">
+            <summary>
+            Writes a 32-bit signed integer to the stream, using the bit converter
+            for this writer. 4 bytes are written.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBinaryWriter.Write(System.Int64)">
+            <summary>
+            Writes a 64-bit signed integer to the stream, using the bit converter
+            for this writer. 8 bytes are written.
+            </summary>
+            <param name="value">The value to write</param>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBinaryWriter.Write(System.Byte[])">
+            <summary>
+            Writes an array of bytes to the stream.
+            </summary>
+            <param name="value">The values to write</param>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBinaryWriter.WriteInternal(System.Byte[],System.Int32)">
+            <summary>
+            Writes the specified number of bytes from the start of the given byte array,
+            after checking whether or not the writer has been disposed.
+            </summary>
+            <param name="bytes">The array of bytes to write from</param>
+            <param name="length">The number of bytes to write</param>
+        </member>
+        <member name="T:org.apache.utils.BigEndianBitConverter">
+            <summary>
+            Equivalent of System.BitConverter, but with big endianness.
+            </summary>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBitConverter.ToBoolean(System.Byte[],System.Int32)">
+            <summary>
+            Returns a Boolean value converted from one byte at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>true if the byte at startIndex in value is nonzero; otherwise, false.</returns>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBitConverter.ToInt32(System.Byte[],System.Int32)">
+            <summary>
+            Returns a 32-bit signed integer converted from four bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A 32-bit signed integer formed by four bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBitConverter.ToInt64(System.Byte[],System.Int32)">
+            <summary>
+            Returns a 64-bit signed integer converted from eight bytes at a specified position in a byte array.
+            </summary>
+            <param name="value">An array of bytes.</param>
+            <param name="startIndex">The starting position within value.</param>
+            <returns>A 64-bit signed integer formed by eight bytes beginning at startIndex.</returns>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBitConverter.CheckByteArgument(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Checks the given argument for validity.
+            </summary>
+            <param name="value">The byte array passed in</param>
+            <param name="startIndex">The start index passed in</param>
+            <param name="bytesRequired">The number of bytes required</param>
+            <exception cref="T:System.ArgumentNullException">value is a null reference</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">
+            startIndex is less than zero or greater than the length of value minus bytesRequired.
+            </exception>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBitConverter.CheckedFromBytes(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Checks the arguments for validity before calling FromBytes
+            (which can therefore assume the arguments are valid).
+            </summary>
+            <param name="value">The bytes to convert after checking</param>
+            <param name="startIndex">The index of the first byte to convert</param>
+            <param name="bytesToConvert">The number of bytes to convert</param>
+            <returns></returns>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBitConverter.FromBytes(System.Byte[],System.Int32,System.Int32)">
+            <summary>
+            Returns a value built from the specified number of bytes from the given buffer,
+            starting at index.
+            </summary>
+            <param name="buffer">The data in byte array format</param>
+            <param name="startIndex">The first index to use</param>
+            <param name="bytesToConvert">The number of bytes to use</param>
+            <returns>The value built from the given bytes</returns>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBitConverter.CopyBytes(System.Int64,System.Int32,System.Byte[],System.Int32)">
+            <summary>
+            Copies the given number of bytes from the least-specific
+            end of the specified value into the specified byte array, beginning
+            at the specified index.
+            This is used to implement the other CopyBytes methods.
+            </summary>
+            <param name="value">The value to copy bytes for</param>
+            <param name="bytes">The number of significant bytes to copy</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBitConverter.CopyBytesImpl(System.Int64,System.Int32,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified number of bytes from value to buffer, starting at index.
+            </summary>
+            <param name="value">The value to copy</param>
+            <param name="bytes">The number of bytes to copy</param>
+            <param name="buffer">The buffer to copy the bytes into</param>
+            <param name="index">The index to start at</param>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBitConverter.CopyBytes(System.Boolean,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified Boolean value into the specified byte array,
+            beginning at the specified index.
+            </summary>
+            <param name="value">A Boolean value.</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBitConverter.CopyBytes(System.Int32,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified 32-bit signed integer value into the specified byte array,
+            beginning at the specified index.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="M:org.apache.utils.BigEndianBitConverter.CopyBytes(System.Int64,System.Byte[],System.Int32)">
+            <summary>
+            Copies the specified 64-bit signed integer value into the specified byte array,
+            beginning at the specified index.
+            </summary>
+            <param name="value">The number to convert.</param>
+            <param name="buffer">The byte array to copy the bytes into</param>
+            <param name="index">The first index into the array to copy the bytes into</param>
+        </member>
+        <member name="T:org.apache.utils.ILogConsumer">
+            <summary>
+            This is for providing external loggers for ZooKeeper
+            </summary>
+        </member>
+        <member name="M:org.apache.utils.ILogConsumer.Log(System.Diagnostics.TraceLevel,System.String,System.String,System.Exception)">
+            <summary>
+            The log method
+            </summary>
+            <param name="severity"></param>
+            <param name="className"></param>
+            <param name="message"></param>
+            <param name="exception"></param>
+        </member>
+        <member name="M:org.apache.utils.LogWriter.Log(System.Diagnostics.TraceLevel,System.String,System.String,System.Exception)">
+            <summary>
+                The method to call during logging.
+                This method should be very fast, since it is called synchronously during logging.
+            </summary>
+            <param name="traceLevel">The severity of the message being traced.</param>
+            <param name="className">The name of the logger tracing the message.</param>
+            <param name="message">The message to log.</param>
+            <param name="exception">The exception to log. May be null.</param>
+        </member>
+        <member name="M:org.apache.utils.LogWriter.PrintDate">
+            <summary>
+                Utility function to convert a <c>DateTime</c> object into printable data format used by the TraceLogger subsystem.
+            </summary>
+            <returns>Formatted string representation of the input data, in the printable format used by the TraceLogger subsystem.</returns>
+        </member>
+        <member name="M:org.apache.utils.LogWriter.PrintException(System.Exception)">
+            <summary>
+                Utility function to convert an exception into printable format, including expanding and formatting any nested
+                sub-expressions.
+            </summary>
+            <param name="exception">The exception to be printed.</param>
+            <returns>
+                Formatted string representation of the exception, including expanding and formatting any nested
+                sub-expressions.
+            </returns>
+        </member>
+    </members>
+</doc>

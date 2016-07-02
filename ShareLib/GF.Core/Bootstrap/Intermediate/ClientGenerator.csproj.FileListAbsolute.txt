@@ -1,0 +1,10 @@
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Intermediate\ClientGenerator.csprojResolveAssemblyReference.cache
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Orleans.SDK.targets
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Configuration\OrleansConfiguration.xsd
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\ClientGenerator.exe.config
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Intermediate\ClientGenerator.exe
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\Intermediate\ClientGenerator.pdb
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\ClientGenerator.exe
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\ClientGenerator.pdb
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\ClientGenerator.exe.CodeAnalysisLog.xml
+D:\work\_Git2\orleans\Binaries\Debug\Bootstrap\ClientGenerator.exe.lastcodeanalysissucceeded

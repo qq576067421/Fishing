@@ -1,0 +1,352 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{3811AA0D-D33A-401B-ADCF-9C616B5D289D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Fishing.Grain</RootNamespace>
+    <AssemblyName>Fishing.Grain</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Output\Bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <NoWarn>4014</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\..\Output\Bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Bond">
+      <HintPath>..\..\ShareLib\GF.Core\Bond.dll</HintPath>
+    </Reference>
+    <Reference Include="Bond.Attributes">
+      <HintPath>..\..\ShareLib\GF.Core\Bond.Attributes.dll</HintPath>
+    </Reference>
+    <Reference Include="Bond.IO">
+      <HintPath>..\..\ShareLib\GF.Core\Bond.IO.dll</HintPath>
+    </Reference>
+    <Reference Include="Bond.JSON">
+      <HintPath>..\..\ShareLib\GF.Core\Bond.JSON.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging">
+      <HintPath>..\..\ShareLib\GF.Core\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core">
+      <HintPath>..\..\ShareLib\GF.Core\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Consul">
+      <HintPath>..\..\ShareLib\GF.Core\Consul.dll</HintPath>
+    </Reference>
+    <Reference Include="Couchbase.NetClient">
+      <HintPath>..\..\ShareLib\GF.Core\Couchbase.NetClient.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions">
+      <HintPath>..\..\ShareLib\GF.Core\FluentAssertions.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentAssertions.Core">
+      <HintPath>..\..\ShareLib\GF.Core\FluentAssertions.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="FSharp.Core">
+      <HintPath>..\..\ShareLib\GF.Core\FSharp.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="GF.Common">
+      <HintPath>..\..\ShareLib\GF.Core\GF.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="GF.Server">
+      <HintPath>..\..\ShareLib\GF.Core\GF.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="GF.Sqlite">
+      <HintPath>..\..\ShareLib\GF.Core\GF.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="GF.UCenter.Common">
+      <HintPath>..\..\ShareLib\GF.UCenter\GF.UCenter.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="GF.UCenter.Common.Portable">
+      <HintPath>..\..\ShareLib\GF.UCenter\GF.UCenter.Common.Portable.dll</HintPath>
+    </Reference>
+    <Reference Include="GF.UCenter.SDK.AppServer">
+      <HintPath>..\..\ShareLib\GF.UCenter\GF.UCenter.SDK.AppServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>..\..\ShareLib\GF.Core\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\..\ShareLib\GF.Core\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\..\ShareLib\GF.Core\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.KeyVault.Core">
+      <HintPath>..\..\ShareLib\GF.Core\Microsoft.Azure.KeyVault.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Azure.SqlDatabase.ElasticScale.Client">
+      <HintPath>..\..\ShareLib\GF.Core\Microsoft.Azure.SqlDatabase.ElasticScale.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ShareLib\Gf\Debug\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ShareLib\Gf\Debug\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ShareLib\Gf\Debug\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection">
+      <HintPath>..\..\ShareLib\GF.Core\Microsoft.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions">
+      <HintPath>..\..\ShareLib\GF.Core\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling">
+      <HintPath>..\..\ShareLib\GF.Core\Microsoft.Practices.EnterpriseLibrary.TransientFaultHandling.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ServiceBus">
+      <HintPath>..\..\ShareLib\GF.Core\Microsoft.ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ShareLib\GF.Core\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration">
+      <HintPath>..\..\ShareLib\GF.Core\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage">
+      <HintPath>..\..\ShareLib\GF.Core\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="NewRelic.Api.Agent">
+      <HintPath>..\..\ShareLib\GF.Core\NewRelic.Api.Agent.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\ShareLib\GF.Core\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Orleans">
+      <HintPath>..\..\ShareLib\GF.Core\Orleans.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansAzureUtils">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansAzureUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansBondUtils">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansBondUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansCodeGenerator">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansCodeGenerator.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansConsulUtils">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansConsulUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansDependencyInjection">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansDependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansEventSourcing">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansEventSourcing.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansGoogleUtils">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansGoogleUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansProviders">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansProviders.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansRuntime">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansServiceBus">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansSQLUtils">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansSQLUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansTelemetryConsumers.AI">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansTelemetryConsumers.AI.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansTelemetryConsumers.NewRelic">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansTelemetryConsumers.NewRelic.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansTestingHost">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansTestingHost.dll</HintPath>
+    </Reference>
+    <Reference Include="OrleansZooKeeperUtils">
+      <HintPath>..\..\ShareLib\GF.Core\OrleansZooKeeperUtils.dll</HintPath>
+    </Reference>
+    <Reference Include="Pngcs">
+      <HintPath>..\..\ShareLib\GF.Core\Pngcs.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.Common">
+      <HintPath>..\..\ShareLib\GF.Core\SuperSocket.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.ProtoBase">
+      <HintPath>..\..\ShareLib\GF.Core\SuperSocket.ProtoBase.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.SocketBase">
+      <HintPath>..\..\ShareLib\GF.Core\SuperSocket.SocketBase.dll</HintPath>
+    </Reference>
+    <Reference Include="SuperSocket.SocketEngine">
+      <HintPath>..\..\ShareLib\GF.Core\SuperSocket.SocketEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ShareLib\GF.Core\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ShareLib\GF.UCenter\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Spatial, Version=5.6.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ShareLib\Gf\Debug\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.5.24.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ShareLib\Gf\Debug\System.Threading.Tasks.Dataflow.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\ShareLib\GF.UCenter\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\ShareLib\GF.Core\UnityEngine.dll</HintPath>
+    </Reference>
+    <Reference Include="Validation">
+      <HintPath>..\..\ShareLib\GF.Core\Validation.dll</HintPath>
+    </Reference>
+    <Reference Include="ZooKeeperNetEx">
+      <HintPath>..\..\ShareLib\GF.Core\ZooKeeperNetEx.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FishScene\Effect\EffectAOE.cs" />
+    <Compile Include="FishScene\Effect\EffectEmpty.cs" />
+    <Compile Include="FishScene\Effect\EffectSpreadFish.cs" />
+    <Compile Include="FishScene\Effect\EffectTimeStop.cs" />
+    <Compile Include="FishScene\Effect\LogicEffectFullScreenBomb.cs" />
+    <Compile Include="FishScene\Effect\LogicEffectLightingChain.cs" />
+    <Compile Include="Main\BtBot.cs" />
+    <Compile Include="Main\BtChild.cs" />
+    <Compile Include="Main\BtPlayer.cs" />
+    <Compile Include="Main\BtChildPlayerManual.cs" />
+    <Compile Include="Component\CellActor.cs" />
+    <Compile Include="Component\CellActorMirror.cs" />
+    <Compile Include="Component\CellDesktop.cs" />
+    <Compile Include="Component\CellPlayerLobby.cs" />
+    <Compile Include="Component\CellPlayerRanking.cs" />
+    <Compile Include="Component\CellPlayerTrade.cs" />
+    <Compile Include="ExternEffect\EffectCreateStatus.cs" />
+    <Compile Include="ExternEffect\EffectStatus1.cs" />
+    <Compile Include="ExternEffect\EffectStatus2.cs" />
+    <Compile Include="ExternEffect\EffectStatusCreator2.cs" />
+    <Compile Include="ExternEffect\EffectUseConsumable.cs" />
+    <Compile Include="FishScene\AI\BotsNicknameAlloter.cs" />
+    <Compile Include="FishScene\AI\LogicBot.cs" />
+    <Compile Include="FishScene\Collider\BoxColliderTester.cs" />
+    <Compile Include="FishScene\Collider\BulletCollider.cs" />
+    <Compile Include="FishScene\Collider\Collider.cs" />
+    <Compile Include="FishScene\Collider\ColliderMgr.cs" />
+    <Compile Include="FishScene\Collider\FishCollider.cs" />
+    <Compile Include="FishScene\Collider\IArea.cs" />
+    <Compile Include="FishScene\Collider\QuadNode.cs" />
+    <Compile Include="FishScene\Collider\QuadTree.cs" />
+    <Compile Include="FishScene\Collider\RectArea.cs" />
+    <Compile Include="FishScene\Collider\TagCollider.cs" />
+    <Compile Include="FishScene\Collider\TagColliderObject.cs" />
+    <Compile Include="FishScene\FishGroupRouteAlloter.cs" />
+    <Compile Include="FishScene\FishRouteMap.cs" />
+    <Compile Include="FishScene\LogicBullet.cs" />
+    <Compile Include="FishScene\LogicFish.cs" />
+    <Compile Include="FishScene\LogicFishFactory.cs" />
+    <Compile Include="FishScene\LogicLevel.cs" />
+    <Compile Include="FishScene\LogicLevelStateNormal.cs" />
+    <Compile Include="FishScene\LogicLevelStateSwitch.cs" />
+    <Compile Include="FishScene\LogicParticleSystemOuter.cs" />
+    <Compile Include="FishScene\LogicProtocol.cs" />
+    <Compile Include="FishScene\LogicScene.cs" />
+    <Compile Include="FishScene\LogicTurret.cs" />
+    <Compile Include="Grain\GrainCellBotService.cs" />
+    <Compile Include="Grain\GrainCellDesktop.cs" />
+    <Compile Include="Grain\GrainCellDesktopGroup.cs" />
+    <Compile Include="Grain\GrainCellDesktopService.cs" />
+    <Compile Include="Grain\GrainCellPlayerProxy.cs" />
+    <Compile Include="Grain\GrainCellFishingMgrService.cs" />
+    <Compile Include="Grain\GrainCellPlayer.cs" />
+    <Compile Include="Grain\GrainCellPlayerService.cs" />
+    <Compile Include="Main\CellApp.cs" />
+    <Compile Include="Component\CellBag.cs" />
+    <Compile Include="Component\CellActorMirrorAi.cs" />
+    <Compile Include="Component\CellEquip.cs" />
+    <Compile Include="Component\CellPlayer.cs" />
+    <Compile Include="Component\CellPlayerChat.cs" />
+    <Compile Include="Component\CellPlayerFriend.cs" />
+    <Compile Include="Component\CellPlayerDesktop.cs" />
+    <Compile Include="Component\CellPlayerMailBox.cs" />
+    <Compile Include="Component\CellPlayerTask.cs" />
+    <Compile Include="Component\CellStatus.cs" />
+    <Compile Include="ExternEffect\EffectStatusCreator1.cs" />
+    <Compile Include="ExternEffect\EffectUseSkillBook.cs" />
+    <Compile Include="ExternEffect\EffectTakeoffEquip.cs" />
+    <Compile Include="ExternEffect\EffectTakeonEquip.cs" />
+    <Compile Include="ExternTask\TaskCollectItem.cs" />
+    <Compile Include="ExternTask\TaskDialogue.cs" />
+    <Compile Include="ExternTask\TaskKillMonster.cs" />
+    <Compile Include="Grain\GrainCellMarqueeNewsService.cs" />
+    <Compile Include="Grain\GrainCellClient.cs" />
+    <Compile Include="Grain\GrainType.cs" />
+    <Compile Include="Main\CellConfig.cs" />
+    <Compile Include="Main\CouchbaseQue.cs" />
+    <Compile Include="Main\DbClientCouchbase.cs" />
+    <Compile Include="Main\DbClientZk.cs" />
+    <Compile Include="Main\JsonConfig.cs" />
+    <Compile Include="Main\OrleansBootstrap4Cell.cs" />
+    <Compile Include="Main\OrleansCouchbaseStorage.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Fishing.Common\Fishing.Common.csproj">
+      <Project>{636f7fc1-f769-418a-b83e-6a23de49d7cf}</Project>
+      <Name>Fishing.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Fishing.GrainInterface\Fishing.GrainInterface.csproj">
+      <Project>{4fded322-b9d0-4585-8432-1954a11cc41e}</Project>
+      <Name>Fishing.GrainInterface</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!--
+  <PropertyGroup>
+    <OrleansProjectType>Server</OrleansProjectType>
+  </PropertyGroup>
+  -->
+  <!--<Import Project="..\Orleans.SDK.targets" />-->
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

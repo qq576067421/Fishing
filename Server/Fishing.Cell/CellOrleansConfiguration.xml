@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<OrleansConfiguration xmlns="urn:orleans">
+  <Globals>
+    <Application>
+      <Defaults>
+        <Deactivation AgeLimit="300s"/>
+      </Defaults>
+    </Application>
+    <!--<SeedNode Address="localhost" Port="11111" />-->
+    <!--<Liveness LivenessEnabled="true" LivenessType="ZooKeeper" />-->
+    <!--
+    <SystemStore SystemStoreType="ZooKeeper" DeploymentId="Fishing"
+      DataConnectionString="139.196.105.80:2181"/>
+    -->
+    <!--
+    <SystemStore SystemStoreType="SqlServer" DeploymentId="Fishing"
+      DataConnectionString="Data Source =121.40.153.103\SQLExpress;Initial Catalog =Fishing;User Id =sa;Password =123321;"/>
+    -->
+    <SystemStore SystemStoreType="None" DataConnectionString="http://localhost:8500" DeploymentId="Fishing">
+    </SystemStore>
+    <StorageProviders>
+      <Provider Type="Orleans.Storage.MemoryStorage" Name="MemoryStore" />
+      <Provider Type="Orleans.Storage.MemoryStorage" Name="PubSubStore" />
+       <Provider Type="Orleans.Storage.Couchbase.OrleansCouchbaseStorage" Name="CouchbaseStore"
+        ConfigSectionName="couchbaseClients/couchbase" />
+      <!-- To use Azure storage, uncomment one of the following lines: -->
+      <!--<Provider Type="Orleans.Storage.AzureTableStorage" Name="AzureStore" DataConnectionString="UseDevelopmentStorage=true" />-->
+      <!--<Provider Type="Orleans.Storage.AzureTableStorage" Name="AzureStore" DataConnectionString="DefaultEndpointsProtocol=https;AccountName=MYACCOUNTNAME;AccountKey=MYACCOUNTKEY" />-->
+    </StorageProviders>
+    <StreamProviders>
+      <Provider Type="Orleans.Providers.Streams.SimpleMessageStream.SimpleMessageStreamProvider" Name="SMSProvider"/>
+      <!--<Provider Type="Orleans.Providers.Streams.AzureQueue.AzureQueueStreamProvider" Name="AzureQueueProvider"/>-->
+    </StreamProviders>
+    <BootstrapProviders>
+      <Provider Type="Ps.OrleansBootstrap4Cell" Name="OrleansBootstrap4Cell" />
+    </BootstrapProviders>
+    <!--<ReminderService ReminderServiceType="ReminderTableGrain"/>-->
+  </Globals>
+  <Defaults>
+    <Networking Address="localhost" Port="11111" />
+    <ProxyingGateway Address="localhost" Port="30000" />
+    <Tracing DefaultTraceLevel="Info" TraceToConsole="true" TraceToFile="{0}-{1}.log" BulkMessageLimit="1000">
+      <TraceLevelOverride LogPrefix="Application" TraceLevel="Info" />
+      <!--
+      <TraceLevelOverride LogPrefix="Runtime.MembershipOracle" TraceLevel="Verbose" />
+      <TraceLevelOverride LogPrefix="Runtime.Dispatcher" TraceLevel="Verbose" />
+      <TraceLevelOverride LogPrefix="AssemblyLoader.Silo" TraceLevel="Warning" />
+      -->
+    </Tracing>
+    <Statistics MetricsTableWriteInterval="30s" PerfCounterWriteInterval="30s"
+      LogWriteInterval="300s" WriteLogStatisticsToTable="true" StatisticsCollectionLevel="Info"/>
+  </Defaults>
+</OrleansConfiguration>

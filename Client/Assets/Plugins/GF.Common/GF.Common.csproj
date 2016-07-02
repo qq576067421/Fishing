@@ -1,0 +1,297 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{4A1A0894-DC8E-4D16-B920-064B77C9E781}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GF.Common</RootNamespace>
+    <AssemblyName>GF.Common</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>..\Output\Bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterBuild" command="cp  ${TargetDir}/${TargetName} ${SolutionDir}/../Client/Assets/Plugins" />
+      </CustomCommands>
+    </CustomCommands>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>..\Output\Bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CustomCommands>
+      <CustomCommands>
+        <Command type="AfterExecute" command="" workingdir="" />
+        <Command type="AfterBuild" command="" workingdir="" />
+      </CustomCommands>
+    </CustomCommands>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\ShareLib\PngReaderDLL\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Pngcs">
+      <HintPath>..\ShareLib\PngReaderDLL\Pngcs.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\ShareLib\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BehaviorTree\Actions\Action1.cs" />
+    <Compile Include="BehaviorTree\Actions\Action2.cs" />
+    <Compile Include="BehaviorTree\BehaviorComponent.cs" />
+    <Compile Include="BehaviorTree\BehaviorTree.cs" />
+    <Compile Include="BehaviorTree\Blackboard.cs" />
+    <Compile Include="BehaviorTree\Composites\PartialSelector.cs" />
+    <Compile Include="BehaviorTree\Composites\PartialSequence.cs" />
+    <Compile Include="BehaviorTree\Composites\RandomSelector.cs" />
+    <Compile Include="BehaviorTree\Composites\RootSelector.cs" />
+    <Compile Include="BehaviorTree\Composites\Selector.cs" />
+    <Compile Include="BehaviorTree\Composites\Sequence.cs" />
+    <Compile Include="BehaviorTree\Composites\StatefulSelector.cs" />
+    <Compile Include="BehaviorTree\Composites\StatefulSequence.cs" />
+    <Compile Include="BehaviorTree\Conditionals\Conditional.cs" />
+    <Compile Include="BehaviorTree\Decorators\DecoratorCounter.cs" />
+    <Compile Include="BehaviorTree\Decorators\DecoratorInverter.cs" />
+    <Compile Include="BehaviorTree\Decorators\DecoratorRandom.cs" />
+    <Compile Include="BehaviorTree\Decorators\DecoratorTimer.cs" />
+    <Compile Include="ComponentDef\DefNode.cs" />
+    <Compile Include="ComponentDef\DefSuperSocket.cs" />
+    <Compile Include="ComponentDef\EtNode.cs" />
+    <Compile Include="ComponentDef\EtSuperSocket.cs" />
+    <Compile Include="Data\ISqlite.cs" />
+    <Compile Include="Entity\EntityDef.cs" />
+    <Compile Include="Entity\EntityPool.cs" />
+    <Compile Include="Entity\RpcCallee.cs" />
+    <Compile Include="Entity\RpcCaller.cs" />
+    <Compile Include="Main\EbTool.cs" />
+    <Compile Include="Main\EbCommonType.cs" />
+    <Compile Include="Data\EbData.cs" />
+    <Compile Include="Data\EbDataMgr.cs" />
+    <Compile Include="Entity\Component.cs" />
+    <Compile Include="Entity\ComponentFactory.cs" />
+    <Compile Include="Entity\Entity.cs" />
+    <Compile Include="Entity\ComponentDef.cs" />
+    <Compile Include="Entity\EntityEvent.cs" />
+    <Compile Include="Entity\PropAttr.cs" />
+    <Compile Include="Main\EbDoubleLinkList2.cs" />
+    <Compile Include="Main\EbFileStream.cs" />
+    <Compile Include="Entity\EntityMgr.cs" />
+    <Compile Include="Entity\EntityType.cs" />
+    <Compile Include="Entity\Prop.cs" />
+    <Compile Include="Entity\PropDef.cs" />
+    <Compile Include="Fsm\EbEvent.cs" />
+    <Compile Include="Fsm\EbFsm.cs" />
+    <Compile Include="Fsm\EbState.cs" />
+    <Compile Include="Main\EbBase64Decoder.cs" />
+    <Compile Include="Main\EbBase64Encoder.cs" />
+    <Compile Include="Main\EbLog.cs" />
+    <Compile Include="Main\EbDoubleLinkList.cs" />
+    <Compile Include="Main\EbTimerShaft.cs" />
+    <Compile Include="Math\EbAngle.cs" />
+    <Compile Include="Math\EbAngleCursor.cs" />
+    <Compile Include="Math\EbBoundingBox.cs" />
+    <Compile Include="Math\EbMath.cs" />
+    <Compile Include="Math\EbVector2.cs" />
+    <Compile Include="Math\EbVector3.cs" />
+    <Compile Include="Node\INodeClientListener.cs" />
+    <Compile Include="Node\INodeClientScript.cs" />
+    <Compile Include="Node\INodeEffect.cs" />
+    <Compile Include="Node\INodeServerListener.cs" />
+    <Compile Include="Node\INodeServerScript.cs" />
+    <Compile Include="Node\INodeTrigger.cs" />
+    <Compile Include="Node\INodeTriggerCondition.cs" />
+    <Compile Include="Node\MsgMgr.cs" />
+    <Compile Include="Node\Node.cs" />
+    <Compile Include="Node\NodeConfig.cs" />
+    <Compile Include="Node\NodeDefXml\DataScenario.cs" />
+    <Compile Include="Node\NodeDefXml\DirectRemote.cs" />
+    <Compile Include="Node\NodeDefXml\EditNodeData.cs" />
+    <Compile Include="Node\NodeDefXml\FakeRemote.cs" />
+    <Compile Include="Node\NodeDefXml\Interface.cs" />
+    <Compile Include="Node\NodeDefXml\NodeData.cs" />
+    <Compile Include="Node\NodeDefXml\StackTrace.cs" />
+    <Compile Include="Node\NodeDefXml\SVNRemote.cs" />
+    <Compile Include="Node\NodeEffectMgr.cs" />
+    <Compile Include="Node\NodeMgr.cs" />
+    <Compile Include="Node\NodePath.cs" />
+    <Compile Include="Node\NodeScriptMgr.cs" />
+    <Compile Include="Node\NodeStateInit.cs" />
+    <Compile Include="Node\NodeStateRelease.cs" />
+    <Compile Include="Node\NodeStateRun.cs" />
+    <Compile Include="Node\NodeStateStart.cs" />
+    <Compile Include="Node\NodeStateStop.cs" />
+    <Compile Include="Node\NodeSys.cs" />
+    <Compile Include="Node\NodeTriggerConditionMgr.cs" />
+    <Compile Include="Node\NodeTriggerMgr.cs" />
+    <Compile Include="Node\NodeType.cs" />
+    <Compile Include="ProtoBuf.Net\BclHelpers.cs" />
+    <Compile Include="ProtoBuf.Net\BufferExtension.cs" />
+    <Compile Include="ProtoBuf.Net\BufferPool.cs" />
+    <Compile Include="ProtoBuf.Net\CallbackAttributes.cs" />
+    <Compile Include="ProtoBuf.Net\Compiler\CompilerContext.cs" />
+    <Compile Include="ProtoBuf.Net\Compiler\CompilerDelegates.cs" />
+    <Compile Include="ProtoBuf.Net\Compiler\Local.cs" />
+    <Compile Include="ProtoBuf.Net\DataFormat.cs" />
+    <Compile Include="ProtoBuf.Net\Extensible.cs" />
+    <Compile Include="ProtoBuf.Net\ExtensibleUtil.cs" />
+    <Compile Include="ProtoBuf.Net\GlobalSuppressions.cs" />
+    <Compile Include="ProtoBuf.Net\Helpers.cs" />
+    <Compile Include="ProtoBuf.Net\IExtensible.cs" />
+    <Compile Include="ProtoBuf.Net\IExtension.cs" />
+    <Compile Include="ProtoBuf.Net\ImplicitFields.cs" />
+    <Compile Include="ProtoBuf.Net\KeyValuePairProxy.cs" />
+    <Compile Include="ProtoBuf.Net\Meta\AttributeMap.cs" />
+    <Compile Include="ProtoBuf.Net\Meta\BasicList.cs" />
+    <Compile Include="ProtoBuf.Net\Meta\CallbackSet.cs" />
+    <Compile Include="ProtoBuf.Net\Meta\MetaType.cs" />
+    <Compile Include="ProtoBuf.Net\Meta\RuntimeTypeModel.cs" />
+    <Compile Include="ProtoBuf.Net\Meta\SubType.cs" />
+    <Compile Include="ProtoBuf.Net\Meta\TypeFormatEventArgs.cs" />
+    <Compile Include="ProtoBuf.Net\Meta\TypeModel.cs" />
+    <Compile Include="ProtoBuf.Net\Meta\ValueMember.cs" />
+    <Compile Include="ProtoBuf.Net\NetObjectCache.cs" />
+    <Compile Include="ProtoBuf.Net\PrefixStyle.cs" />
+    <Compile Include="ProtoBuf.Net\ProtoContractAttribute.cs" />
+    <Compile Include="ProtoBuf.Net\ProtoConverterAttribute.cs" />
+    <Compile Include="ProtoBuf.Net\ProtoEnumAttribute.cs" />
+    <Compile Include="ProtoBuf.Net\ProtoException.cs" />
+    <Compile Include="ProtoBuf.Net\ProtoIgnoreAttribute.cs" />
+    <Compile Include="ProtoBuf.Net\ProtoIncludeAttribute.cs" />
+    <Compile Include="ProtoBuf.Net\ProtoMemberAttribute.cs" />
+    <Compile Include="ProtoBuf.Net\ProtoReader.cs" />
+    <Compile Include="ProtoBuf.Net\ProtoWriter.cs" />
+    <Compile Include="ProtoBuf.Net\SerializationContext.cs" />
+    <Compile Include="ProtoBuf.Net\Serializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\ArrayDecorator.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\BlobSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\BooleanSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\ByteSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\CharSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\CompiledSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\DateTimeSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\DecimalSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\DefaultValueDecorator.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\DoubleSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\EnumSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\FieldDecorator.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\GuidSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\ImmutableCollectionDecorator.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\Int16Serializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\Int32Serializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\Int64Serializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\IProtoSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\IProtoTypeSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\ISerializerProxy.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\KeyValuePairDecorator.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\ListDecorator.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\MemberSpecifiedDecorator.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\NetObjectSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\NullDecorator.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\ParseableSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\PropertyDecorator.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\ProtoDecoratorBase.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\SByteSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\SingleSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\StringSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\SubItemSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\SurrogateSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\SystemTypeSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\TagDecorator.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\TimeSpanSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\TupleSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\TypeSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\UInt16Serializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\UInt32Serializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\UInt64Serializer.cs" />
+    <Compile Include="ProtoBuf.Net\Serializers\UriDecorator.cs" />
+    <Compile Include="ProtoBuf.Net\ServiceModel\ProtoBehaviorAttribute.cs" />
+    <Compile Include="ProtoBuf.Net\ServiceModel\ProtoBehaviorExtensionElement.cs" />
+    <Compile Include="ProtoBuf.Net\ServiceModel\ProtoEndpointBehavior.cs" />
+    <Compile Include="ProtoBuf.Net\ServiceModel\ProtoOperationBehavior.cs" />
+    <Compile Include="ProtoBuf.Net\ServiceModel\XmlProtoSerializer.cs" />
+    <Compile Include="ProtoBuf.Net\SubItemToken.cs" />
+    <Compile Include="ProtoBuf.Net\WireType.cs" />
+    <Compile Include="Scene\EbAtar.cs" />
+    <Compile Include="Scene\EbAstarAssistant.cs" />
+    <Compile Include="Scene\EbGrid.cs" />
+    <Compile Include="Scene\EbSceneType.cs" />
+    <Compile Include="Scene\EbPixelLoader.cs" />
+    <Compile Include="Scene\EbPixelLoaderPng.cs" />
+    <Compile Include="Scene\EbPixelNav.cs" />
+    <Compile Include="Scene\EbGridRegion.cs" />
+    <Compile Include="Scene\EbRoute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Script\EbScriptMgr.cs" />
+    <Compile Include="SharpConfig\Comment.cs" />
+    <Compile Include="SharpConfig\Configuration.cs" />
+    <Compile Include="SharpConfig\Configuration.Deserialization.cs" />
+    <Compile Include="SharpConfig\Configuration.Parsing.cs" />
+    <Compile Include="SharpConfig\Configuration.Serialization.cs" />
+    <Compile Include="SharpConfig\ConfigurationElement.cs" />
+    <Compile Include="SharpConfig\IgnoreAttribute.cs" />
+    <Compile Include="SharpConfig\ParserException.cs" />
+    <Compile Include="SharpConfig\Section.cs" />
+    <Compile Include="SharpConfig\Setting.cs" />
+    <Compile Include="SharpConfig\SettingArrayEnumerator.cs" />
+    <Compile Include="SharpConfig\SettingValueCastException.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GF.Sqlite\GF.Sqlite.csproj">
+      <Project>{47b5d60f-be8d-4ccf-8125-800b991a6502}</Project>
+      <Name>GF.Sqlite</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>rd /s /q   $(SolutionDir)GF.Unity\Assets\Plugins\GF.Common
+xcopy /f /i /r /y /k /e  $(ProjectDir)*.*   $(SolutionDir)GF.Unity\Assets\Plugins\GF.Common\
+rd /s /q   $(SolutionDir)GF.Unity\Assets\Plugins\GF.Common\obj
+rd /s /q   $(SolutionDir)GF.Unity\Assets\Plugins\GF.Common\Properties
+rd /s /q   $(SolutionDir)GF.Unity\Assets\Plugins\GF.Common\ProtoBuf.Net\Properties</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

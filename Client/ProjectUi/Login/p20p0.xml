@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1280,800">
+  <displayList>
+    <image id="n0" name="n0" src="px3r2" xy="0,0" size="1280,800">
+      <relation target="" sidePair="width-width,height-height"/>
+    </image>
+    <component id="n1" name="DlgLogin" src="rbto4" xy="400,224">
+      <relation target="" sidePair="center-center,middle-middle"/>
+    </component>
+  </displayList>
+</component>

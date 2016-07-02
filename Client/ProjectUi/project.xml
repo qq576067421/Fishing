@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<projectDescription name="Fishing" type="Unity" id="0acb3b5795bedf945cae93068058fe46">
+  <packages>
+    <package id="e2ilf5a4" name="Common"/>
+    <package id="enrbs27q" name="Login"/>
+    <package id="et4emg1w" name="Main"/>
+    <package id="fcyokqd7" name="Loading"/>
+  </packages>
+  <textSetting font="宋体" size="12"/>
+  <scrollBars/>
+</projectDescription>

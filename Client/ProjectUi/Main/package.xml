@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="et4emg1w" jpegQuality="80" compressPNG="true">
+  <resources>
+    <component id="p20p0" name="Main" folder="" file="p20p0.xml" exported="true"/>
+    <folder id="p20p1" name="image" folder=""/>
+  </resources>
+  <publish name="Main"/>
+</packageDescription>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="e2ilf5a4" jpegQuality="80" compressPNG="true">
+  <resources>
+    <folder id="p20p0" name="image" folder=""/>
+    <folder id="px3r1" name="sound" folder=""/>
+    <component id="px3r2" name="FloatMsg" folder="" file="px3r2.xml" exported="true"/>
+    <image id="px3r3" name="TitleSendGift" folder="p20p0" qualityOption="source" file="px3r3.png" size="430,44" exported="true"/>
+    <image id="px3r4" name="TitleDayGift" folder="p20p0" qualityOption="source" file="px3r4.png" size="226,46" exported="true"/>
+    <image id="px3r5" name="shit" folder="p20p0" qualityOption="source" file="px3r5.png" size="70,70" exported="true"/>
+    <image id="px3r6" name="RankSilver" folder="p20p0" qualityOption="source" file="px3r6.png" size="64,54" exported="true"/>
+    <image id="px3r7" name="RankGold" folder="p20p0" qualityOption="source" file="px3r7.png" size="64,54" exported="true"/>
+    <image id="px3r8" name="RankCopper" folder="p20p0" qualityOption="source" file="px3r8.png" size="64,54" exported="true"/>
+    <image id="px3r9" name="RankBgTop" folder="p20p0" qualityOption="source" file="px3r9.png" size="60,60" exported="true"/>
+    <image id="px3ra" name="RankBgSelf" folder="p20p0" qualityOption="source" file="px3ra.png" size="54,54" exported="true"/>
+    <image id="px3rb" name="RankBg" folder="p20p0" qualityOption="source" file="px3rb.png" size="60,60" exported="true" scale="9grid" scale9grid="3,5,54,49"/>
+    <image id="px3rc" name="QuestArrows" folder="p20p0" qualityOption="source" file="px3rc.png" size="28,46" exported="true"/>
+    <image id="px3rd" name="purpleDiamond" folder="p20p0" qualityOption="source" file="px3rd.png" size="54,38" exported="true"/>
+    <image id="px3re" name="Primary" folder="p20p0" qualityOption="source" file="px3re.png" size="132,60" exported="true"/>
+    <image id="px3rf" name="PersonOnline" folder="p20p0" qualityOption="source" file="px3rf.png" size="28,36" exported="true"/>
+    <image id="px3rg" name="MsgLine1" folder="p20p0" qualityOption="source" file="px3rg.png" size="908,4" exported="true"/>
+    <image id="px3rh" name="MsgLine" folder="p20p0" qualityOption="source" file="px3rh.png" size="458,2" exported="true"/>
+    <image id="px3ri" name="Middle" folder="p20p0" qualityOption="source" file="px3ri.png" size="130,60" exported="true"/>
+    <image id="px3rk" name="LoginPwd" folder="p20p0" qualityOption="source" file="px3rk.png" size="30,30" exported="true"/>
+    <image id="px3rl" name="LoginPhone" folder="p20p0" qualityOption="source" file="px3rl.png" size="30,30" exported="true"/>
+    <image id="px3rm" name="LoginDownList" folder="p20p0" qualityOption="source" file="px3rm.png" size="30,30" exported="true"/>
+    <image id="px3rn" name="LoginDelete" folder="p20p0" qualityOption="source" file="px3rn.png" size="30,30" exported="true"/>
+    <image id="px3ro" name="LoginCheckCode" folder="p20p0" qualityOption="source" file="px3ro.png" size="30,30" exported="true"/>
+    <image id="px3rp" name="LoginAccount" folder="p20p0" qualityOption="source" file="px3rp.png" size="30,30" exported="true"/>
+    <image id="px3rq" name="loading" folder="p20p0" qualityOption="source" file="px3rq.png" size="50,50" exported="true"/>
+    <image id="px3rr" name="Horn" folder="p20p0" qualityOption="source" file="px3rr.png" size="56,58" exported="true"/>
+    <image id="px3rs" name="High" folder="p20p0" qualityOption="source" file="px3rs.png" size="132,60" exported="true"/>
+    <image id="px3rt" name="Gold" folder="p20p0" qualityOption="source" file="px3rt.png" size="60,60" exported="true"/>
+    <image id="px3ru" name="flower" folder="p20p0" qualityOption="source" file="px3ru.png" size="70,70" exported="true"/>
+    <image id="px3rv" name="DefaultInco" folder="p20p0" qualityOption="source" file="px3rv.png" size="100,100" exported="true"/>
+    <image id="px3rw" name="DayGiftDone" folder="p20p0" qualityOption="source" file="px3rw.png" size="50,50" exported="true"/>
+    <image id="px3rx" name="Crown" folder="p20p0" qualityOption="source" file="px3rx.png" size="64,44" exported="true"/>
+    <image id="px3ry" name="CircleBorder" folder="p20p0" qualityOption="source" file="px3ry.png" size="156,156" exported="true" scale="9grid" scale9grid="39,39,78,78"/>
+    <image id="px3rz" name="CheckBoxChecked" folder="p20p0" qualityOption="source" file="px3rz.png" size="38,38" exported="true"/>
+    <image id="px3r10" name="BtnPurple" folder="p20p0" qualityOption="source" file="px3r10.png" size="258,84" exported="true"/>
+    <image id="px3r11" name="BtnLongGold" folder="p20p0" qualityOption="source" file="px3r11.png" size="646,84" exported="true"/>
+    <image id="px3r12" name="BtnGray" folder="p20p0" qualityOption="source" file="px3r12.png" size="258,84" exported="true"/>
+    <image id="px3r13" name="BtnGold" folder="p20p0" qualityOption="source" file="px3r13.png" size="258,84" exported="true"/>
+    <image id="px3r14" name="BtnBlue" folder="p20p0" qualityOption="source" file="px3r14.png" size="258,84" exported="true"/>
+    <image id="px3r15" name="BtnBg" folder="p20p0" qualityOption="source" file="px3r15.png" size="258,84" exported="true"/>
+    <image id="px3r16" name="Box" folder="p20p0" qualityOption="source" file="px3r16.png" size="82,85" exported="true"/>
+    <image id="px3r17" name="Bowl" folder="p20p0" qualityOption="source" file="px3r17.png" size="88,106" exported="true"/>
+    <image id="px3r18" name="BorderLittleIcoSelect" folder="p20p0" qualityOption="source" file="px3r18.png" size="100,100" exported="true"/>
+    <image id="px3r19" name="BorderIco" folder="p20p0" qualityOption="source" file="px3r19.png" size="90,90" exported="true"/>
+    <image id="px3r1a" name="BorderIco NotLobby" folder="p20p0" qualityOption="source" file="px3r1a.png" size="200,200" exported="true"/>
+    <image id="px3r1b" name="BorderGold" folder="p20p0" qualityOption="source" file="px3r1b.png" size="130,126" exported="true"/>
+    <image id="px3r1c" name="BorderBigIcoSelect" folder="p20p0" qualityOption="source" file="px3r1c.png" size="320,184" exported="true"/>
+    <image id="px3r1d" name="BgWarning" folder="p20p0" qualityOption="source" file="px3r1d.png" size="640,102" exported="true"/>
+    <image id="px3r1e" name="BgTitle" folder="p20p0" qualityOption="source" file="px3r1e.png" size="392,48" exported="true"/>
+    <image id="px3r1f" name="BgSendGold" folder="p20p0" qualityOption="source" file="px3r1f.png" size="164,164" exported="true"/>
+    <image id="px3r1g" name="BgInput" folder="p20p0" qualityOption="source" file="px3r1g.png" size="526,52" exported="true" scale="9grid" scale9grid="28,13,469,26"/>
+    <image id="px3r1h" name="BgGoldInLobby" folder="p20p0" qualityOption="source" file="px3r1h.png" size="252,54" exported="true"/>
+    <image id="px3r1i" name="BgGoldInGame" folder="p20p0" qualityOption="source" file="px3r1i.png" size="184,60" exported="true" scale="9grid" scale9grid="26,15,131,30"/>
+    <image id="px3r1j" name="BgCheckBox" folder="p20p0" qualityOption="source" file="px3r1j.png" size="38,38" exported="true"/>
+    <image id="px3r1k" name="Award" folder="p20p0" qualityOption="source" file="px3r1k.png" size="158,52" exported="true"/>
+    <image id="px3r1l" name="VipIcon" folder="p20p0" qualityOption="source" file="px3r1l.png" size="28,28" exported="true"/>
+    <sound id="px3r1m" name="Close" folder="px3r1" file="px3r1m.wav" exported="true"/>
+    <image id="px3r1n" name="fgExp" folder="p20p0" qualityOption="source" file="px3r1n.png" size="60,30" exported="true" scale="9grid" scale9grid="5,8,49,16"/>
+    <folder id="ffoh1o" name="component" folder=""/>
+    <component id="ffoh1p" name="Btn1" folder="ffoh1o" file="ffoh1p.xml" exported="true"/>
+    <component id="ffoh1q" name="Btn2" folder="ffoh1o" file="ffoh1q.xml" exported="true"/>
+    <component id="ffoh1r" name="Btn3" folder="ffoh1o" file="ffoh1r.xml" exported="true"/>
+    <component id="ffoh1s" name="Btn4" folder="ffoh1o" file="ffoh1s.xml" exported="true"/>
+    <component id="ffoh1t" name="Btn5" folder="ffoh1o" file="ffoh1t.xml" exported="true"/>
+    <component id="ffoh1u" name="Btn6" folder="ffoh1o" file="ffoh1u.xml" exported="true"/>
+  </resources>
+  <publish name="Common"/>
+</packageDescription>

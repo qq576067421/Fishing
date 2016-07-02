@@ -1,0 +1,1 @@
+Consul.exe agent -server -bootstrap -data-dir ".\Data" -client=0.0.0.0

@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>OrleansBondUtils</name>
+    </assembly>
+    <members>
+        <member name="T:Orleans.Serialization.BondSerializer">
+            <summary>
+            An implementation of IExternalSerializer for usage with Bond types.
+            </summary>
+        </member>
+        <member name="M:Orleans.Serialization.BondSerializer.IsSupportedType(System.Type)">
+            <summary>
+            Determines whether this serializer has the ability to serialize a particular type.
+            </summary>
+            <param name="itemType">The type of the item to be serialized</param>
+            <returns>A value indicating whether the type can be serialized</returns>
+        </member>
+        <member name="M:Orleans.Serialization.BondSerializer.DeepCopy(System.Object)">
+            <summary>
+            Creates a deep copy of an object
+            </summary>
+            <param name="source">The source object to be copy</param>
+            <returns>The copy that was created</returns>
+        </member>
+        <member name="M:Orleans.Serialization.BondSerializer.Deserialize(System.Type,Orleans.Serialization.BinaryTokenStreamReader)">
+            <summary>
+            Deserializes an object from a binary stream
+            </summary>
+            <param name="expectedType">The type that is expected to be deserialized</param>
+            <param name="reader">The <see cref="T:Orleans.Serialization.BinaryTokenStreamReader"/></param>
+            <returns>The deserialized object</returns>
+        </member>
+        <member name="M:Orleans.Serialization.BondSerializer.Initialize(Orleans.Runtime.TraceLogger)">
+            <summary>
+            Initializes the external serializer
+            </summary>
+            <param name="logger">The logger to use to capture any serialization events</param>
+        </member>
+        <member name="M:Orleans.Serialization.BondSerializer.Serialize(System.Object,Orleans.Serialization.BinaryTokenStreamWriter,System.Type)">
+            <summary>
+            Serializes an object to a binary stream
+            </summary>
+            <param name="item">The object to serialize</param>
+            <param name="writer">The <see cref="T:Orleans.Serialization.BinaryTokenStreamWriter"/></param>
+            <param name="expectedType">The type the deserializer should expect</param>
+        </member>
+    </members>
+</doc>
